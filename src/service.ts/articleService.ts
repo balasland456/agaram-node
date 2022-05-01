@@ -1,3 +1,4 @@
+import ValidatorError from "../exception/ValidatorErrors";
 import Article from "../models/article";
 import headingTypes from "../types.ts/headingTypes";
 import { createStartAndEndIndex } from "../utils";
@@ -37,7 +38,7 @@ export default class CreateArticle {
     try {
       const deleted = await Article.findOneAndDelete({ _id: articleId });
       if (!deleted) {
-        throw new Error("article not found");
+        throw new ValidatorError("article not found");
       }
       return deleted;
     } catch (error) {
@@ -57,7 +58,7 @@ export default class CreateArticle {
         { runValidators: true }
       );
       if (!update) {
-        throw new Error("Article not found");
+        throw new ValidatorError("Article not found");
       }
       const updated = await Article.findOne({ _id: articleId });
       return updated;

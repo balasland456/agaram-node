@@ -1,3 +1,5 @@
+import CustomResponse from "../types.ts/CustomResponse";
+
 export const createStartAndEndIndex = (
     page?: number,
     pageSize?: number
@@ -7,5 +9,9 @@ export const createStartAndEndIndex = (
     }
     const startIndex = (page * pageSize) - pageSize;
     return { startIndex: startIndex, endIndex: pageSize };
+  };
+
+  export const getCustomValidationResponse = (): CustomResponse<null> => {
+    return new CustomResponse({ success: false, errors: null, statusCode: 400, data: null });
   };
   

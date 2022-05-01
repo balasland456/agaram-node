@@ -63,7 +63,7 @@ export default class articleController {
       });
       return response.status(StatusCode.OK).json(customResponse);
     } catch (error) {
-      console.log(error);
+      return next(error);
     }
   }
 
