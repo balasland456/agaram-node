@@ -1,4 +1,4 @@
-export default class ValidatorError extends Error {
+export default class ForbiddenError extends Error {
     message: string;
     constructor(message: string) {
       super();

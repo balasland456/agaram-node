@@ -1,11 +1,11 @@
-import ValidatorError from "../exception/ValidatorErrors";
+import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
-import headingTypes from "../types.ts/headingTypes";
+import IArticle from "../types";
 import { createStartAndEndIndex } from "../utils";
 
 export default class CreateArticle {
   // Create a new article
-  async addArticle(article: headingTypes): Promise<headingTypes> {
+  async addArticle(article: IArticle): Promise<IArticle> {
     try {
       const articleObj = new Article(article);
       const savedArticle = await articleObj.save();
@@ -20,10 +20,10 @@ export default class CreateArticle {
     sortParam: string,
     page?: number,
     pageSize?: number
-  ): Promise<headingTypes[]> {
+  ): Promise<IArticle[]> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
-      const getArticle: headingTypes[] = await Article.find()
+      const getArticle: IArticle[] = await Article.find()
         .sort("-updatedAt")
         .skip(startIndex)
         .limit(endIndex);
@@ -34,7 +34,7 @@ export default class CreateArticle {
   }
 
   // delete a article
-  async deleteArticle(articleId: string): Promise<headingTypes> {
+  async deleteArticle(articleId: string): Promise<IArticle> {
     try {
       const deleted = await Article.findOneAndDelete({ _id: articleId });
       if (!deleted) {
@@ -48,9 +48,9 @@ export default class CreateArticle {
 
   // Update a article
   async updateArticle(
-    article: headingTypes,
+    article: IArticle,
     articleId: string
-  ): Promise<headingTypes> {
+  ): Promise<IArticle> {
     try {
       const update = await Article.findOneAndUpdate(
         { _id: articleId },
