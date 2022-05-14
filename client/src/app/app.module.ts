@@ -11,6 +11,9 @@ import { MaterialModule } from './material.module';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { UsersComponent } from './components/users/users.component';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     SideBarComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    TransactionsComponent,
+    UsersComponent,
+    ResetpasswordComponent
   ],
   imports: [
     BrowserModule,
