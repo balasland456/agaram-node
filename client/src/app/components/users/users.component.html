@@ -1,0 +1,68 @@
+<app-side-bar>
+<div
+  *ngIf="loading"
+  class="d-flex align-items-center justify-content-center"
+>
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+<div *ngIf="!loading">
+  <h4 class="text-muted mt-4">User List</h4>
+  <table mat-table fixedLayout="true" [dataSource]="dataSource">
+
+    <!-- user id Column -->
+    <ng-container matColumnDef="userId">
+      <th mat-header-cell *matHeaderCellDef>User ID </th>
+      <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+       <!-- Address Column -->
+    <ng-container matColumnDef="Address">
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+      </ng-container>
+
+     <!--ID Column -->
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+       <!-- Transaction Mobile Column -->
+       <ng-container matColumnDef="Mobile">
+        <th mat-header-cell *matHeaderCellDef>Mobile</th>
+        <td mat-cell *matCellDef="let element">{{ element.mobile }}</td>
+      </ng-container>
+
+      <!-- Transaction Email Column -->
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+        <!-- Contact Person Column -->
+    <ng-container matColumnDef="ContactPerson">
+        <th mat-header-cell *matHeaderCellDef>Contact Person</th>
+        <td mat-cell *matCellDef="let element">{{ element.contact.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="ContactMobile">
+        <th mat-header-cell *matHeaderCellDef>Contact Mobile</th>
+        <td mat-cell *matCellDef="let element">{{ element.contact.mobile }}</td>
+      </ng-container>
+
+
+     
+
+   
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+</app-side-bar>

@@ -14,7 +14,9 @@ import { NonAdminDashboardComponent } from './components/non-admin-dashboard/non
 import { ArticleFormComponent } from './components/article-form/article-form.component';
 import { ArticleDeleteComponent } from './components/article-delete/article-delete.component';
 import { LoginComponent } from './components/login/login.component';
-
+import { TransactionsComponent } from './components/transactions/transactions.component';
+import { UsersComponent } from './components/users/users.component';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,10 @@ import { LoginComponent } from './components/login/login.component';
     NonAdminDashboardComponent,
     ArticleFormComponent,
     ArticleDeleteComponent,
-    LoginComponent
+    LoginComponent,
+    TransactionsComponent,
+    UsersComponent,
+    ResetpasswordComponent
   ],
   imports: [
     BrowserModule,
