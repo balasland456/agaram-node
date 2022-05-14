@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 import UnAuthenticatedError from "../exceptions/unathenticated-error";
 import User from "../models/user-model";
-import { ITokenPayload, tokens } from "../types";
+import { ITokenPayload, statusCode, tokens } from "../types";
 
 export const checkRefreshToken = async (
   req: Request,
@@ -29,6 +29,9 @@ export const checkRefreshToken = async (
     req.userEmail = decodedValue.email;
     return next();
   } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      error.name = statusCode.REFRESH_TOKEN_EXPIRED.toString();
+    }
     return next(error);
   }
 };

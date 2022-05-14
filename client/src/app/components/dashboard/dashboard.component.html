@@ -18,90 +18,47 @@
         <mat-datepicker #epicker></mat-datepicker>
       </mat-form-field>
     </div>
-    <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-      <!-- Position Column -->
-      <ng-container matColumnDef="sno">
-        <th mat-header-cell *matHeaderCellDef>S.No.</th>
-        <td mat-cell *matCellDef="let element; let i = index;">{{ i + 1 }}</td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="client">
-        <th mat-header-cell *matHeaderCellDef>Client</th>
-        <td mat-cell *matCellDef="let element">{{ element.client ?? "NO CLIENT" }}</td>
-      </ng-container>
-
-      <!-- Weight Column -->
-      <ng-container matColumnDef="batch">
-        <th mat-header-cell *matHeaderCellDef>Batch</th>
-        <td mat-cell *matCellDef="let element">{{ element.batch }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="articleTypes">
-        <th mat-header-cell *matHeaderCellDef>Article Type</th>
-        <td mat-cell *matCellDef="let element">{{ element.articleTypes }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="article">
-        <th mat-header-cell *matHeaderCellDef>Article</th>
-        <td mat-cell *matCellDef="let element">{{ element.article }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="pages">
-        <th mat-header-cell *matHeaderCellDef>Pages</th>
-        <td mat-cell *matCellDef="let element">{{ element.pages }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="processType">
-        <th mat-header-cell *matHeaderCellDef>Process Type</th>
-        <td mat-cell *matCellDef="let element">{{ element.processType }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="assignedTo">
-        <th mat-header-cell *matHeaderCellDef>Assigned To</th>
-        <td mat-cell *matCellDef="let element">{{ element.assignedTo }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef>Date Field</th>
-        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef>Created Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.createdAt| date }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="updatedAt">
-        <th mat-header-cell *matHeaderCellDef>Last Updated</th>
-        <td mat-cell *matCellDef="let element">{{ element.updatedAt| date }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="primary" (click)="openCreateArticle()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <div>
-            <button (click)="openUpdateArticle(element)" mat-icon-button color="primary" matTooltip="edit" matTooltipPosition="left">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button (click)="openDeleteArticle(element)" mat-icon-button color="accent" matTooltip="delete" matTooltipPosition="left">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" *ngFor="let column of displayedColumns">
+              {{ column }}
+            </th>
+            <th>
+              <button mat-icon-button color="primary" (click)="openCreateArticle()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dataSource; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ data.client }}</td>
+            <td>{{ data.batch }}</td>
+            <td>{{ data.articleTypes }}</td>
+            <td>{{ data.article }}</td>
+            <td>{{ data.pages }}</td>
+            <td>{{ data.processType }}</td>
+            <td>{{ data.assignedTo }}</td>
+            <td>{{ data.status }}</td>
+            <td>aa</td>
+            <td>{{ data.createdAt| date }}</td>
+            <td>{{ data.updatedAt| date }}</td>
+            <td>
+              <div class="d-flex">
+                <button mat-icon-button color="primary" matTooltip="edit" (click)="openUpdateArticle(data)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" matTooltip="delete" (click)="openDeleteArticle(data)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </app-side-bar>

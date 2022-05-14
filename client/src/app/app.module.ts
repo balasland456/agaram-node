@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,9 @@ import { LoginComponent } from './components/login/login.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { UsersComponent } from './components/users/users.component';
 import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { SideBarUserComponent } from './components/side-bar-user/side-bar-user.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { ResponseInterceptorService } from './services/response-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { ResetpasswordComponent } from './components/resetpassword/resetpassword
     LoginComponent,
     TransactionsComponent,
     UsersComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
+    SideBarUserComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,9 @@ import { ResetpasswordComponent } from './components/resetpassword/resetpassword
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

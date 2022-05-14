@@ -5,14 +5,40 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NonAdminDashboardComponent } from './components/non-admin-dashboard/non-admin-dashboard.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { UsersComponent } from './components/users/users.component';
+import { ResetpasswordComponent } from './components/resetpassword/resetpassword.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { LoginGuardService } from './services/login-guard.service';
+import { IsAdminGuardService } from './services/is-admin-guard.service';
+import { IsNonAdminGuardService } from './services/is-non-admin-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
-  { path: 'admin-dashboard', component: DashboardComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'non-admin-dashboard', component: NonAdminDashboardComponent },
-  { path: 'transaction', component: TransactionsComponent },
-  { path: 'users', component: UsersComponent },
+  {
+    path: 'admin-dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuardService, IsAdminGuardService],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [LoginGuardService],
+  },
+  {
+    path: 'non-admin-dashboard',
+    component: NonAdminDashboardComponent,
+    canActivate: [AuthGuardService, IsNonAdminGuardService],
+  },
+  {
+    path: 'transaction',
+    component: TransactionsComponent,
+    canActivate: [AuthGuardService, IsAdminGuardService],
+  },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'resetpassword',
+    component: ResetpasswordComponent,
+    canActivate: [LoginGuardService, IsAdminGuardService],
+  },
 ];
 
 @NgModule({

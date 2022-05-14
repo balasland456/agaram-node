@@ -15,19 +15,18 @@ export class DashboardComponent implements OnInit {
   endDate: Date = new Date();
   loading: boolean = false;
   displayedColumns: string[] = [
-    'sno',
-    'client',
-    'batch',
-    'articleTypes',
-    'article',
-    'pages',
-    'processType',
-    'assignedTo',
-    'status',
-    'date',
-    'createdAt',
-    'updatedAt',
-    'actions',
+    '#',
+    'Client',
+    'Batch',
+    'Article Type',
+    'Article',
+    'Pages',
+    'Process Type',
+    'Assigned To',
+    'Status',
+    'Date',
+    'Created At',
+    'Updated At',
   ];
   dataSource: IArticle[] = [];
 
@@ -67,9 +66,9 @@ export class DashboardComponent implements OnInit {
     const matDialogRef = this._matDialog.open(ArticleFormComponent, {
       data: {
         updateArticle: true,
-        title: "Update Article",
+        title: 'Update Article',
         status: data.status,
-        article: data
+        article: data,
       },
     });
 
@@ -83,7 +82,7 @@ export class DashboardComponent implements OnInit {
   openDeleteArticle(data: IArticle) {
     const matDialogRef = this._matDialog.open(ArticleDeleteComponent, {
       data: {
-        _id: data._id
+        _id: data._id,
       },
     });
 
