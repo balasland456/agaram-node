@@ -10,10 +10,11 @@ export class NonAdminDashboardComponent implements OnInit {
   loading: boolean = false;
   displayedColumns: string[] = ["sno", "batch", "articleTypes", "article", "pages", "processType", "assignedTo", "status", "date", "createdAt", "updatedAt"];
   dataSource: [] = [];
+  startDate: Date = new Date();
+  endDate: Date = new Date();
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

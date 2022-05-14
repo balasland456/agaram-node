@@ -11,7 +11,7 @@ const articleController = new ArticleController();
 
 const router: Router = express.Router();
 
-router.post("/add", auth, validator(articleValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}), articleController.addArticle as unknown as RequestHandler);
+router.post("/add", validator(articleValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}), articleController.addArticle as unknown as RequestHandler);
 router.get("/getall", articleController.getallArticle);
 router.get("/search", auth, articleController.searchArticle);
 router.delete("/delete/:_id", articleController.deleteArticle);

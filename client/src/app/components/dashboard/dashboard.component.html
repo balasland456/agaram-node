@@ -2,17 +2,33 @@
   <div class="row">
     <h2>Dashboard</h2>
     <hr />
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <div class="d-flex justify-content-end my-3">
+      <mat-form-field appearance="outline" class="mx-2">
+        <mat-label>Start Date</mat-label>
+        <input matInput [(ngModel)]="startDate" [matDatepicker]="spicker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="spicker"></mat-datepicker-toggle>
+        <mat-datepicker #spicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>End Date</mat-label>
+        <input matInput [(ngModel)]="startDate" [matDatepicker]="epicker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="epicker"></mat-datepicker-toggle>
+        <mat-datepicker #epicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <table mat-table fixedLayout="true" [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
       <!-- Position Column -->
       <ng-container matColumnDef="sno">
         <th mat-header-cell *matHeaderCellDef>S.No.</th>
-        <td mat-cell *matCellDef="let element; let i = index;">{{ i }}</td>
+        <td mat-cell *matCellDef="let element; let i = index;">{{ i + 1 }}</td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="client">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.client.name ?? "NO CLIENT" }}</td>
+        <th mat-header-cell *matHeaderCellDef>Client</th>
+        <td mat-cell *matCellDef="let element">{{ element.client ?? "NO CLIENT" }}</td>
       </ng-container>
 
       <!-- Weight Column -->
@@ -42,7 +58,7 @@
       </ng-container>
 
       <ng-container matColumnDef="assignedTo">
-        <th mat-header-cell *matHeaderCellDef>Process Type</th>
+        <th mat-header-cell *matHeaderCellDef>Assigned To</th>
         <td mat-cell *matCellDef="let element">{{ element.assignedTo }}</td>
       </ng-container>
 
@@ -58,12 +74,30 @@
 
       <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef>Created Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.createdAt }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.createdAt| date }}</td>
       </ng-container>
 
       <ng-container matColumnDef="updatedAt">
         <th mat-header-cell *matHeaderCellDef>Last Updated</th>
-        <td mat-cell *matCellDef="let element">{{ element.updatedAt }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.updatedAt| date }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" (click)="openCreateArticle()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <button (click)="openUpdateArticle(element)" mat-icon-button color="primary" matTooltip="edit" matTooltipPosition="left">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="openDeleteArticle(element)" mat-icon-button color="accent" matTooltip="delete" matTooltipPosition="left">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

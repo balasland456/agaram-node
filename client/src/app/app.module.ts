@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +11,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MaterialModule } from './material.module';
 import { NonAdminDashboardComponent } from './components/non-admin-dashboard/non-admin-dashboard.component';
+import { ArticleFormComponent } from './components/article-form/article-form.component';
+import { ArticleDeleteComponent } from './components/article-delete/article-delete.component';
 
 @NgModule({
   declarations: [
@@ -16,13 +20,17 @@ import { NonAdminDashboardComponent } from './components/non-admin-dashboard/non
     HeaderComponent,
     SideBarComponent,
     DashboardComponent,
-    NonAdminDashboardComponent
+    NonAdminDashboardComponent,
+    ArticleFormComponent,
+    ArticleDeleteComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

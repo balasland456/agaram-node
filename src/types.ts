@@ -11,7 +11,7 @@ export interface IUser {
 export default interface IArticle {
   _id: string;
   articleTypes: string;
-  article: string;
+  article: string;  
   pages: number;
   processType: string;
   status: Status;

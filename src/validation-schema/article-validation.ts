@@ -47,14 +47,4 @@ export const articleValidatorSchema: ValidatorObject[] = [
       notBlank: "status should not be blank",
     },
  },
-
- {
-    key: "assignedTo",
-    type: ValidatorTypes.String,
-    validators: [FunctionTypes.required, FunctionTypes.notBlank],
-    messages: {
-      required: "assignedTo is required",
-      notBlank: "assignedTo should not be blank",
-    },
- },
 ]; 
