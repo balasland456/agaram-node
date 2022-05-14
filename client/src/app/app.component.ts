@@ -15,7 +15,7 @@ export class AppComponent {
     this._router.events.subscribe(
       (event: any) => {
         if (event instanceof NavigationEnd) {
-          if (this._router.url === "/login" || this._router.url === "/register") {
+          if (this._router.url === "/login" || this._router.url === "/register" || this._router.url === "/resetpassword" ) {
             this.isLoginUrl = true;
           } else {
             this.isLoginUrl = false;

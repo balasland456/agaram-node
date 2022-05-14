@@ -3,38 +3,32 @@ export interface IUser {
   email: string;
   username: string;
   password: string;
-  employeeId: string;
-  mobileNo: string;
   createdAt: Date;
   type: UserType;
   updatedAt: Date;
-  contactPerson: {
-    name: string;
-    mobile: string;
-    email: string;
-  };
 }
 
-export interface IArticle {
-  _id: string;
+export default interface IArticle {
+  _id?: string;
   articleTypes: string;
-  article: string;  
+  article: string;
   pages: number;
   processType: string;
   status: Status;
   assignedTo: string;
-  client: string;
-  batch: string;
+  client?: string;
+  batch?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export interface ITransaction {
-  _id: string;
-  invoice: string;
-  description: string;
-  date: string;
-  for: string;
-  paid: number;
-  amount: number;
+export interface IArticleSave {
+  articleTypes: string;
+  article: string;
+  pages: number;
+  processType: string;
+  assignedTo: string;
+  status: Status;
 }
 
 export enum Status {
@@ -42,7 +36,7 @@ export enum Status {
   UNASSIGNED = "UNASSIGNED",
   COMPLETED = "COMPLETED",
   CLOSED = "CLOSED",
-  REJECTED = "REJECTED",
+  REJECTED = "REJECTED"
 }
 
 export enum UserType {

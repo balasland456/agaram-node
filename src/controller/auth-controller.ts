@@ -55,10 +55,10 @@ export class AuthController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<IUser>> | void> {
     try {
-      const { email, password } = req.body;
+      const { username, password } = req.body;
 
       // check email
-      const user = await this._authService.findUserByEmail(email);
+      const user = await this._authService.findUserByUsername(username);
 
       // check password
       const isPasswordMatch = await this._authService.comparePassword(

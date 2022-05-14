@@ -13,7 +13,7 @@ export class TransactionsComponent implements OnInit {
   // transactionDate: Date | undefined ;
   // transactionTo:string | undefined ;
 
-  displayedColumns: string[] = [ 'Invoice', 'Description', 'TransactionDate', 'Beneficiary', 'Paid','Recived'];
+  displayedColumns: string[] = ['#', 'Invoice', 'Description', 'TransactionDate', 'Beneficiary', 'Paid','Recieved'];
   dataSource = [
     {
       invoice:'1128278',
@@ -21,7 +21,7 @@ export class TransactionsComponent implements OnInit {
       txnDate: new Date(),
       transactionTo: 'user',
       paid: 12772,
-      recived: 2727
+      recieved: 2727
 
   },
   {
@@ -30,7 +30,7 @@ export class TransactionsComponent implements OnInit {
     txnDate: new Date(),
     transactionTo: 'user',
     paid: 12772,
-    recived: 2727
+    recieved: 2727
 
 }, {
   invoice:'1128278',
@@ -38,7 +38,7 @@ export class TransactionsComponent implements OnInit {
   txnDate: new Date(),
   transactionTo: 'user',
   paid: 12772,
-  recived: 2727
+  recieved: 2727
 
 }, {
   invoice:'1128278',
@@ -46,7 +46,7 @@ export class TransactionsComponent implements OnInit {
   txnDate: new Date(),
   transactionTo: 'user',
   paid: 12772,
-  recived: 2727
+  recieved: 2727
 
 }
   ];

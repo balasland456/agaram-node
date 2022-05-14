@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDialogModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   exports: [
     MatIconModule,
@@ -43,7 +45,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDialogModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   providers: [],
 })
