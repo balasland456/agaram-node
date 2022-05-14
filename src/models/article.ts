@@ -12,6 +12,7 @@ const articleSchema = new mongoose.Schema(
     },
     pages: {
       type: Number,
+      required: true,
     },
     processType: {
       type: String,
@@ -25,8 +26,13 @@ const articleSchema = new mongoose.Schema(
     },
     assignedTo: {
       type: String,
-      required: true,
     },
+    client: {
+      type: String,
+    },
+    batch: {
+      type: String,
+    }
   },
   { timestamps: true }
 );

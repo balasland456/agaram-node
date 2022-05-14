@@ -12,6 +12,7 @@ export default class ArticleController {
     this.getallArticle = this.getallArticle.bind(this);
     this.deleteArticle = this.deleteArticle.bind(this);
     this.updateArticle = this.updateArticle.bind(this);
+    this.searchArticle = this.searchArticle.bind(this);
   }
 
   async addArticle(
@@ -21,6 +22,8 @@ export default class ArticleController {
   ): Promise<Response<ResponseDTO<IArticle>> | void> {
     try {
       const article: IArticle = request.body;
+
+      request.user?._id;
 
       // Saving the article
       const savedArticle = await this._article.addArticle(article);
@@ -57,6 +60,36 @@ export default class ArticleController {
         statusCode.OK,
         true,
         allArticle,
+        null
+      );
+      return response.status(statusCode.OK).json(responseDTO);
+    } catch (error) {
+      return next(error);
+    }
+  }
+// Search a article
+  async searchArticle(
+    request: Request,
+    response: Response<ResponseDTO<IArticle[]>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
+    try {
+      const { sort, page, pageSize, sd, ed } = request.query;
+      const pageNumber: number | undefined = page ? +page : undefined;
+      const pageSizeNumber: number | undefined = pageSize
+        ? +pageSize
+        : undefined;
+      const searchedArticle = await this._article.searchArticle(
+        new Date(sd as string), 
+        new Date(ed as string),
+        sort as string,
+        pageNumber,
+        pageSizeNumber
+      );
+      const responseDTO = new ResponseDTO<IArticle[]>(
+        statusCode.OK,
+        true,
+        searchedArticle,
         null
       );
       return response.status(statusCode.OK).json(responseDTO);

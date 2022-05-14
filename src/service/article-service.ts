@@ -33,6 +33,31 @@ export default class CreateArticle {
     }
   }
 
+  // Search
+  async searchArticle(
+    sd: Date,
+    ed: Date,
+    sortParam: string,
+    page?: number,
+    pageSize?: number
+  ): Promise<IArticle[]> {
+    try {
+      const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
+      const getArticle: IArticle[] = await Article.find({
+        createdAt: {
+          $gt: sd,
+          $lt: ed,
+        },
+      })
+        .sort("-updatedAt")
+        .skip(startIndex)
+        .limit(endIndex);
+      return getArticle;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // delete a article
   async deleteArticle(articleId: string): Promise<IArticle> {
     try {
@@ -47,10 +72,7 @@ export default class CreateArticle {
   }
 
   // Update a article
-  async updateArticle(
-    article: IArticle,
-    articleId: string
-  ): Promise<IArticle> {
+  async updateArticle(article: IArticle, articleId: string): Promise<IArticle> {
     try {
       const update = await Article.findOneAndUpdate(
         { _id: articleId },

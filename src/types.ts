@@ -16,6 +16,8 @@ export default interface IArticle {
   processType: string;
   status: Status;
   assignedTo: string;
+  client: string;
+  batch: string;
 }
 
 export enum Status {
