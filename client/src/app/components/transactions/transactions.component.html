@@ -1,0 +1,54 @@
+<app-side-bar>
+<div
+  *ngIf="loading"
+  class="d-flex align-items-center justify-content-center"
+>
+  <mat-spinner [diameter]="30"></mat-spinner>
+</div>
+<div *ngIf="!loading">
+  <h4 class="text-muted mt-4">Transaction List</h4>
+  <table mat-table fixedLayout="true" [dataSource]="dataSource">
+
+    <!-- invoice Column -->
+    <ng-container matColumnDef="Invoice">
+      <th mat-header-cell *matHeaderCellDef>Invoice No</th>
+      <td mat-cell *matCellDef="let element">{{ element.invoice }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="Description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+
+       <!-- Transaction Date Column -->
+    <ng-container matColumnDef="TransactionDate">
+        <th mat-header-cell *matHeaderCellDef>Transaction Date</th>
+        <td mat-cell *matCellDef="let element">{{ element.txnDate |  date: 'dd/MM/yyyy' }} </td>
+      </ng-container>
+        <!-- Transaction To Column -->
+    <ng-container matColumnDef="Beneficiary">
+        <th mat-header-cell *matHeaderCellDef>Beneficiary </th>
+        <td mat-cell *matCellDef="let element">{{ element.transactionTo }}</td>
+      </ng-container>
+
+              <!-- Transaction To Column -->
+    <ng-container matColumnDef="Paid">
+        <th mat-header-cell *matHeaderCellDef>Paid</th>
+        <td mat-cell *matCellDef="let element">{{element.paid}}</td>
+      </ng-container>
+      
+      <ng-container matColumnDef="Recived">
+        <th mat-header-cell *matHeaderCellDef>Recived</th>
+        <td mat-cell *matCellDef="let element">{{element.recived}}</td>
+      </ng-container>
+
+     
+
+   
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+</app-side-bar>
