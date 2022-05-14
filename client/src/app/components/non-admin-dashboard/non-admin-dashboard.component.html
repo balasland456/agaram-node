@@ -9,12 +9,6 @@
         <td mat-cell *matCellDef="let element; let i = index;">{{ i }}</td>
       </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="client">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.client.name ?? "NO CLIENT" }}</td>
-      </ng-container>
-
       <!-- Weight Column -->
       <ng-container matColumnDef="batch">
         <th mat-header-cell *matHeaderCellDef>Batch</th>

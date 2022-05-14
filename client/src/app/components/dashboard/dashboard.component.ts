@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  loading: boolean = false;
+  displayedColumns: string[] = ["sno", "client", "batch", "articleTypes", "article", "pages", "processType", "assignedTo", "status", "date", "createdAt", "updatedAt", "actions"];
+  dataSource: [] = [];
+
+
   constructor() { }
 
   ngOnInit(): void {

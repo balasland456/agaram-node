@@ -8,13 +8,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MaterialModule } from './material.module';
+import { NonAdminDashboardComponent } from './components/non-admin-dashboard/non-admin-dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SideBarComponent,
-    DashboardComponent
+    DashboardComponent,
+    NonAdminDashboardComponent
   ],
   imports: [
     BrowserModule,
