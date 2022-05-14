@@ -10,11 +10,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loading: boolean = false;
-
+  reset:boolean =false;
   hide: boolean = true;
 
   username: string = '';
   password: string = '';
+  email:string = '';
 
   errorMessage: string = '';
 
@@ -26,6 +27,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  toogleblock(){
+    
+     this.reset= !this.reset;
+  }
+
+  forgetPassword(){
+    
+  }
   login(): void {
 
     this.loading = true;
