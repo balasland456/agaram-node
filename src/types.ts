@@ -3,12 +3,19 @@ export interface IUser {
   email: string;
   username: string;
   password: string;
+  employeeId: string;
+  mobileNo: string;
   createdAt: Date;
   type: UserType;
   updatedAt: Date;
+  contactPerson: {
+    name: string;
+    mobile: string;
+    email: string;
+  };
 }
 
-export default interface IArticle {
+export interface IArticle {
   _id: string;
   articleTypes: string;
   article: string;
@@ -20,7 +27,7 @@ export default interface IArticle {
   batch: string;
 }
 
-export default interface ITransaction{
+export interface ITransaction {
   _id: string;
   invoice: string;
   description: string;
@@ -35,7 +42,7 @@ export enum Status {
   UNASSIGNED = "UNASSIGNED",
   COMPLETED = "COMPLETED",
   CLOSED = "CLOSED",
-  REJECTED = "REJECTED"
+  REJECTED = "REJECTED",
 }
 
 export enum UserType {

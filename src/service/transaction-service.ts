@@ -1,82 +1,85 @@
 import ValidatorError from "../exceptions/validator-error";
 import Transaction from "../models/transaction";
-import ITransaction from "../types"
+import { ITransaction } from "../types";
 import { createStartAndEndIndex } from "../utils";
 
 export default class Savetransaction {
+  // add transaction
+  async addtransaction(transaction: ITransaction): Promise<ITransaction> {
+    try {
+      const transactionObj = new Transaction(transaction);
+      const savedtransaction = await transactionObj.save();
+      return savedtransaction;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-    // add transaction
-    async addtransaction (transaction: ITransaction): Promise<ITransaction>{
-        try {
+  // get all transactions
 
-            const transactionObj = new Transaction(transaction);
-            const savedtransaction = await transactionObj.save();
-            return savedtransaction
-        }  catch (error) {
-            throw error;
-          }
-        }
-    
-    // get all transactions
-    
-    async gettransactions(
-        sortParam: string,
-        page?: number,
-        pageSize?: number
-      ): Promise<ITransaction[]> {
-        try {
-          const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
-          const gettransaction: ITransaction[] = await Transaction.find()
-            .sort("-updatedAt")
-            .skip(startIndex)
-            .limit(endIndex);
-          return gettransaction;
-        } catch (error) {
-          throw error;
-        }
+  async gettransactions(
+    sortParam: string,
+    page?: number,
+    pageSize?: number
+  ): Promise<ITransaction[]> {
+    try {
+      const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
+      const gettransaction: ITransaction[] = await Transaction.find()
+        .sort("-updatedAt")
+        .skip(startIndex)
+        .limit(endIndex);
+      return gettransaction;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Search
+  async searchtransaction(
+    sd: Date,
+    ed: Date,
+    sortParam: string,
+    page?: number,
+    pageSize?: number
+  ): Promise<ITransaction[]> {
+    try {
+      const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
+      const search: ITransaction[] = await Transaction.find({
+        createdAt: {
+          $gt: sd,
+          $lt: ed,
+        },
+      })
+        .sort("-updatedAt")
+        .skip(startIndex)
+        .limit(endIndex);
+      return search;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // Delete transaction
+  async deletetransaction(transactionId: string): Promise<ITransaction> {
+    try {
+      const deleted = await Transaction.findOneAndDelete({
+        _id: transactionId,
+      });
+      if (!deleted) {
+        throw new ValidatorError("article not found");
       }
-    
-      // Search
-      async searchtransaction(
-        sd: Date,
-        ed: Date,
-        sortParam: string,
-        page?: number,
-        pageSize?: number
-      ): Promise<ITransaction[]> {
-        try {
-          const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
-          const search: ITransaction[] = await Transaction.find({
-            createdAt: {
-              $gt: sd,
-              $lt: ed,
-            },
-          })
-            .sort("-updatedAt")
-            .skip(startIndex)
-            .limit(endIndex);
-          return search;
-        } catch (error) {
-          throw error;
-        }
-      }
+      return deleted;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-      // Delete transaction
-      async deletetransaction(transactionId: string): Promise<ITransaction> {
-        try {
-          const deleted = await Transaction.findOneAndDelete({ _id: transactionId });
-          if (!deleted) {
-            throw new ValidatorError("article not found");
-          }
-          return deleted;
-        } catch (error) {
-          throw error;
-        }
-      }
+  // Update transaction
 
-       // Update transaction
-
-  async updatetransaction(transaction: ITransaction, transactionId: string): Promise<ITransaction> {
+  async updatetransaction(
+    transaction: ITransaction,
+    transactionId: string
+  ): Promise<ITransaction> {
     try {
       const update = await Transaction.findOneAndUpdate(
         { _id: transactionId },
@@ -91,5 +94,4 @@ export default class Savetransaction {
       throw error;
     }
   }
-     
-    }
+}

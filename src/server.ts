@@ -9,6 +9,7 @@ import initDB from "./database";
 import Handler from "./exceptions";
 import { AuthRouter } from "./routes/auth-routes";
 import { ArticleRouter } from "./routes/article-routes";
+import { UserRoutes } from "./routes/user-routes";
 import User from "./models/user-model";
 import { UserType } from "./types";
 import { TransactionRouter } from "./routes/transaction-routes";
@@ -32,7 +33,7 @@ app.use(cookieParser());
 app.use("/api/auth", AuthRouter);
 app.use("/api/article", ArticleRouter);
 app.use("/api/transaction", TransactionRouter);
-
+app.use("/api/user", UserRoutes);
 
 // handle errors
 app.use("*/", Handler.handleError);
@@ -50,7 +51,14 @@ app.listen(PORT, async () => {
   //   password: hashedPassword,
   //   firstName: "ADMIN",
   //   type: UserType.ADMIN,
-  //   username: "admin"
+  //   username: "admin",
+  //   employeeId: "1",
+  //   mobileNo: "string",
+  //   contactPerson: {
+  //     name: "string",
+  //     mobile: "string",
+  //     email: "string",
+  //   },
   // });
   // const savedUser = await userObj.save();
   console.log(`Server connected at http://localhost:${PORT}`);
