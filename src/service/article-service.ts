@@ -1,6 +1,6 @@
 import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
-import IArticle from "../types";
+import { IArticle } from "../types";
 import { createStartAndEndIndex } from "../utils";
 
 export default class CreateArticle {

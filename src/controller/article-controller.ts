@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import CreateArticle from "../service/article-service";
-import IArticle, { ResponseDTO, statusCode } from "../types";
+import { IArticle, ResponseDTO, statusCode } from "../types";
 
 export default class ArticleController {
   private _article: CreateArticle;
@@ -67,7 +67,7 @@ export default class ArticleController {
       return next(error);
     }
   }
-// Search a article
+  // Search a article
   async searchArticle(
     request: Request,
     response: Response<ResponseDTO<IArticle[]>>,
@@ -80,7 +80,7 @@ export default class ArticleController {
         ? +pageSize
         : undefined;
       const searchedArticle = await this._article.searchArticle(
-        new Date(sd as string), 
+        new Date(sd as string),
         new Date(ed as string),
         sort as string,
         pageNumber,
@@ -137,10 +137,10 @@ export default class ArticleController {
       );
 
       const responseDTO = new ResponseDTO<IArticle>(
-       statusCode.OK,
-       true,
-       updateArticle,
-       null
+        statusCode.OK,
+        true,
+        updateArticle,
+        null
       );
       return response.status(statusCode.OK).json(responseDTO);
     } catch (error) {
