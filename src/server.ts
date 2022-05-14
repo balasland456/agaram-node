@@ -7,10 +7,11 @@ import bcrypt from "bcrypt";
 
 import initDB from "./database";
 import Handler from "./exceptions";
-import { AuthRoter } from "./routes/auth-routes";
+import { AuthRouter } from "./routes/auth-routes";
 import { ArticleRouter } from "./routes/article-routes";
 import User from "./models/user-model";
 import { UserType } from "./types";
+import { TransactionRouter } from "./routes/transaction-routes";
 
 // init app
 const app = express();
@@ -28,8 +29,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.use("/api/auth", AuthRoter);
+app.use("/api/auth", AuthRouter);
 app.use("/api/article", ArticleRouter);
+app.use("/api/transaction", TransactionRouter);
 
 
 // handle errors
