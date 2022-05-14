@@ -13,4 +13,4 @@ router.get('/refresh', checkRefreshToken, authController.getAccessToken);
 router.get('/logout', auth, authController.logout);
 
 
-export { router as AuthRoter };
+export { router as AuthRouter };

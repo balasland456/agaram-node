@@ -13,6 +13,8 @@ import { MaterialModule } from './material.module';
 import { NonAdminDashboardComponent } from './components/non-admin-dashboard/non-admin-dashboard.component';
 import { ArticleFormComponent } from './components/article-form/article-form.component';
 import { ArticleDeleteComponent } from './components/article-delete/article-delete.component';
+import { LoginComponent } from './components/login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { ArticleDeleteComponent } from './components/article-delete/article-dele
     DashboardComponent,
     NonAdminDashboardComponent,
     ArticleFormComponent,
-    ArticleDeleteComponent
+    ArticleDeleteComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -43,7 +43,7 @@ export default class CreateArticle {
   ): Promise<IArticle[]> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
-      const getArticle: IArticle[] = await Article.find({
+      const search: IArticle[] = await Article.find({
         createdAt: {
           $gt: sd,
           $lt: ed,
@@ -52,7 +52,7 @@ export default class CreateArticle {
         .sort("-updatedAt")
         .skip(startIndex)
         .limit(endIndex);
-      return getArticle;
+      return search;
     } catch (error) {
       throw error;
     }
