@@ -10,12 +10,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loading: boolean = false;
-  reset:boolean =false;
+  reset: boolean = false;
   hide: boolean = true;
 
   username: string = '';
   password: string = '';
-  email:string = '';
+  email: string = '';
 
   errorMessage: string = '';
 
@@ -27,31 +27,26 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toogleblock(){
-    
-     this.reset= !this.reset;
+  toogleblock() {
+    this.reset = !this.reset;
   }
 
-  forgetPassword(){
-    
-  }
+  forgetPassword() {}
   login(): void {
-
     this.loading = true;
     this._authService.login(this.username, this.password).subscribe({
-      next: (data:any) => {
+      next: (data: any) => {
         this.loading = false;
         localStorage.setItem('user', JSON.stringify(data.data));
         this._snackBar.open('Login Successfull!', '', {
           duration: 3000,
         });
-        
       },
-      error: (error:Error) => {
+      error: (error: Error) => {
         this._snackBar.open(JSON.stringify(error), '', {
           duration: 3000,
         });
-              
+
         this.loading = false;
       },
     });
