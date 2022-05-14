@@ -20,6 +20,16 @@ export default interface IArticle {
   batch: string;
 }
 
+export default interface ITransaction{
+  _id: string;
+  invoice: string;
+  description: string;
+  date: string;
+  for: string;
+  paid: number;
+  amount: number;
+}
+
 export enum Status {
   ASSIGNED = "ASSIGNED",
   UNASSIGNED = "UNASSIGNED",
