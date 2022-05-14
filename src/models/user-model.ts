@@ -7,9 +7,30 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    userId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    mobileNo: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    contactPerson: {
+      name: {
+        type: String,
+        required: true,
+      },
+      mobile: {
+        type: String,
+        required: true,
+      },
+      email: { type: String, required: true },
+    },
     type: {
       type: String,
-      options: ["ADMIN", "NON_ADMIN"],
+      options: ["ADMIN", "NON_ADMIN", "CLIENT"],
       required: true,
     },
     password: {

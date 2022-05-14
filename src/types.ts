@@ -8,6 +8,26 @@ export interface IUser {
   updatedAt: Date;
 }
 
+export default interface IArticle {
+  _id: string;
+  articleTypes: string;
+  article: string;
+  pages: number;
+  processType: string;
+  status: Status;
+  assignedTo: string;
+  client: string;
+  batch: string;
+}
+
+export enum Status {
+  ASSIGNED = "ASSIGNED",
+  UNASSIGNED = "UNASSIGNED",
+  COMPLETED = "COMPLETED",
+  CLOSED = "CLOSED",
+  REJECTED = "REJECTED"
+}
+
 export enum UserType {
   ADMIN = "ADMIN",
   NON_ADMIN = "NON_ADMIN",

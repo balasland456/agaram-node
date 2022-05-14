@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import initDB from "./database";
 import Handler from "./exceptions";
 import { AuthRoter } from "./routes/auth-routes";
+import { ArticleRouter } from "./routes/article-routes";
 import User from "./models/user-model";
 import { UserType } from "./types";
 
@@ -28,6 +29,8 @@ app.use(cookieParser());
 
 // routes
 app.use("/api/auth", AuthRoter);
+app.use("/api/article", ArticleRouter);
+
 
 // handle errors
 app.use("*/", Handler.handleError);
@@ -39,14 +42,14 @@ initDB(DB_URL);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async () => {
-//   const hashedPassword = await bcrypt.hash("password", 6);
-//   const userObj = new User({
-//     email: "user@example.com",
-//     password: hashedPassword,
-//     firstName: "ADMIN",
-//     type: UserType.ADMIN,
-//     username: "admin"
-//   });
-//   const savedUser = await userObj.save();
+  // const hashedPassword = await bcrypt.hash("password", 6);
+  // const userObj = new User({
+  //   email: "user@example.com",
+  //   password: hashedPassword,
+  //   firstName: "ADMIN",
+  //   type: UserType.ADMIN,
+  //   username: "admin"
+  // });
+  // const savedUser = await userObj.save();
   console.log(`Server connected at http://localhost:${PORT}`);
 });
