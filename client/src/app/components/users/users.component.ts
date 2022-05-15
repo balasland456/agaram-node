@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateUserComponent } from '../create-user/create-user.component';
 
 @Component({
   selector: 'app-users',
@@ -7,7 +9,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
   loading: boolean = false;
-  constructor() { }
   displayedColumns: string[] = ['#', 'userId', 'Name', 'Address', 'ID', 'Mobile','Email','ContactPerson','ContactMobile', 'ContactEmail'];
   dataSource = [
     {
@@ -25,8 +26,19 @@ export class UsersComponent implements OnInit {
     }
   ];
 
+  constructor(private _dialog: MatDialog) { }
+
+
   ngOnInit(): void {
 
+  }
+
+  openCreateUser(): void {
+    const dialogRef = this._dialog.open(CreateUserComponent);
+
+    dialogRef.afterClosed().subscribe((data) => {
+      console.log(data);
+    })
   }
 
 }

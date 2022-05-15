@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { TokenExpiredError } from "jsonwebtoken";
 import UnAuthenticatedError from "../exceptions/unathenticated-error";
-import User from "../models/user-model";
+import User from "../models/user";
 import { ITokenPayload, statusCode, tokens } from "../types";
 
 export const checkRefreshToken = async (

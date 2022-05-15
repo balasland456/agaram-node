@@ -7,6 +7,7 @@ export default class UserController {
 
   constructor() {
     this._user = new UserService();
+    
     this.adduser = this.adduser.bind(this);
   }
 

@@ -7,10 +7,12 @@ export interface IUser {
   mobileNo: string;
   createdAt: Date;
   type: UserType;
+  name: string;
   updatedAt: Date;
+  address: string;
   contactPerson: {
     name: string;
-    mobile: string;
+    mobileNo: string;
     email: string;
   };
 }
@@ -48,6 +50,7 @@ export enum Status {
 export enum UserType {
   ADMIN = "ADMIN",
   NON_ADMIN = "NON_ADMIN",
+  CLIENT = "CLIENT",
 }
 
 export interface ITokens {

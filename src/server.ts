@@ -10,7 +10,7 @@ import Handler from "./exceptions";
 import { AuthRouter } from "./routes/auth-routes";
 import { ArticleRouter } from "./routes/article-routes";
 import { UserRoutes } from "./routes/user-routes";
-import User from "./models/user-model";
+import User from "./models/user";
 import { UserType } from "./types";
 import { TransactionRouter } from "./routes/transaction-routes";
 
@@ -52,11 +52,13 @@ app.listen(PORT, async () => {
   //   firstName: "ADMIN",
   //   type: UserType.ADMIN,
   //   username: "admin",
+  //   name: "admin",
   //   employeeId: "1",
   //   mobileNo: "string",
+  //   address: "aaa",
   //   contactPerson: {
   //     name: "string",
-  //     mobile: "string",
+  //     mobileNo: "string",
   //     email: "string",
   //   },
   // });

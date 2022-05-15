@@ -20,6 +20,7 @@ import { ResetpasswordComponent } from './components/resetpassword/resetpassword
 import { SideBarUserComponent } from './components/side-bar-user/side-bar-user.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ResponseInterceptorService } from './services/response-interceptor.service';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ResponseInterceptorService } from './services/response-interceptor.serv
     UsersComponent,
     ResetpasswordComponent,
     SideBarUserComponent,
-    LogoutComponent
+    LogoutComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,

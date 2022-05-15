@@ -1,5 +1,5 @@
 import ValidatorError from "../exceptions/validator-error";
-import User from "../models/user-model";
+import User from "../models/user";
 import { IUser } from "../types";
 import bcrypt from "bcrypt";
 

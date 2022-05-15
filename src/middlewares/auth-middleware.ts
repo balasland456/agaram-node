@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import UnAuthenticatedError from "../exceptions/unathenticated-error";
-import User from "../models/user-model";
+import User from "../models/user";
 import { ITokenPayload, tokens } from "../types";
 
 export const auth = async (

@@ -1,11 +1,20 @@
 export interface IUser {
-  _id: string;
+  _id?: string;
   email: string;
   username: string;
   password: string;
-  createdAt: Date;
+  employeeId: string;
+  mobileNo: string;
+  createdAt?: Date;
   type: UserType;
-  updatedAt: Date;
+  updatedAt?: Date;
+  contactPerson: {
+    name: string;
+    mobileNo: string;
+    email: string;
+  };
+  name: string;
+  address: string;
 }
 
 export default interface IArticle {
@@ -42,6 +51,7 @@ export enum Status {
 export enum UserType {
   ADMIN = "ADMIN",
   NON_ADMIN = "NON_ADMIN",
+  CLIENT = "CLIENT"
 }
 
 export interface ITokens {
