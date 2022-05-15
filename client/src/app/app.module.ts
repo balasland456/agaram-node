@@ -22,6 +22,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { ResponseInterceptorService } from './services/response-interceptor.service';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { TransactionDeleteComponent } from './components/transaction-delete/transaction-delete.component';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TransactionDeleteComponent } from './components/transaction-delete/tran
     SideBarUserComponent,
     LogoutComponent,
     CreateUserComponent,
-    TransactionDeleteComponent
+    TransactionDeleteComponent,
+    TransactionFormComponent,
   ],
   imports: [
     BrowserModule,

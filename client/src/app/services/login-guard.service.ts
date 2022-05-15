@@ -19,7 +19,7 @@ export class LoginGuardService  implements CanActivate{
       });
       if (userObj.type === UserType.ADMIN) {
         this._router.navigate(['/']);
-      } else if (userObj.type === UserType.NON_ADMIN) {
+      } else if (userObj.type === UserType.EMP) {
         this._router.navigate(['/non-admin-dashboard']);
       }
       return false;

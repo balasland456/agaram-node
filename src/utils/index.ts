@@ -14,3 +14,15 @@ export const createStartAndEndIndex = (
 export const getCustomValidationResponse = (): ResponseDTO<null> => {
   return new ResponseDTO(statusCode.BAD_REQUEST, false, null, null);
 };
+
+export const getCurrentDate = (d?: Date) => {
+  let t = new Date();
+  if (d) {
+    t = new Date(d);
+  }
+  const date = ("0" + t.getUTCDate()).slice(-2);
+  const month = ("0" + (t.getUTCMonth() + 1)).slice(-2);
+  const year = t.getUTCFullYear();
+  return `${year}-${month}-${date}`;
+};
+

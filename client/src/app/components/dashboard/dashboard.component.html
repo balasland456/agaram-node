@@ -15,11 +15,14 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>End Date</mat-label>
-        <input matInput [(ngModel)]="startDate" [matDatepicker]="epicker">
+        <input matInput [(ngModel)]="endDate" [matDatepicker]="epicker">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="epicker"></mat-datepicker-toggle>
         <mat-datepicker #epicker></mat-datepicker>
       </mat-form-field>
+      <button mat-icon-button class="mt-2" (click)="searchArticle()">
+        <mat-icon>search</mat-icon>
+      </button>
     </div>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -44,7 +47,7 @@
             <td>{{ data.article }}</td>
             <td>{{ data.pages }}</td>
             <td>{{ data.processType }}</td>
-            <td>{{ data.assignedTo }}</td>
+            <td>{{ data.assignedTo?.username }}</td>
             <td>{{ data.status }}</td>
             <td>aa</td>
             <td>{{ data.createdAt| date }}</td>

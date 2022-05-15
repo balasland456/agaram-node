@@ -97,5 +97,19 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  searchArticle(): void {
+    this.loading = true;
+    this._articleService.searchArticle(1, 10, this.startDate, this.endDate).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this.dataSource = data.data!;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+      },
+    })
+  }
+
   ngOnInit(): void {}
 }

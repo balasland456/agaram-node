@@ -53,7 +53,7 @@ export enum Status {
 
 export enum UserType {
   ADMIN = "ADMIN",
-  NON_ADMIN = "NON_ADMIN",
+  EMP = "EMP",
   CLIENT = "CLIENT",
   SUP = "SUP",
 }

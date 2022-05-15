@@ -48,7 +48,7 @@ export default class UserService {
       const getallusers: IUser[] = await User.find({
         type: { $ne: UserType.ADMIN },
       })
-        .sort("-updatedAt")
+        .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
       return getallusers;

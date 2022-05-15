@@ -10,6 +10,22 @@ import { ITransaction, ResponseDTO } from '../shared/types';
 export class TransactionService {
   constructor(private _http: HttpClient) {}
 
+  savetransaction(transaction: ITransaction): Observable<ResponseDTO<ITransaction>> {
+    return this._http.post<ResponseDTO<ITransaction>>(
+      `${environment.serverUrl}/transaction/add`,
+      transaction,
+      { withCredentials: true }
+    );
+  }
+
+  updateTransaction(transaction: ITransaction, id: string): Observable<ResponseDTO<ITransaction>> {
+    return this._http.put<ResponseDTO<ITransaction>>(
+      `${environment.serverUrl}/transaction/update/${id}`,
+      transaction,
+      { withCredentials: true }
+    );
+  }
+
   getAllTransactions(
     page: number,
     pageSize: number
@@ -22,6 +38,26 @@ export class TransactionService {
           pageSize: pageSize,
         },
         withCredentials: true,
+      }
+    );
+  }
+
+  searchTransaction(
+    page: number,
+    pageSize: number,
+    sd: Date,
+    ed: Date
+  ): Observable<ResponseDTO<ITransaction[]>> {
+    return this._http.get<ResponseDTO<ITransaction[]>>(
+      `${environment.serverUrl}/transaction/search`,
+      {
+        withCredentials: true,
+        params: {
+          page: page,
+          pageSize: pageSize,
+          sd: sd.toString(),
+          ed: ed.toString(),
+        },
       }
     );
   }

@@ -18,15 +18,15 @@ export interface IUser {
 }
 
 export interface ITransaction {
-  _id: string;
+  _id?: string;
   invoice: string;
   description: string;
   date: Date;
   for: string;
   paid: number;
   recieved: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export default interface IArticle {
@@ -36,7 +36,7 @@ export default interface IArticle {
   pages: number;
   processType: string;
   status: Status;
-  assignedTo: string;
+  assignedTo: IUser;
   client?: string;
   batch?: string;
   createdAt?: Date;
@@ -62,8 +62,9 @@ export enum Status {
 
 export enum UserType {
   ADMIN = "ADMIN",
-  NON_ADMIN = "NON_ADMIN",
-  CLIENT = "CLIENT"
+  EMP = "EMP",
+  CLIENT = "CLIENT",
+  SUP = "SUP"
 }
 
 export interface ITokens {
