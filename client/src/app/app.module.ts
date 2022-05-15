@@ -21,6 +21,7 @@ import { SideBarUserComponent } from './components/side-bar-user/side-bar-user.c
 import { LogoutComponent } from './components/logout/logout.component';
 import { ResponseInterceptorService } from './services/response-interceptor.service';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { TransactionDeleteComponent } from './components/transaction-delete/transaction-delete.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     ResetpasswordComponent,
     SideBarUserComponent,
     LogoutComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    TransactionDeleteComponent
   ],
   imports: [
     BrowserModule,

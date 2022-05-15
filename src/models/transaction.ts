@@ -1,34 +1,36 @@
 import mongoose from "mongoose";
 
-const transactionSchema = new mongoose.Schema({
-  invoice: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  date: { 
-    type: Date,
-    required: true,
-  },
-  for: {
+const transactionSchema = new mongoose.Schema(
+  {
+    invoice: {
       type: String,
       required: true,
-  },
-  paid: {
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    for: {
+      type: String,
+      required: true,
+      enum: ["EMP", "SUP", "CLIENT"]
+    },
+    paid: {
       type: Number,
       required: true,
-  },
-  amount : {
+    },
+    recieved: {
       type: Number,
       required: true,
-  }
-},
-{ timestamps: true}
+    },
+  },
+  { timestamps: true }
 );
 
-const Transaction = mongoose.model("Transaction",transactionSchema)
+const Transaction = mongoose.model("Transaction", transactionSchema);
 
-export default Transaction
+export default Transaction;

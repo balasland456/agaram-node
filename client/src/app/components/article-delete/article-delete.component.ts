@@ -11,7 +11,6 @@ import { ArticleService } from 'src/app/services/article.service';
 export class ArticleDeleteComponent implements OnInit {
 
   constructor(private _articleService: ArticleService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleDeleteComponent>,@Inject(MAT_DIALOG_DATA) public data: { _id: string }) {
-    console.log(data);
   }
 
   ngOnInit(): void {

@@ -27,16 +27,20 @@ export interface IArticle {
   assignedTo: string;
   client: string;
   batch: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ITransaction {
   _id: string;
   invoice: string;
   description: string;
-  date: string;
+  date: Date;
   for: string;
   paid: number;
-  amount: number;
+  recieved: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export enum Status {
@@ -51,6 +55,7 @@ export enum UserType {
   ADMIN = "ADMIN",
   NON_ADMIN = "NON_ADMIN",
   CLIENT = "CLIENT",
+  SUP = "SUP",
 }
 
 export interface ITokens {

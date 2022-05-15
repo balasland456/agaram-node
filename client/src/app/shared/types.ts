@@ -17,6 +17,18 @@ export interface IUser {
   address: string;
 }
 
+export interface ITransaction {
+  _id: string;
+  invoice: string;
+  description: string;
+  date: Date;
+  for: string;
+  paid: number;
+  recieved: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export default interface IArticle {
   _id?: string;
   articleTypes: string;

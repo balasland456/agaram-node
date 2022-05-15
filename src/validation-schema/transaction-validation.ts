@@ -49,7 +49,7 @@ export const transactionValidatorSchema: ValidatorObject[] = [
     },
    
     {
-       key: "amount",
+       key: "recieved",
        type: ValidatorTypes.Number,
        validators: [FunctionTypes.required, FunctionTypes.notBlank],
        messages: {

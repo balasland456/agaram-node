@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      options: ["ADMIN", "NON_ADMIN", "CLIENT"],
+      options: ["ADMIN", "NON_ADMIN", "CLIENT", "SUP"],
       required: true,
     },
     password: {

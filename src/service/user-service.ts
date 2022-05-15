@@ -1,4 +1,4 @@
-import { IUser } from "../types";
+import { IUser, UserType } from "../types";
 import User from "../models/user";
 import bcrypt from "bcrypt";
 import ValidatorError from "../exceptions/validator-error";
@@ -45,7 +45,9 @@ export default class UserService {
   ): Promise<IUser[]> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
-      const getallusers: IUser[] = await User.find()
+      const getallusers: IUser[] = await User.find({
+        type: { $ne: UserType.ADMIN },
+      })
         .sort("-updatedAt")
         .skip(startIndex)
         .limit(endIndex);
