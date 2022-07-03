@@ -17,6 +17,22 @@ export interface IUser {
   };
 }
 
+export interface IUserExcel {
+  email: string;
+  username: string;
+  password: string;
+  employeeId: string;
+  mobileNo: string;
+  type: UserType;
+  name: string;
+  address: string;
+  contactPerson: {
+    contactPersonName: string;
+    contactPersonMobileNo: string;
+    contactPersonEmail: string;
+  };
+}
+
 export interface IArticle {
   _id: string;
   articleTypes: string;
@@ -27,16 +43,20 @@ export interface IArticle {
   assignedTo: string;
   client: string;
   batch: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ITransaction {
   _id: string;
   invoice: string;
   description: string;
-  date: string;
+  date: Date;
   for: string;
   paid: number;
-  amount: number;
+  recieved: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export enum Status {
@@ -49,8 +69,15 @@ export enum Status {
 
 export enum UserType {
   ADMIN = "ADMIN",
-  NON_ADMIN = "NON_ADMIN",
+  EMP = "EMP",
   CLIENT = "CLIENT",
+  SUP = "SUP",
+}
+
+export enum ModelType {
+  USER = "USER",
+  TRANSACTION = "TRANSACTION",
+  ARTICLE = "ARTICLE",
 }
 
 export interface ITokens {

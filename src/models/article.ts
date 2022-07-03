@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { getCurrentDate } from "../utils";
 
 const articleSchema = new mongoose.Schema(
   {
@@ -26,15 +27,21 @@ const articleSchema = new mongoose.Schema(
     },
     assignedTo: {
       type: String,
+      ref: "User"
     },
     client: {
       type: String,
     },
     batch: {
       type: String,
-    }
+    },
+    createdAt: {
+      type: Date,
+      required: true,
+      default: new Date(getCurrentDate()),
+    },
   },
-  { timestamps: true }
+  { timestamps: { updatedAt: true, createdAt: false } }
 );
 
 const Article = mongoose.model("Article", articleSchema);

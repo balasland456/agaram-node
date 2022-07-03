@@ -1,44 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from 'src/app/services/user.service';
+import { IUser } from 'src/app/shared/types';
 import { CreateUserComponent } from '../create-user/create-user.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
   loading: boolean = false;
-  displayedColumns: string[] = ['#', 'userId', 'Name', 'Address', 'ID', 'Mobile','Email','ContactPerson','ContactMobile', 'ContactEmail'];
-  dataSource = [
-    {
-      userId: '291991',
-      name: 'suswer',
-      address: 'no 17 subash street poes garden chennai 600100',
-      employeeId: '29030020',
-      mobileNo: '0018928277',
-      email:'saravnama@gmail.com',
-      contactPerson:{
-        mobileNo:'9992922',
-        name: 'sa88a9',
-        email:'saravnama@gmail.com',
-      }
-    }
+  displayedColumns: string[] = [
+    '#',
+    'Username',
+    'Name',
+    'Address',
+    'ID',
+    'Mobile',
+    'Email',
+    'Contact Person',
+    'Contact Person Mobile',
+    'Contact Person Email',
   ];
+  dataSource: IUser[] = [];
 
-  constructor(private _dialog: MatDialog) { }
+  constructor(private _dialog: MatDialog, private _userService: UserService) {
+    this.getAllUsers();
+  }
+
+  ngOnInit(): void {}
 
 
-  ngOnInit(): void {
-
+  getAllUsers(): void {
+    this.loading = true;
+    this._userService.getAllUsers(1, 10).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this.dataSource = data.data!;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+      }
+    })
   }
 
   openCreateUser(): void {
     const dialogRef = this._dialog.open(CreateUserComponent);
 
     dialogRef.afterClosed().subscribe((data) => {
-      console.log(data);
-    })
+      if (data) {
+        this.getAllUsers();
+      }
+    });
   }
-
 }

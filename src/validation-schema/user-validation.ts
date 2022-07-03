@@ -76,12 +76,19 @@ export const userValidatorSchema: ValidatorObject[] = [
   },
 
   {
-    key: "contactPerson.mobile",
+    key: "contactPerson.mobileNo",
     type: ValidatorTypes.String,
-    validators: [FunctionTypes.required, FunctionTypes.notBlank],
+    validators: [
+      FunctionTypes.required,
+      FunctionTypes.notBlank,
+      { min: 10 },
+      { max: 10 },
+    ],
     messages: {
-      required: "mobile is required",
-      notBlank: "mobile should not be blank",
+      required: "Contact person mobile is required",
+      notBlank: "Contact person mobile should not be blank",
+      min: "Contact person mobile is not valid",
+      max: "Contact person mobile is not valid"
     },
   },
 

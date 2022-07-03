@@ -13,7 +13,6 @@ import { ArticleFormComponent } from '../article-form/article-form.component';
 export class DashboardComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
-  loading: boolean = false;
   displayedColumns: string[] = [
     '#',
     'Client',
@@ -30,6 +29,8 @@ export class DashboardComponent implements OnInit {
   ];
   dataSource: IArticle[] = [];
 
+  loading: boolean = false;
+
   constructor(
     private _articleService: ArticleService,
     private _matDialog: MatDialog
@@ -38,11 +39,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getArticles(): void {
+    this.loading = true;
     this._articleService.getAllArticle(1, 10).subscribe({
       next: (data) => {
+        this.loading = false;
         this.dataSource = data.data as IArticle[];
       },
       error: (err) => {
+        this.loading = false;
         console.error(err);
       },
     });
@@ -91,6 +95,20 @@ export class DashboardComponent implements OnInit {
         this.getArticles();
       }
     });
+  }
+
+  searchArticle(): void {
+    this.loading = true;
+    this._articleService.searchArticle(1, 10, this.startDate, this.endDate).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this.dataSource = data.data!;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+      },
+    })
   }
 
   ngOnInit(): void {}
