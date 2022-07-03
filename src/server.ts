@@ -51,8 +51,8 @@ if (process.env.NODE_ENV === "production") {
 
 // handle errors
 app.use("*/", Handler.handleError);
-
-const DB_URL = process.env.DB_URL!;
+.
+const DB_URL = mongodb+srv://agaram:<Password123@#>@cluster0.s9hib.mongodb.net/?retryWrites=true&w=majority;
 
 initDB(DB_URL);
 
