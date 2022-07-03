@@ -1,4 +1,4 @@
 export const environment = {
-  serverUrl: 'http://localhost:3000/api',
+  serverUrl: 'https://agaramdk-app.herokuapp.com/api',
   production: true,
 };
