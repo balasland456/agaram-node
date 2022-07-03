@@ -1,20 +1,16 @@
-import express from "express";
+import cookieParser from "cookie-parser";import cors from "cors";
 import dotenv from "dotenv";
-dotenv.config();
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import bcrypt from "bcrypt";
+import express from "express";
 import path from "path";
+dotenv.config();
 
 import initDB from "./database";
 import Handler from "./exceptions";
-import { AuthRouter } from "./routes/auth-routes";
 import { ArticleRouter } from "./routes/article-routes";
-import { UserRoutes } from "./routes/user-routes";
-import User from "./models/user";
-import { UserType } from "./types";
+import { AuthRouter } from "./routes/auth-routes";
 import { TransactionRouter } from "./routes/transaction-routes";
 import { uploadRouter } from "./routes/upload-routes";
+import { UserRoutes } from "./routes/user-routes";
 
 // init app
 const app = express();
@@ -51,8 +47,8 @@ if (process.env.NODE_ENV === "production") {
 
 // handle errors
 app.use("*/", Handler.handleError);
-.
-const DB_URL = mongodb+srv://agaram:<Password123@#>@cluster0.s9hib.mongodb.net/?retryWrites=true&w=majority;
+
+const DB_URL = process.env.DB_URL || "";
 
 initDB(DB_URL);
 
