@@ -13,7 +13,7 @@ export class IsNonAdminGuardService {
 
     if (user) {
       const userObj: IUser = JSON.parse(user);
-      if (userObj.type === UserType.NON_ADMIN) {
+      if (userObj.type === UserType.EMP) {
         return true;
       }
     }

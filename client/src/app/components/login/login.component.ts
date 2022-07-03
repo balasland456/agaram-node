@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         if (data.data?.type === UserType.ADMIN) {
           this._router.navigate(['/admin-dashboard']);
         }
-        if (data.data?.type === UserType.NON_ADMIN) {
+        if (data.data?.type === UserType.EMP) {
           this._router.navigate(['/non-admin-dashboard']);
         }
       },

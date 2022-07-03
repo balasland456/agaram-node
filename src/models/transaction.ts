@@ -1,34 +1,42 @@
 import mongoose from "mongoose";
+import { getCurrentDate } from "../utils";
 
-const transactionSchema = new mongoose.Schema({
-  invoice: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  date: { 
-    type: Date,
-    required: true,
-  },
-  for: {
+const transactionSchema = new mongoose.Schema(
+  {
+    invoice: {
       type: String,
       required: true,
-  },
-  paid: {
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    for: {
+      type: String,
+      required: true,
+      enum: ["EMP", "SUP", "CLIENT"]
+    },
+    paid: {
       type: Number,
       required: true,
-  },
-  amount : {
+    },
+    recieved: {
       type: Number,
       required: true,
-  }
-},
-{ timestamps: true}
+    },
+  createdAt: {
+      type: Date,
+      required: true,
+      default: new Date(getCurrentDate()),
+    },
+  },
+  { timestamps: { updatedAt: true, createdAt: false } }
 );
 
-const Transaction = mongoose.model("Transaction",transactionSchema)
+const Transaction = mongoose.model("Transaction", transactionSchema);
 
-export default Transaction
+export default Transaction;

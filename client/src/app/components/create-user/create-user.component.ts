@@ -22,7 +22,7 @@ export class CreateUserComponent implements OnInit {
     email: "",
     mobileNo: "",
     password: "",
-    type: UserType.NON_ADMIN,
+    type: UserType.EMP,
     name: "",
     address: "",
   }

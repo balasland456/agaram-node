@@ -1,7 +1,8 @@
 import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
+import User from "../models/user";
 import { IArticle } from "../types";
-import { createStartAndEndIndex } from "../utils";
+import { createStartAndEndIndex, getCurrentDate } from "../utils";
 
 export default class CreateArticle {
   // Create a new article
@@ -24,9 +25,10 @@ export default class CreateArticle {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       const getArticle: IArticle[] = await Article.find()
-        .sort("-updatedAt")
+        .sort("-createdAt")
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex)
+        .populate("assignedTo");
       return getArticle;
     } catch (error) {
       throw error;
@@ -41,15 +43,16 @@ export default class CreateArticle {
     page?: number,
     pageSize?: number
   ): Promise<IArticle[]> {
+
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       const search: IArticle[] = await Article.find({
         createdAt: {
-          $gt: sd,
-          $lt: ed,
+          $gte: getCurrentDate(sd),
+          $lte: getCurrentDate(ed),
         },
       })
-        .sort("-updatedAt")
+        .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
       return search;

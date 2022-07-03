@@ -18,7 +18,7 @@ export class ArticleService {
     );
   }
 
-  updateArticle(article: IArticleSave, id: string): Observable<ResponseDTO<IArticle>> {
+  updateArticle(article: IArticle, id: string): Observable<ResponseDTO<IArticle>> {
     return this._http.put<ResponseDTO<IArticle>>(
       `${environment.serverUrl}/article/update/${id}`,
       article,
@@ -44,6 +44,26 @@ export class ArticleService {
         params: {
           page: page,
           pageSize: pageSize,
+        },
+      }
+    );
+  }
+
+  searchArticle(
+    page: number,
+    pageSize: number,
+    sd: Date,
+    ed: Date
+  ): Observable<ResponseDTO<IArticle[]>> {
+    return this._http.get<ResponseDTO<IArticle[]>>(
+      `${environment.serverUrl}/article/search`,
+      {
+        withCredentials: true,
+        params: {
+          page: page,
+          pageSize: pageSize,
+          sd: sd.toString(),
+          ed: ed.toString(),
         },
       }
     );

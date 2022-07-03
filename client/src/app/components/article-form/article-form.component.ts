@@ -2,7 +2,9 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ArticleService } from 'src/app/services/article.service';
-import IArticle, { IArticleSave, Status } from 'src/app/shared/types';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import IArticle, { IArticleSave, IUser, Status } from 'src/app/shared/types';
 
 @Component({
   selector: 'app-article-form',
@@ -19,7 +21,7 @@ export class ArticleFormComponent implements OnInit {
 
   statusOptions = Object.keys(Status);
 
-  constructor(private _articleService: ArticleService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle}) {
+  constructor(private _authService: AuthService, private _articleService: ArticleService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle}) {
 
     if (this.data.status) {
       this.status = this.data.status;
@@ -30,12 +32,13 @@ export class ArticleFormComponent implements OnInit {
   }
 
   onSave(): void {
+    const user: IUser | null = this._authService.getLoggedInUser();
     const data: IArticleSave = {
       articleTypes: this.articleType,
       article: this.article,
       pages: this.pages,
       processType: this.processType,
-      assignedTo: "",
+      assignedTo: user?._id!,
       status: Status.ASSIGNED
     }
 

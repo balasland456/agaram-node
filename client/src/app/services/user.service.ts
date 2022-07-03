@@ -11,8 +11,24 @@ export class UserService {
   constructor(private _http: HttpClient) {}
 
   saveUser(user: IUser): Observable<ResponseDTO<IUser>> {
-    return this._http.post<ResponseDTO<IUser>>(`${environment.serverUrl}/user/add`, user, {
-      withCredentials: true,
-    });
+    return this._http.post<ResponseDTO<IUser>>(
+      `${environment.serverUrl}/user/add`,
+      user,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  getAllUsers(
+    page: number,
+    pageSize: number
+  ): Observable<ResponseDTO<IUser[]>> {
+    return this._http.get<ResponseDTO<IUser[]>>(
+      `${environment.serverUrl}/user/getAll`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

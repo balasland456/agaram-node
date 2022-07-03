@@ -13,7 +13,7 @@
               {{ column }}
             </th>
             <th>
-              <button mat-icon-button color="primary" (click)="openCreateUser()">
+              <button mat-icon-button color="primary" (click)="openCreateUser()" matTooltip="Add Transaction" matTooltipPosition="right"  >
                 <mat-icon>add</mat-icon>
               </button>
             </th>
@@ -22,7 +22,7 @@
         <tbody>
           <tr *ngFor="let data of dataSource; let i = index">
             <th scope="row">{{ i + 1 }}</th>
-            <td>{{ data.userId }}</td>
+            <td>{{ data.username }}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.address }}</td>
             <td>{{ data.employeeId }}</td>

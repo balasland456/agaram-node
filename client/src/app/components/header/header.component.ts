@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(private dialog: MatDialog, private _authService: AuthService) {
     this.isLoggedIn = this._authService.isUserLoggedIn();
     const user = this._authService.getLoggedInUser();
-    this.link = user?.type === UserType.NON_ADMIN ? "non-admin-dashboard" : "admin-dashboard";
+    this.link = user?.type === UserType.EMP ? "non-admin-dashboard" : "admin-dashboard";
   }
 
   ngOnInit(): void {

@@ -21,6 +21,8 @@ import { SideBarUserComponent } from './components/side-bar-user/side-bar-user.c
 import { LogoutComponent } from './components/logout/logout.component';
 import { ResponseInterceptorService } from './services/response-interceptor.service';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { TransactionDeleteComponent } from './components/transaction-delete/transaction-delete.component';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     ResetpasswordComponent,
     SideBarUserComponent,
     LogoutComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    TransactionDeleteComponent,
+    TransactionFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,11 +49,15 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptorService, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptorService,
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
