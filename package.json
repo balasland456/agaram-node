@@ -1,5 +1,4 @@
-{
-    "name": "agaram",
+{    "name": "agaram",
     "version": "1.0.0",
     "description": "Backend for agaram",
     "main": "server.ts",
@@ -33,5 +32,9 @@
         "mongoose": "^6.3.1",
         "multer": "^1.4.4",
         "read-excel-file": "^5.3.3"
+    },
+    "engines": {
+        "node": "16.14.0",
+        "npm": "8.5.3"
     }
 }
