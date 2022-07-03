@@ -17,6 +17,22 @@ export interface IUser {
   };
 }
 
+export interface IUserExcel {
+  email: string;
+  username: string;
+  password: string;
+  employeeId: string;
+  mobileNo: string;
+  type: UserType;
+  name: string;
+  address: string;
+  contactPerson: {
+    contactPersonName: string;
+    contactPersonMobileNo: string;
+    contactPersonEmail: string;
+  };
+}
+
 export interface IArticle {
   _id: string;
   articleTypes: string;
@@ -56,6 +72,12 @@ export enum UserType {
   EMP = "EMP",
   CLIENT = "CLIENT",
   SUP = "SUP",
+}
+
+export enum ModelType {
+  USER = "USER",
+  TRANSACTION = "TRANSACTION",
+  ARTICLE = "ARTICLE",
 }
 
 export interface ITokens {

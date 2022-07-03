@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Connection } from "mongoose";
+
+let conn: Connection;
 
 export default function initDB(dbUrl: string): void {
   mongoose.connect(dbUrl, (err) => {
@@ -6,6 +8,9 @@ export default function initDB(dbUrl: string): void {
       console.error(err);
       return;
     }
+    conn = mongoose.connection;
     console.log("Database connected");
   });
 }
+
+export { conn };
