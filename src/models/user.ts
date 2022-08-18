@@ -49,6 +49,10 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+    },
+    forgotPassword:{
+      type:Boolean,
+      default: false
     }
   },
   { timestamps: true }

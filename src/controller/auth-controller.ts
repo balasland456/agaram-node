@@ -13,6 +13,7 @@ export class AuthController {
 
     this.login = this.login.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
+    this.passwordResetRequest = this.passwordResetRequest.bind(this);
   }
 
   async logout(
@@ -59,7 +60,7 @@ export class AuthController {
 
       // check email
       const user = await this._authService.findUserByUsername(username);
-
+      
       // check password
       const isPasswordMatch = await this._authService.comparePassword(
         user.password,
@@ -134,6 +135,23 @@ export class AuthController {
         "Token generated successfully!",
         null
       );
+      return res.status(statusCode.OK).json(response);
+    } catch (error) {
+      console.error(error);
+      return next(error);
+    }
+  }
+
+  async passwordResetRequest(
+    req: Request,
+    res: Response<ResponseDTO<IUser>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<IUser>> | void> {
+    try {
+      const { email } = req.body;
+      const user = await this._authService.passwordResetRequest(email);
+      user.password = "HIDDEN";
+      const response = new ResponseDTO(statusCode.OK, true, user, null);
       return res.status(statusCode.OK).json(response);
     } catch (error) {
       console.error(error);

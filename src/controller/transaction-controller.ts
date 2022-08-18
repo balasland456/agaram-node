@@ -12,6 +12,7 @@ export default class TransactionController {
     this.searchtransaction = this.searchtransaction.bind(this);
     this.deletetransaction = this.deletetransaction.bind(this);
     this.updatetransaction = this.updatetransaction.bind(this);
+    this.exportdata = this.exportdata.bind(this);
   }
 
   async addtransaction(
@@ -74,7 +75,7 @@ export default class TransactionController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<ITransaction[]>> | void> {
     try {
-      const { sort, page, pageSize, sd, ed } = request.query;
+      const { sort, page, pageSize, sd, ed, forr } = request.query;
       const pageNumber: number | undefined = page ? +page : undefined;
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
@@ -83,8 +84,9 @@ export default class TransactionController {
         new Date(sd as string),
         new Date(ed as string),
         sort as string,
+        forr as string,
         pageNumber,
-        pageSizeNumber
+        pageSizeNumber        
       );
       const responseDTO = new ResponseDTO<ITransaction[]>(
         statusCode.OK,
@@ -147,6 +149,32 @@ export default class TransactionController {
       return response.status(statusCode.OK).json(responseDTO);
     } catch (error) {
       console.log(error);
+      return next(error);
+    }
+  }
+
+  async exportdata(
+    request: Request,
+    response: Response<Blob>,
+    next: NextFunction
+  ): Promise<Response<Blob> | void> {
+    try {      
+      const { sd, ed,filter,forr } = request.query;
+      const data = await this._transaction.exportdata(
+        new Date(sd as string),
+        new Date(ed as string),
+        filter as string,
+        forr as string
+      );
+      let filename = "Transaction";
+      response.set({
+        "Content-disposition": `attachment; filename=${filename}.xlsx`,
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      return data.xlsx.write(response).then(() => {
+        response.status(statusCode.OK).end();
+      });
+    } catch (error) {
       return next(error);
     }
   }

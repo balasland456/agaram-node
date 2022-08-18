@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleService } from 'src/app/services/article.service';
-import IArticle from 'src/app/shared/types';
+import IArticle, {FilterStatus} from 'src/app/shared/types';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 
@@ -13,6 +13,10 @@ import { ArticleFormComponent } from '../article-form/article-form.component';
 export class DashboardComponent implements OnInit {
   startDate: Date = new Date();
   endDate: Date = new Date();
+  searched:boolean = false;
+  statusOptions = Object.keys(FilterStatus);
+  status: FilterStatus = FilterStatus.ALL;
+  client:string = "";
   displayedColumns: string[] = [
     '#',
     'Client',
@@ -23,9 +27,9 @@ export class DashboardComponent implements OnInit {
     'Process Type',
     'Assigned To',
     'Status',
-    'Date',
-    'Created At',
-    'Updated At',
+    'Date Field',
+    'Created Date',
+    'Last Updated',
   ];
   dataSource: IArticle[] = [];
 
@@ -99,8 +103,9 @@ export class DashboardComponent implements OnInit {
 
   searchArticle(): void {
     this.loading = true;
-    this._articleService.searchArticle(1, 10, this.startDate, this.endDate).subscribe({
+    this._articleService.searchArticle(1, 10, this.startDate, this.endDate,this.status,this.client).subscribe({
       next: (data) => {
+        this.searched = true;
         this.loading = false;
         this.dataSource = data.data!;
       },
@@ -112,4 +117,20 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  exportDashboard():void{
+    this.loading = true;
+    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,this.client).subscribe((data:any)=>{
+      this.loading = false;
+      let url = window.URL.createObjectURL(data);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Dasboard.xlsx";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
+  }
 }

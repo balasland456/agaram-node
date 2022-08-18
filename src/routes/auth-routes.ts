@@ -11,6 +11,7 @@ const authController = new AuthController();
 router.post('/login', authController.login);
 router.get('/refresh', checkRefreshToken, authController.getAccessToken);
 router.get('/logout', auth, authController.logout);
+router.post('/passwordresetrequest', authController.passwordResetRequest);
 
 
 export { router as AuthRouter };

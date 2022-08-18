@@ -26,7 +26,7 @@
               {{ column }}
             </th>
             <th>
-              <button mat-icon-button color="primary">
+              <button mat-icon-button color="primary" (click)="openCreateArticle()">
                 <mat-icon>add</mat-icon>
               </button>
             </th>
@@ -42,15 +42,15 @@
             <td>{{ data.processType }}</td>
             <td>{{ data.assignedTo.username }}</td>
             <td>{{ data.status }}</td>
-            <td>aa</td>
+            <td>{{ data.datefield | date }}</td>
             <td>{{ data.createdAt }}</td>
             <td>{{ data.updatedAt }}</td>
             <td>
               <div class="d-flex">
-                <button mat-icon-button color="primary" matTooltip="edit">
+                <button mat-icon-button color="primary" matTooltip="edit" (click)="openUpdateArticle(data)">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="accent" matTooltip="delete">
+                <button mat-icon-button color="accent" matTooltip="delete" (click)="openDeleteArticle(data)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>

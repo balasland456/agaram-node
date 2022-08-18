@@ -10,6 +10,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { LoginGuardService } from './services/login-guard.service';
 import { IsAdminGuardService } from './services/is-admin-guard.service';
 import { IsNonAdminGuardService } from './services/is-non-admin-guard.service';
+import { AuthorizePasswordComponent } from './components/authorize-password/authorize-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
@@ -39,6 +40,11 @@ const routes: Routes = [
     component: ResetpasswordComponent,
     canActivate: [LoginGuardService, IsAdminGuardService],
   },
+  {
+    path: 'forgot-password-requests',
+    component: AuthorizePasswordComponent,
+    canActivate: [AuthGuardService, IsAdminGuardService],
+  }
 ];
 
 @NgModule({

@@ -2,7 +2,7 @@
   <mat-dialog-content>
     <form #createForm="ngForm">
       <div class="row">
-        <h4 class="text-left" style="color: #5bc9a1">Create User</h4>
+        <h4 class="text-left" style="color: #5bc9a1">{{(update?"Edit User":"Create User")}}</h4>
         <div class="col-12">
           <div class="row">
             <div class="col-12">
@@ -26,7 +26,7 @@
             <div>
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Enter Password</mat-label>
-                <input
+                <input [disabled]="update"
                   matInput
                   [(ngModel)]="formData.password"
                   name="password"
@@ -204,7 +204,9 @@
     </form>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="!createForm.valid">Save</button>
+    <button *ngIf="data.updateUser" mat-raised-button color="primary" (click)="updateUser()" [disabled]="!createForm.valid">Save</button>
+    
+    <button *ngIf="!data.updateUser" mat-raised-button color="primary" (click)="onSave()" [disabled]="!createForm.valid">Save</button>
     <button mat-raised-button color="warn" matDialogClose>Close</button>
   </mat-dialog-actions>
 </div>

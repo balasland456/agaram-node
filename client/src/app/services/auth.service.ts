@@ -30,4 +30,8 @@ export class AuthService {
   logout(): Observable<ResponseDTO<string>> {
     return this._http.get<ResponseDTO<string>>(`${environment.serverUrl}/auth/logout`, { withCredentials: true });
   }
+
+  passwordResetRequest(email: string): Observable<ResponseDTO<IUser>> {
+    return this._http.post<ResponseDTO<IUser>>(`${environment.serverUrl}/auth/passwordresetrequest`, { email }, { withCredentials: true });
+  }
 }

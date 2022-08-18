@@ -11,6 +11,10 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    datefield: {
+      type: Date,
+      required: true,
+    },
     pages: {
       type: Number,
       required: true,

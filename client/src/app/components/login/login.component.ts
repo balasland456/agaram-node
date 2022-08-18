@@ -32,7 +32,24 @@ export class LoginComponent implements OnInit {
     this.reset = !this.reset;
   }
 
-  forgetPassword() {}
+  forgetPassword() {
+    this._authService.passwordResetRequest(this.email).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this._snackBar.open('Reset password initiated successfully!', '', {
+          duration: 3000,
+        });
+        this.reset = !this.reset;
+      },
+      error: (error) => {
+        this._snackBar.open(error?.error?.error, '', {
+          duration: 3000,
+        });
+
+        this.loading = false;
+      },
+    });
+  }
   login(): void {
     this.loading = true;
     this._authService.login(this.username, this.password).subscribe({
@@ -49,8 +66,8 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/non-admin-dashboard']);
         }
       },
-      error: (error: Error) => {
-        this._snackBar.open(JSON.stringify(error), '', {
+      error: (error) => {
+        this._snackBar.open(error?.error?.error, '', {
           duration: 3000,
         });
 

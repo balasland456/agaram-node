@@ -1,3 +1,10 @@
+export interface IResetPassword{
+  password:string;
+  confirmPassword:string;
+  username:string;
+  _id?:string;
+}
+
 export interface IUser {
   _id?: string;
   email: string;
@@ -39,17 +46,21 @@ export default interface IArticle {
   assignedTo: IUser;
   client?: string;
   batch?: string;
+  datefield?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface IArticleSave {
+  client:string,
+  batch:string,
   articleTypes: string;
   article: string;
   pages: number;
   processType: string;
-  assignedTo: string;
-  status: Status;
+  assignedTo?: string;
+  status: Status,
+  datefield:Date
 }
 
 export enum Status {
@@ -117,4 +128,13 @@ declare global {
       user?: IUser;
     }
   }
+}
+
+export enum FilterStatus  {
+  ASSIGNED = "ASSIGNED",
+  UNASSIGNED = "UNASSIGNED",
+  COMPLETED = "COMPLETED",
+  CLOSED = "CLOSED",
+  REJECTED = "REJECTED",
+  ALL = "ALL"
 }

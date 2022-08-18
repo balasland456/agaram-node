@@ -1,13 +1,19 @@
-import { IUser, UserType } from "../types";
+import mongoose from 'mongoose';
+import { IUser, UserType, IResetPassword } from "../types";
 import User from "../models/user";
 import bcrypt from "bcrypt";
 import ValidatorError from "../exceptions/validator-error";
 import { createStartAndEndIndex } from "../utils";
-
+import { ExcelService } from "./excel-service";
+import excel from 'exceljs';
 export default class UserService {
+  private _excelService: ExcelService;
+  constructor() {
+    this._excelService = new ExcelService();
+  }
+
   async addUser(user: IUser): Promise<IUser> {
     try {
-      // validate user
       const retrievedUser = await User.findOne({
         $or: [
           {
@@ -33,11 +39,68 @@ export default class UserService {
       const userObj = new User(user);
       const saveduser = await userObj.save();
       return saveduser;
+         
+     
     } catch (error) {
       throw error;
     }
   }
+async updateUser(user: IUser,id:string): Promise<IUser> {
+    try {
+      // // validate user     
+      // const retrievedUser = await User.findOne({
+      //   // $and:[
+      //   //   {            
+      //       $and:[
+      //         {_id:{ $ne: new mongoose.Types.ObjectId(id) }},
+      //         {
+      //           $or: [
+      //             {
+      //               email: user.email,
+      //             },
+      //             {
+      //               username: user.username,
+      //             }
+      //           ]
+      //         }
+      //     ]
+            
+      //   //   },
+      //   //   {
+      //   //     $or: [
+      //   //       {
+      //   //         email: user.email,
+      //   //       },
+      //   //       {
+      //   //         username: user.username,
+      //   //       },
+      //   //     ]
+      //   //   }            
+      //   // ]         
+      // });
 
+      // if (retrievedUser) {
+      //   if (retrievedUser.username === user.username) {
+      //     throw new ValidatorError("Username is already in use");
+      //   }
+      //   if (retrievedUser.email === user.email) {
+      //     throw new ValidatorError("Email is already in use");
+      //   }
+      // }
+      const update = await User.findOneAndUpdate(
+        { _id: id },
+        user,
+        { runValidators: true }
+      );
+      if (!update) {
+        throw new ValidatorError("User not found");
+      }
+      const updated = await User.findOne({ _id: id });
+      return updated;     
+    } catch (error) {
+      throw error;
+    }
+  }
   async getallusers(
     sortParam: string,
     page?: number,
@@ -51,6 +114,113 @@ export default class UserService {
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
+      return getallusers;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getforgotpasswordlist(
+    sortParam: string,
+    page?: number,
+    pageSize?: number
+  ): Promise<IUser[]> {
+    try {
+      const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
+      const getallusers: IUser[] = await User.find({
+        forgotPassword: { $eq: true },
+      })
+        .sort("-createdAt")
+        .skip(startIndex)
+        .limit(endIndex);
+      return getallusers;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+  async resetPassword(user: IResetPassword): Promise<IUser> {
+    try {      
+      const objId = new mongoose.Types.ObjectId(user._id);
+      const retrievedUser = await User.findOne({
+        _id: objId
+      });
+      const hashedPassword = await bcrypt.hash(user.password, 6);
+      retrievedUser.password = hashedPassword;
+      retrievedUser.forgotPassword = false;
+      const saveduser = await retrievedUser.save();
+      return saveduser;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  async exportdata(): Promise<excel.Workbook> {
+    try {
+      const data: IUser[] = await User.find({
+        type: { $ne: UserType.ADMIN },
+      }).sort("-createdAt");
+      let columns:any[] = [
+        {
+          key:"username",
+          header:"Username"
+        },
+        {
+          key:"name",
+          header:"Name"
+        },
+        {
+          header:"Address",
+          key:"address"
+        },
+        {
+          header:"ID",
+          key:"employeeId"
+        },
+        {
+          header:"Mobile",
+          key:"mobileNo"
+        },
+        {
+          header:"Email",
+          key:"email"
+        },
+        {
+          header:"Contact Person",
+          key:"cname"
+        },
+        {
+          header:"Contact Person Mobile",
+          key:"cmobileNo"
+        },
+        {
+          header:"Contact Person Email",
+          key:"cemail"
+        },        
+      ];
+      let convertedData = data.map(function(row){
+        let rrow = JSON.parse(JSON.stringify(row));
+        rrow["cname"]=rrow.contactPerson.name;
+        rrow["cemail"]=rrow.contactPerson.email;
+        rrow["cmobileNo"]=rrow.contactPerson.mobileNo;
+        delete rrow.contactPerson;
+        return rrow;
+      })
+      let exportedData = await this._excelService.exportData(columns,convertedData);
+      return exportedData;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
+  async getNonAdmin(): Promise<IUser[]> {
+    try {      
+      const getallusers: IUser[] = await User.find({
+        type: { $ne: UserType.ADMIN },
+      })
+        .sort("username")
       return getallusers;
     } catch (error) {
       throw error;

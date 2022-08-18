@@ -30,4 +30,20 @@ export class AuthService {
       throw error;
     }
   }
+
+  async passwordResetRequest(email: string): Promise<IUser> {
+    try {
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        throw new ValidatorError("Email is invalid");
+      }
+      else{
+        user.forgotPassword = true;
+        const saveduser = await user.save();
+        return saveduser;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }

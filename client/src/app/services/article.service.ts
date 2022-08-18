@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import IArticle, { IArticleSave, ResponseDTO } from '../shared/types';
+import IArticle, { IArticleSave, ResponseDTO,FilterStatus } from '../shared/types';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,9 @@ export class ArticleService {
     page: number,
     pageSize: number,
     sd: Date,
-    ed: Date
+    ed: Date,
+    status: FilterStatus,
+    client: string
   ): Observable<ResponseDTO<IArticle[]>> {
     return this._http.get<ResponseDTO<IArticle[]>>(
       `${environment.serverUrl}/article/search`,
@@ -62,8 +64,50 @@ export class ArticleService {
         params: {
           page: page,
           pageSize: pageSize,
+          sd: (sd ? sd.toString():sd),
+          ed: (ed ? ed.toString():ed),
+          status: (status.toString()),
+          client: (client),
+        },
+      }
+    );
+  }
+
+  exportDashboard(
+    sd: Date,
+    ed: Date,
+    filter:boolean,
+    status: FilterStatus,
+    client: string
+    ):any {
+    return this._http.get(
+      `${environment.serverUrl}/article/export`,
+      {
+        withCredentials: true,        
+        responseType:"blob",
+        params: {
           sd: sd.toString(),
           ed: ed.toString(),
+          filter:filter,
+          status: (status.toString()),
+          client: (client),
+        },
+      }
+    );
+  }
+
+  getAllArticleById(
+    id: string,
+    page: number,
+    pageSize: number
+  ): Observable<ResponseDTO<IArticle[]>> {
+    return this._http.get<ResponseDTO<IArticle[]>>(
+      `${environment.serverUrl}/article/getallById?id=${id}`,
+      {
+        withCredentials: true,
+        params: {
+          page: page,
+          pageSize: pageSize,
         },
       }
     );

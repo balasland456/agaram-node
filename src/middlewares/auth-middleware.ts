@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 import UnAuthenticatedError from "../exceptions/unathenticated-error";
 import User from "../models/user";
-import { ITokenPayload, tokens } from "../types";
+import { ITokenPayload, tokens,statusCode } from "../types";
 
 export const auth = async (
   req: Request,
@@ -11,6 +11,12 @@ export const auth = async (
 ): Promise<void> => {
   try {
     const accessToken = req.cookies["access_token"];
+    const refresToken = req.cookies["access_token"];
+    if (!accessToken&&!refresToken) {
+      let error = new TokenExpiredError("Token not found",new Date()); 
+      error.name = statusCode.REFRESH_TOKEN_EXPIRED.toString();
+      throw error;
+    }
     if (!accessToken) {
       throw new UnAuthenticatedError("Token not found");
     }

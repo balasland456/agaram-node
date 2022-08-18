@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TransactionService } from 'src/app/services/transaction.service';
-import { ITransaction } from 'src/app/shared/types';
+import { ITransaction, UserType } from 'src/app/shared/types';
 import { TransactionDeleteComponent } from '../transaction-delete/transaction-delete.component';
 import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 
@@ -12,6 +12,14 @@ import { TransactionFormComponent } from '../transaction-form/transaction-form.c
 })
 export class TransactionsComponent implements OnInit {
   loading: boolean = false;
+  searched:boolean = false;
+  for:string = "ALL";
+  options = [
+    { key: "ALL", value: "ALL" },
+    { key: "EMP", value: UserType.EMP },
+    { key: "SUP", value: UserType.SUP },
+    { key: "CLIENT", value: UserType.CLIENT },
+  ]
 
   displayedColumns: string[] = [
     '#',
@@ -76,8 +84,9 @@ export class TransactionsComponent implements OnInit {
 
   searchTransaction(): void {
     this.loading = true;
-    this._transactionService.searchTransaction(1, 10, this.startDate, this.endDate).subscribe({
+    this._transactionService.searchTransaction(1, 10, this.startDate, this.endDate,this.for).subscribe({
       next: (data) => {
+        this.searched = true;
         this.loading = false;
         this.dataSource = data.data!;
       },
@@ -100,5 +109,20 @@ export class TransactionsComponent implements OnInit {
         this.getTransactions();
       }
     });
+  }
+  exportTransactions():void{
+    this.loading = true;
+    this._transactionService.exportTransactions(this.startDate, this.endDate,this.searched,this.for).subscribe((data:any)=>{
+      this.loading = false;
+      let url = window.URL.createObjectURL(data);
+      let a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = "Transactions.xlsx";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    })
   }
 }

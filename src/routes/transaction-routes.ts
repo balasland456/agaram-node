@@ -14,6 +14,6 @@ router.get("/getall", auth, transactionController.getalltransactions)
 router.get("/search", auth, transactionController.searchtransaction)
 router.delete("/delete/:_id", auth, transactionController.deletetransaction as unknown as RequestHandler);
 router.put("/update/:_id", auth,validator(transactionValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}), transactionController.updatetransaction as unknown as RequestHandler);
-
+router.get("/export", auth, transactionController.exportdata);
 
 export { router as TransactionRouter };

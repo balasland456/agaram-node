@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import CreateArticle from "../service/article-service";
-import { IArticle, ResponseDTO, statusCode } from "../types";
+import { FilterStatus, IArticle, ResponseDTO, statusCode } from "../types";
 
 export default class ArticleController {
   private _article: CreateArticle;
@@ -13,6 +13,7 @@ export default class ArticleController {
     this.deleteArticle = this.deleteArticle.bind(this);
     this.updateArticle = this.updateArticle.bind(this);
     this.searchArticle = this.searchArticle.bind(this);
+    this.exportdata = this.exportdata.bind(this);
   }
 
   async addArticle(
@@ -74,7 +75,7 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
     try {
-      const { sort, page, pageSize, sd, ed } = request.query;
+      const { client, status, page, pageSize, sd, ed } = request.query;
       const pageNumber: number | undefined = page ? +page : undefined;
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
@@ -82,7 +83,8 @@ export default class ArticleController {
       const searchedArticle = await this._article.searchArticle(
         new Date(sd as string),
         new Date(ed as string),
-        sort as string,
+        status as FilterStatus,
+        client as string,
         pageNumber,
         pageSizeNumber
       );
@@ -145,6 +147,33 @@ export default class ArticleController {
       return response.status(statusCode.OK).json(responseDTO);
     } catch (error) {
       console.log(error);
+      return next(error);
+    }
+  }
+
+  async exportdata(
+    request: Request,
+    response: Response<Blob>,
+    next: NextFunction
+  ): Promise<Response<Blob> | void> {
+    try {      
+      const { sd, ed,filter,status,client } = request.query;
+      const data = await this._article.exportdata(
+        new Date(sd as string),
+        new Date(ed as string),
+        filter as string,
+        status as FilterStatus,
+        client as string
+      );
+      let filename = "Articles";
+      response.set({
+        "Content-disposition": `attachment; filename=${filename}.xlsx`,
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      return data.xlsx.write(response).then(() => {
+        response.status(statusCode.OK).end();
+      });
+    } catch (error) {
       return next(error);
     }
   }

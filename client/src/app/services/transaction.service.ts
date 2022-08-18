@@ -46,7 +46,8 @@ export class TransactionService {
     page: number,
     pageSize: number,
     sd: Date,
-    ed: Date
+    ed: Date,
+    forr:string,
   ): Observable<ResponseDTO<ITransaction[]>> {
     return this._http.get<ResponseDTO<ITransaction[]>>(
       `${environment.serverUrl}/transaction/search`,
@@ -57,6 +58,7 @@ export class TransactionService {
           pageSize: pageSize,
           sd: sd.toString(),
           ed: ed.toString(),
+          forr:forr.toString(),
         },
       }
     );
@@ -68,4 +70,25 @@ export class TransactionService {
       { withCredentials: true }
     );
   }
+  exportTransactions(
+    sd: Date,
+    ed: Date,
+    filter:boolean,
+    forr:string,
+    ):any {
+    return this._http.get(
+      `${environment.serverUrl}/transaction/export`,
+      {
+        withCredentials: true,        
+        responseType:"blob",
+        params: {
+          sd: sd.toString(),
+          ed: ed.toString(),
+          filter:filter,
+          forr:forr
+        },
+      }
+    );
+  }
+
 }

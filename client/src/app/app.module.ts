@@ -23,7 +23,8 @@ import { ResponseInterceptorService } from './services/response-interceptor.serv
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { TransactionDeleteComponent } from './components/transaction-delete/transaction-delete.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
-
+import { AuthorizePasswordComponent } from './components/authorize-password/authorize-password.component';
+import { AuthorizePasswordResetComponent } from './components/authorize-password-reset/authorize-password-reset.componenet';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,8 @@ import { TransactionFormComponent } from './components/transaction-form/transact
     CreateUserComponent,
     TransactionDeleteComponent,
     TransactionFormComponent,
+    AuthorizePasswordComponent,
+    AuthorizePasswordResetComponent
   ],
   imports: [
     BrowserModule,

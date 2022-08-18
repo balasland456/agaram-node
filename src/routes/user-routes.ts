@@ -12,5 +12,10 @@ const router: Router = express.Router();
 
 router.post("/add", auth, validator(userValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}) , userController.adduser as unknown as RequestHandler);
 router.get("/getall", auth, userController.getallusers);
+router.get("/getforgotpasswordlist", userController.getforgotpasswordlist);
+router.post("/resetpassword", auth, userController.resetPassword as unknown as RequestHandler);
+router.get("/export", auth, userController.exportdata);
+router.get("/getNonAdmin", auth, userController.getNonAdmin);
+router.post("/update/:_id", auth, validator(userValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}) , userController.updateUser as unknown as RequestHandler);
 export { router as UserRoutes };
 
