@@ -19,7 +19,7 @@ export class ArticleFormComponent implements OnInit {
   pages: number = 0;
   processType: string = "";
   status: Status = Status.ASSIGNED;
-  assignedTo?:IUser = undefined;
+  assignedTo?:string = undefined;
   datefield:Date = new Date();
   statusOptions = Object.keys(Status);
   users : IUser[]|null = [];
@@ -35,8 +35,11 @@ export class ArticleFormComponent implements OnInit {
       this.article= this.data.article.article;
       this.pages = this.data.article.pages;
       this.processType= this.data.article.processType;
-      this.status= this.data.article.status;
-      this.assignedTo = this.data.article.assignedTo;
+      if(this.data.article.status)
+        this.status= Status[this.data.article.status];
+      if(this.data.article.assignedTo){
+        this.assignedTo = this.data.article.assignedTo._id;
+      }
     }
     
     
@@ -47,7 +50,7 @@ export class ArticleFormComponent implements OnInit {
         if(data.success){
           this.users = data.data;
           if(this.data.article.assignedTo){
-            this.assignedTo = this.data.article.assignedTo;
+            this.assignedTo = this.data.article.assignedTo._id;
           }
         }
       },
@@ -66,7 +69,7 @@ export class ArticleFormComponent implements OnInit {
       article: this.article,
       pages: this.pages,
       processType: this.processType,
-      assignedTo: this.assignedTo?._id,
+      assignedTo: this.assignedTo,
       status: Status.ASSIGNED,
       datefield:this.datefield
     }
@@ -86,20 +89,21 @@ export class ArticleFormComponent implements OnInit {
   }
 
   updateArticle(): void {
-    this.data.article.batch =  this.batch;
-    this.data.article.client =  this.client;
-    this.data.article.datefield =  this.datefield;
-    this.data.article.articleTypes =  this.articleType;
-    this.data.article.article =  this.article;
-    this.data.article.pages =  this.pages;
-    this.data.article.processType =  this.processType;
-    this.data.article.status =  this.status;
-    if(this.assignedTo)
-      this.data.article.assignedTo =  this.assignedTo;
+
+    const data: IArticleSave = {
+      client:this.client,
+      batch:this.batch,
+      articleTypes: this.articleType,
+      article: this.article,
+      pages: this.pages,
+      processType: this.processType,
+      assignedTo: this.assignedTo,
+      status: this.status,
+      datefield:this.datefield
+    }
     
-    this._articleService.updateArticle(this.data.article, this.data.article._id!).subscribe({
+    this._articleService.updateArticle(data, this.data.article._id!).subscribe({
       next: (data) => {
-        console.log(data);
         this._snackBar.open('Article updated', "", {
           duration: 3000
         });

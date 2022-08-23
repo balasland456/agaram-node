@@ -89,4 +89,10 @@ export class UserService {
       }
     );
   }
+  deleteUser(id: string): Observable<ResponseDTO<IUser>> {
+    return this._http.delete<ResponseDTO<IUser>>(
+      `${environment.serverUrl}/user/delete/${id}`,
+      { withCredentials: true }
+    );
+  }
 }

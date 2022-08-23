@@ -6,6 +6,7 @@ import ValidatorError from "../exceptions/validator-error";
 import { createStartAndEndIndex } from "../utils";
 import { ExcelService } from "./excel-service";
 import excel from 'exceljs';
+import Article from '../models/article';
 export default class UserService {
   private _excelService: ExcelService;
   constructor() {
@@ -222,6 +223,22 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
       })
         .sort("username")
       return getallusers;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteUser(userId: string): Promise<IUser> {
+    try {
+      const checkArticles = await Article.findOne({assignedTo:userId});
+      if(checkArticles){
+        throw new ValidatorError("Unable to delete, User is mapped with articles");
+      }
+      const deleted = await User.findOneAndDelete({ _id: userId });
+      if (!deleted) {
+        throw new ValidatorError("user not found");
+      }
+      return deleted;
     } catch (error) {
       throw error;
     }

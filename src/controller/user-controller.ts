@@ -15,6 +15,7 @@ export default class UserController {
     this.exportdata = this.exportdata.bind(this);
     this.getNonAdmin = this.getNonAdmin.bind(this);
     this.updateUser = this.updateUser.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
   }
 
   async adduser(
@@ -177,6 +178,26 @@ export default class UserController {
         statusCode.OK,
         true,
         alluser,
+        null
+      );
+      return response.status(statusCode.OK).json(responseDTO);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async deleteUser(
+    request: Request<IUser>,
+    response: Response<ResponseDTO<IUser>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<IUser>> | void> {
+    try {
+      const { _id } = request.params;
+      const deleteUser = await this._user.deleteUser(_id);
+      const responseDTO = new ResponseDTO<IUser>(
+        statusCode.OK,
+        true,
+        deleteUser,
         null
       );
       return response.status(statusCode.OK).json(responseDTO);

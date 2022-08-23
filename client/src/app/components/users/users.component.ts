@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { IUser, UserType } from 'src/app/shared/types';
 import { CreateUserComponent } from '../create-user/create-user.component';
+import { UserDeleteComponent } from '../user-delete/user-delete.component';
 
 @Component({
   selector: 'app-users',
@@ -91,7 +92,18 @@ export class UsersComponent implements OnInit {
       }
     });
   }
-  deleteUser(editdata:IUser): void {
+  deleteUser(data:IUser): void {
+    const matDialogRef = this._dialog.open(UserDeleteComponent, {
+      data: {
+        _id: data._id,
+      },
+    });
+
+    matDialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.getAllUsers();
+      }
+    });
   }
   exportUsers():void{
     this.loading = true;

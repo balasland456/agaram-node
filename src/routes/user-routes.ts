@@ -17,5 +17,6 @@ router.post("/resetpassword", auth, userController.resetPassword as unknown as R
 router.get("/export", auth, userController.exportdata);
 router.get("/getNonAdmin", auth, userController.getNonAdmin);
 router.post("/update/:_id", auth, validator(userValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}) , userController.updateUser as unknown as RequestHandler);
+router.delete("/delete/:_id", auth, userController.deleteUser as unknown as RequestHandler);
 export { router as UserRoutes };
 

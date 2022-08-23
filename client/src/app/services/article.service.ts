@@ -18,7 +18,7 @@ export class ArticleService {
     );
   }
 
-  updateArticle(article: IArticle, id: string): Observable<ResponseDTO<IArticle>> {
+  updateArticle(article: IArticleSave, id: string): Observable<ResponseDTO<IArticle>> {
     return this._http.put<ResponseDTO<IArticle>>(
       `${environment.serverUrl}/article/update/${id}`,
       article,
