@@ -35,13 +35,15 @@ export class ArticleService {
 
   getAllArticle(
     page: number,
-    pageSize: number
+    pageSize: number,
+    userWise:boolean = false,
   ): Observable<ResponseDTO<IArticle[]>> {
     return this._http.get<ResponseDTO<IArticle[]>>(
       `${environment.serverUrl}/article/getall`,
       {
         withCredentials: true,
         params: {
+          userWise:userWise,
           page: page,
           pageSize: pageSize,
         },
@@ -55,19 +57,23 @@ export class ArticleService {
     sd: Date,
     ed: Date,
     status: FilterStatus,
-    client: string
+    client: string,
+    userWise:boolean = false,
+    batch:string,
   ): Observable<ResponseDTO<IArticle[]>> {
     return this._http.get<ResponseDTO<IArticle[]>>(
       `${environment.serverUrl}/article/search`,
       {
         withCredentials: true,
         params: {
+          userWise:userWise,
           page: page,
           pageSize: pageSize,
           sd: (sd ? sd.toString():sd),
           ed: (ed ? ed.toString():ed),
           status: (status.toString()),
           client: (client),
+          batch:(batch)
         },
       }
     );
@@ -78,7 +84,9 @@ export class ArticleService {
     ed: Date,
     filter:boolean,
     status: FilterStatus,
-    client: string
+    client: string,
+    userWise:boolean = false,
+    batch:string,
     ):any {
     return this._http.get(
       `${environment.serverUrl}/article/export`,
@@ -86,30 +94,31 @@ export class ArticleService {
         withCredentials: true,        
         responseType:"blob",
         params: {
+          userWise:userWise,
           sd: sd.toString(),
           ed: ed.toString(),
           filter:filter,
           status: (status.toString()),
           client: (client),
+          batch:(batch)
         },
       }
     );
   }
 
-  getAllArticleById(
-    id: string,
-    page: number,
-    pageSize: number
-  ): Observable<ResponseDTO<IArticle[]>> {
-    return this._http.get<ResponseDTO<IArticle[]>>(
-      `${environment.serverUrl}/article/getallById?id=${id}`,
-      {
-        withCredentials: true,
-        params: {
-          page: page,
-          pageSize: pageSize,
-        },
-      }
-    );
-  }
+  // getAllArticleByUser(
+  //   page: number,
+  //   pageSize: number
+  // ): Observable<ResponseDTO<IArticle[]>> {
+  //   return this._http.get<ResponseDTO<IArticle[]>>(
+  //     `${environment.serverUrl}/article/getAllArticleByUser`,
+  //     {
+  //       withCredentials: true,
+  //       params: {
+  //         page: page,
+  //         pageSize: pageSize,
+  //       },
+  //     }
+  //   );
+  // }
 }

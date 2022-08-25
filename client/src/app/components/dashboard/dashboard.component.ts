@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
 
   searchArticle(): void {
     this.loading = true;
-    this._articleService.searchArticle(1, 10, this.startDate, this.endDate,this.status,this.client).subscribe({
+    this._articleService.searchArticle(1, 10, this.startDate, this.endDate,this.status,this.client,false,"").subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit {
 
   exportDashboard():void{
     this.loading = true;
-    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,this.client).subscribe((data:any)=>{
+    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,this.client,false,"").subscribe((data:any)=>{
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');

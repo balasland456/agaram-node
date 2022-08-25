@@ -47,7 +47,11 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
     try {
-      const { sort, page, pageSize } = request.query;
+      const { sort, page, pageSize,userWise } = request.query;
+      let userId:string |undefined= "0";
+      if(userWise && userWise=="true"){
+        userId = request.user?._id;
+      }
       const pageNumber: number | undefined = page ? +page : undefined;
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
@@ -55,7 +59,8 @@ export default class ArticleController {
       const allArticle = await this._article.getAllArticle(
         sort as string,
         pageNumber,
-        pageSizeNumber
+        pageSizeNumber,
+        userId
       );
       const responseDTO = new ResponseDTO<IArticle[]>(
         statusCode.OK,
@@ -75,7 +80,15 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
     try {
-      const { client, status, page, pageSize, sd, ed } = request.query;
+      const { client, status, page, pageSize, sd, ed,userWise,batch } = request.query;
+
+      let userId:string = "0";
+      if(userWise && userWise=="true"){
+        if(request.user?._id){
+        userId = request.user?._id;
+        }
+      }
+
       const pageNumber: number | undefined = page ? +page : undefined;
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
@@ -84,9 +97,11 @@ export default class ArticleController {
         new Date(sd as string),
         new Date(ed as string),
         status as FilterStatus,
-        client as string,
+        client as string,        
+        batch as string,
+        userId,
         pageNumber,
-        pageSizeNumber
+        pageSizeNumber,
       );
       const responseDTO = new ResponseDTO<IArticle[]>(
         statusCode.OK,
@@ -157,13 +172,22 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<Blob> | void> {
     try {      
-      const { sd, ed,filter,status,client } = request.query;
+      const { sd, ed,filter,status,client,userWise,batch } = request.query;
+      let userId:string = "0";
+      if(userWise && userWise=="true"){
+        if(request.user?._id){
+        userId = request.user?._id;
+        }
+      }
+      
       const data = await this._article.exportdata(
         new Date(sd as string),
         new Date(ed as string),
         filter as string,
         status as FilterStatus,
-        client as string
+        client as string,
+        batch as string,
+        userId
       );
       let filename = "Articles";
       response.set({

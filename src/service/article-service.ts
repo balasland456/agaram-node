@@ -25,11 +25,16 @@ export default class CreateArticle {
   async getAllArticle(
     sortParam: string,
     page?: number,
-    pageSize?: number
+    pageSize?: number,
+    userId?:string,
   ): Promise<IArticle[]> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
-      const getArticle: IArticle[] = await Article.find()
+      let where = {};
+      if(userId && userId !="0"){
+        where = {assignedTo:userId};
+      }
+      const getArticle: IArticle[] = await Article.find(where)
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex)
@@ -46,18 +51,27 @@ export default class CreateArticle {
     ed: Date,
     status:FilterStatus,
     client:string,    
+    batch:string,
+    userId:string,
     page?: number,
-    pageSize?: number
+    pageSize?: number,    
   ): Promise<IArticle[]> {
 
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       let where : any = {};
+
+      if(userId && userId !="0" ){
+        where = {assignedTo:userId};
+      }      
       if(status!=FilterStatus.ALL){
         where.status = {$eq:status};
       }
       if(client){
         where.client = {$regex: '.*' + client + '.*'};
+      }
+      if(batch){
+        where.batch = {$regex: '.*' + batch + '.*'};
       }
       const search: IArticle[] = await Article.find({
         createdAt: {
@@ -112,17 +126,20 @@ export default class CreateArticle {
     ed: Date,
     filter:string,
     status:FilterStatus,
-    client:string
+    client:string,
+    batch:string,    
+    userId?:string,
   ): Promise<excel.Workbook> {
     try {      
       let where :any= {};
+      if(userId && userId !="0"){
+        where = {assignedTo:userId};
+      }
       if(filter =="true"){
-        where = {
-          createdAt: {
+        where.createdAt= {
             $gte: getCurrentDate(sd),
             $lte: getCurrentDate(ed),
-          },
-        }
+          }
 
         if(status!=FilterStatus.ALL){
           where.status = {$eq:status};
@@ -130,10 +147,14 @@ export default class CreateArticle {
         if(client){
           where.client = {$regex: '.*' + client + '.*'};
         }
+        if(batch){
+          where.batch = {$regex: '.*' + batch + '.*'};
+        }
       }
+      
       const data: IArticle[] = await Article.find(where).sort("-createdAt");
-
-      let columns:any[] = [
+      
+      let columns:any[] = [        
         {
           key:"client",
           header:"Client"
@@ -198,7 +219,10 @@ export default class CreateArticle {
             return value;
           }
         },
-      ];         
+      ];    
+      if(userId && userId !="0"){
+        columns.splice(0,1);
+      }     
       let exportedData = await this._excelService.exportData(columns,data);
       return exportedData;
     } catch (error) {

@@ -23,7 +23,9 @@ export class ArticleFormComponent implements OnInit {
   datefield:Date = new Date();
   statusOptions = Object.keys(Status);
   users : IUser[]|null = [];
-  constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle}) {
+  fromNonAdmin:boolean=false;
+  constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle,fromNonAdmin:boolean}) {
+    this.fromNonAdmin = this.data.fromNonAdmin;
     if(this.data.updateArticle) {
       if(this.data.article.batch)
         this.batch = this.data.article.batch;
@@ -34,12 +36,15 @@ export class ArticleFormComponent implements OnInit {
       this.articleType= this.data.article.articleTypes;
       this.article= this.data.article.article;
       this.pages = this.data.article.pages;
-      this.processType= this.data.article.processType;
-      if(this.data.article.status)
-        this.status= Status[this.data.article.status];
-      if(this.data.article.assignedTo){
-        this.assignedTo = this.data.article.assignedTo._id;
-      }
+      this.processType= this.data.article.processType;     
+      if(!this.fromNonAdmin){
+        if(this.data.article.status)
+          this.status= Status[this.data.article.status];
+        if(this.data.article.assignedTo){
+          this.assignedTo = this.data.article.assignedTo._id;
+        }
+      }     
+      
     }
     
     
@@ -61,9 +66,8 @@ export class ArticleFormComponent implements OnInit {
   }
 
   onSave(): void {
-    const user: IUser | null = this._authService.getLoggedInUser();
+    const loggedUser: IUser | null = this._authService.getLoggedInUser();
     const data: IArticleSave = {
-      client:this.client,
       batch:this.batch,
       articleTypes: this.articleType,
       article: this.article,
@@ -73,7 +77,9 @@ export class ArticleFormComponent implements OnInit {
       status: Status.ASSIGNED,
       datefield:this.datefield
     }
-
+    if(this.fromNonAdmin){
+      data.assignedTo = loggedUser?._id;
+    }
     this._articleService.saveArticle(data).subscribe({
       next: (data) => {
         console.log(data);

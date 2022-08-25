@@ -20,6 +20,7 @@ export class ExcelService {
     }
   }
   async exportData(columns:any[],rows:any[]):Promise<excel.Workbook>{
+    columns = [...[{key:"",header:"#"}],...columns]
     let workbook = new excel.Workbook();
     workbook.creator = "";
     workbook.created = new Date();
@@ -33,8 +34,11 @@ export class ExcelService {
       worksheet.addRow({...rrr});
     });
     worksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-      row.eachCell(function (cell, colNumber) {
-          if(columns[colNumber-1]&& columns[colNumber-1].formatter){
+      row.eachCell({ includeEmpty: true },function (cell, colNumber) {
+          if(rowNumber > 1 && colNumber == 1){ 
+            row.getCell(colNumber).value = rowNumber-1;
+          }
+          else if(columns[colNumber-1]&& columns[colNumber-1].formatter){
             row.getCell(colNumber).value = columns[colNumber-1].formatter.call(null,row.getCell(colNumber).value,rowNumber);
           }
           row.getCell(colNumber).border = {

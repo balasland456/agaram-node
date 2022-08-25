@@ -52,7 +52,7 @@ export default interface IArticle {
 }
 
 export interface IArticleSave {
-  client:string,
+  client?:string,
   batch:string,
   articleTypes: string;
   article: string;

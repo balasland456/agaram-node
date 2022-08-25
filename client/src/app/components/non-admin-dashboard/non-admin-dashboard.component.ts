@@ -17,7 +17,7 @@ export class NonAdminDashboardComponent implements OnInit {
   searched:boolean = false;
   statusOptions = Object.keys(FilterStatus);
   status: FilterStatus = FilterStatus.ALL;
-  client:string = "";
+  batch:string = "";
   displayedColumns: string[] = [
     '#',
     'Batch',
@@ -47,7 +47,7 @@ export class NonAdminDashboardComponent implements OnInit {
     const userLoggedin: IUser | null = this._authService.getLoggedInUser();
     this.loading = true;
     if(userLoggedin) {
-      this._articleService.getAllArticle(1, 10).subscribe({
+      this._articleService.getAllArticle(1, 10,true).subscribe({
         next: (data) => {
           this.loading = false;
           this.dataSource = data.data as IArticle[];
@@ -109,7 +109,7 @@ export class NonAdminDashboardComponent implements OnInit {
 
   searchArticle(): void {
     this.loading = true;
-    this._articleService.searchArticle(1, 10, this.startDate, this.endDate,this.status,this.client).subscribe({
+    this._articleService.searchArticle(1, 10, this.startDate, this.endDate,this.status,"",true,this.batch).subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
@@ -126,7 +126,7 @@ export class NonAdminDashboardComponent implements OnInit {
 
   exportDashboard():void{
     this.loading = true;
-    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,this.client).subscribe((data:any)=>{
+    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,"",true,this.batch).subscribe((data:any)=>{
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');
