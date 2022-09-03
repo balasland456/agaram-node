@@ -10,7 +10,7 @@ import { IUser, UserType, Status } from 'src/app/shared/types';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
-
+  userTypeOptions = Object.keys(UserType);
   formData: IUser = {
     username: "",
     employeeId: "",

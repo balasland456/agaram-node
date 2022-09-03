@@ -1,3 +1,4 @@
+import { ProcessType,InputType,Complexity } from './../../shared/types';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,13 +18,21 @@ export class ArticleFormComponent implements OnInit {
   articleType: string = "";
   article: string = "";
   pages: number = 0;
-  processType: string = "";
+  processType: ProcessType = ProcessType.OCR;
   status: Status = Status.ASSIGNED;
   assignedTo?:string = undefined;
-  datefield:Date = new Date();
+  closedDate:Date = new Date();
+  completedDate:Date = new Date();  
   statusOptions = Object.keys(Status);
   users : IUser[]|null = [];
   fromNonAdmin:boolean=false;
+  inputType:InputType=InputType.PDFPRINTED;
+  complexity:Complexity=Complexity.SIMPLE;
+  mathCount:string="";
+  imagesCount:string="";
+  inputTypeOptions = Object.keys(InputType);
+  complexityOptions=Object.keys(Complexity);
+  processTypeOptions= Object.keys(ProcessType);
   constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle,fromNonAdmin:boolean}) {
     this.fromNonAdmin = this.data.fromNonAdmin;
     if(this.data.updateArticle) {
@@ -31,11 +40,18 @@ export class ArticleFormComponent implements OnInit {
         this.batch = this.data.article.batch;
       if(this.data.article.client)
         this.client = this.data.article.client;
-      if(this.data.article.datefield)
-        this.datefield = this.data.article.datefield;
-      this.articleType= this.data.article.articleTypes;
+      if(this.data.article.completedDate)
+        this.completedDate = this.data.article.completedDate;      
+      if(this.data.article.closedDate)
+        this.closedDate = this.data.article.closedDate;
+      //this.articleType= this.data.article.articleTypes;
       this.article= this.data.article.article;
       this.pages = this.data.article.pages;
+      this.inputType = this.data.article.inputType;
+      this.complexity = this.data.article.complexity;
+      this.mathCount = this.data.article.mathCount;
+      this.imagesCount = this.data.article.imagesCount;
+
       this.processType= this.data.article.processType;     
       if(!this.fromNonAdmin){
         if(this.data.article.status)
@@ -69,13 +85,18 @@ export class ArticleFormComponent implements OnInit {
     const loggedUser: IUser | null = this._authService.getLoggedInUser();
     const data: IArticleSave = {
       batch:this.batch,
-      articleTypes: this.articleType,
+      //articleTypes: this.articleType,
       article: this.article,
       pages: this.pages,
       processType: this.processType,
       assignedTo: this.assignedTo,
-      status: Status.ASSIGNED,
-      datefield:this.datefield
+      status: Status.ASSIGNED,      
+      complexity:this.complexity,
+      inputType:this.inputType,
+      mathCount:this.mathCount,
+      imagesCount:this.imagesCount,
+      closedDate:this.closedDate,
+      completedDate:this.completedDate,
     }
     if(this.fromNonAdmin){
       data.assignedTo = loggedUser?._id;
@@ -99,13 +120,18 @@ export class ArticleFormComponent implements OnInit {
     const data: IArticleSave = {
       client:this.client,
       batch:this.batch,
-      articleTypes: this.articleType,
+      //articleTypes: this.articleType,
       article: this.article,
       pages: this.pages,
       processType: this.processType,
       assignedTo: this.assignedTo,
       status: this.status,
-      datefield:this.datefield
+      complexity:this.complexity,
+      inputType:this.inputType,
+      mathCount:this.mathCount,
+      imagesCount:this.imagesCount,
+      closedDate:this.closedDate,
+      completedDate:this.completedDate,
     }
     
     this._articleService.updateArticle(data, this.data.article._id!).subscribe({

@@ -38,29 +38,39 @@ export interface ITransaction {
 
 export default interface IArticle {
   _id?: string;
-  articleTypes: string;
+  //articleTypes: string;
   article: string;
   pages: number;
-  processType: string;
+  inputType:InputType;
+  complexity:Complexity;
+  processType: ProcessType;
+  mathCount:string;
+  imagesCount:string;
   status: Status;
   assignedTo: IUser;
   client?: string;
   batch?: string;
-  datefield?: Date;
+  closedDate?:Date;
+  completedDate?:Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface IArticleSave {
   client?:string,
-  batch:string,
-  articleTypes: string;
-  article: string;
-  pages: number;
-  processType: string;
-  assignedTo?: string;
+  batch:string,   
+  //articleTypes: string,
+  article: string,
+  pages: number,
+  inputType:InputType,
+  complexity:Complexity,
+  processType: ProcessType,
+  mathCount:string,
+  imagesCount:string,
+  assignedTo?: string,
   status: Status,
-  datefield:Date
+  closedDate?:Date,
+  completedDate?:Date
 }
 
 export enum Status {
@@ -137,4 +147,22 @@ export enum FilterStatus  {
   CLOSED = "CLOSED",
   REJECTED = "REJECTED",
   ALL = "ALL"
+}
+export enum InputType {
+  PDFPRINTED= "PDF PRINTED",
+  PDFSCANNED="PDF SCANNED"
+}
+export enum Complexity{
+  SIMPLE="SIMPLE", 
+  MEDIUM="MEDIUM", 
+  COMPLEX="COMPLEX",
+  HCOMPLEX="HCOMPLEX"
+}
+export enum ProcessType{
+  OCR="OCR",
+  CODING="CODING",
+  IMAGES="IMAGES",
+  REF="REF",
+  QA="QA",
+  E2E="E2E"
 }

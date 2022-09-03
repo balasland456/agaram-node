@@ -64,15 +64,20 @@
           <tr *ngFor="let data of dataSource; let i = index">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{ data.batch }}</td>
-            <td>{{ data.articleTypes }}</td>
+            <!-- <td>{{ data.articleTypes }}</td> -->
             <td>{{ data.article }}</td>
             <td>{{ data.pages }}</td>
+            <td>{{ data.inputType }}</td>
+            <td>{{ data.complexity }}</td>
             <td>{{ data.processType }}</td>
-            <td>{{ data.assignedTo.username }}</td>
+            <td>{{ data.mathCount }}</td>
+            <td>{{ data.imagesCount }}</td>
+            <td>{{ data.assignedTo?.username }}</td>
             <td>{{ data.status }}</td>
-            <td>{{ data.datefield | date }}</td>
-            <td>{{ data.createdAt | date}}</td>
-            <td>{{ data.updatedAt | date}}</td>
+            <td>{{ data.createdAt| date }}</td>
+            <td>{{ data.updatedAt| date }}</td>
+            <td>{{ data.closedDate| date }}</td>
+            <td>{{ data.completedDate| date }}</td>
             <td>
               <div class="d-flex">
                 <button mat-icon-button color="primary" matTooltip="edit" (click)="openUpdateArticle(data)">

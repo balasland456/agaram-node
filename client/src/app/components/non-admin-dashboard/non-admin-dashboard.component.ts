@@ -20,16 +20,21 @@ export class NonAdminDashboardComponent implements OnInit {
   batch:string = "";
   displayedColumns: string[] = [
     '#',
-    'Batch',
-    'Article Type',
-    'Article',
+    'Batch/JOB ID',
+    // 'Article Type',
+    'Article/ISBN',
     'Pages',
+    'Input Type',
+    'Complexity',
     'Process Type',
+    'Math Count',
+    'Images Count',
     'Assigned To',
-    'Status',
-    'Date Field',
+    'Status',    
     'Created Date',
     'Last Updated',
+    'Completed Date',
+    'Closed Date',
   ];
   dataSource: IArticle[] = [];
 
