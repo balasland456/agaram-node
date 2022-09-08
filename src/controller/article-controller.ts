@@ -27,16 +27,28 @@ export default class ArticleController {
       request.user?._id;
 
       // Saving the article
-      const savedArticle = await this._article.addArticle(article);
-
-      const responseDTO = new ResponseDTO<IArticle>(
-        statusCode.CREATED,
-        true,
-        savedArticle,
-        null
-      );
-
+      
+      let bln = await this._article.validateArticle(article);
+      if(!bln){
+        const responseDTO = new ResponseDTO<IArticle>(
+          statusCode.CREATED,
+          false,
+          null,
+          "Article is already exists"
+        );
+        return response.status(statusCode.CREATED).json(responseDTO);
+      }
+      else{
+        const savedArticle = await this._article.addArticle(article);
+        const responseDTO = new ResponseDTO<IArticle>(
+          statusCode.CREATED,
+          true,
+          savedArticle,
+          null
+        );
       return response.status(statusCode.CREATED).json(responseDTO);
+      }
+      
     } catch (error) {
       return next(error);
     }

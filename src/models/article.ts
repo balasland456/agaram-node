@@ -72,6 +72,13 @@ const articleSchema = new mongoose.Schema(
     completedDate: {
       type: Date,
     },
+    createdBy:{
+      type: String,
+      ref: "User"
+    },
+    IsCreatedByMe:{
+      type:Boolean
+    },
   },
   { timestamps: { updatedAt: true, createdAt: false } }
 );

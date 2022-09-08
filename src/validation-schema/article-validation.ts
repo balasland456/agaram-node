@@ -28,15 +28,15 @@ export const articleValidatorSchema: ValidatorObject[] = [
 //     notBlank: "Date should not be blank",
 //   },
 // },
- {
-    key: "articleTypes",
-    type: ValidatorTypes.String,
-    validators: [FunctionTypes.required, FunctionTypes.notBlank],
-    messages: {
-      required: "Article Type is required",
-      notBlank: "Article Type should not be blank",
-    },
- },
+//  {
+//     key: "articleTypes",
+//     type: ValidatorTypes.String,
+//     validators: [FunctionTypes.required, FunctionTypes.notBlank],
+//     messages: {
+//       required: "Article Type is required",
+//       notBlank: "Article Type should not be blank",
+//     },
+//  },
  {
     key: "article",
     type: ValidatorTypes.String,

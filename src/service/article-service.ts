@@ -11,9 +11,21 @@ export default class CreateArticle {
     this._excelService = new ExcelService();
   }
   // Create a new article
+  async validateArticle(article: IArticle): Promise<boolean> {
+    const findlst = await Article.find({
+      client:article.client,
+      processType:article.processType,
+      assignedTo:article.assignedTo,
+      article:article.article
+    });
+    if(findlst && findlst.length>0){
+      return false;
+    }
+    return true;
+  }
   async addArticle(article: IArticle): Promise<IArticle> {
     try {
-      const articleObj = new Article(article);
+      const articleObj = new Article(article);      
       const savedArticle = await articleObj.save();
       return savedArticle;
     } catch (error) {

@@ -48,12 +48,15 @@ export default interface IArticle {
   imagesCount:string;
   status: Status;
   assignedTo: IUser;
+  IsCreatedByMe:boolean;
+  createdBy:IUser;
   client?: string;
   batch?: string;
   closedDate?:Date;
   completedDate?:Date;
   createdAt?: Date;
   updatedAt?: Date;
+  
 }
 
 export interface IArticleSave {
@@ -70,7 +73,9 @@ export interface IArticleSave {
   assignedTo?: string,
   status: Status,
   closedDate?:Date,
-  completedDate?:Date
+  completedDate?:Date,
+  IsCreatedByMe?:boolean,
+  createdBy?:string
 }
 
 export enum Status {
@@ -149,8 +154,8 @@ export enum FilterStatus  {
   ALL = "ALL"
 }
 export enum InputType {
-  PDFPRINTED= "PDF PRINTED",
-  PDFSCANNED="PDF SCANNED"
+  "PDF PRINTED"= "PDF PRINTED",
+  "PDF SCANNED"="PDF SCANNED"
 }
 export enum Complexity{
   SIMPLE="SIMPLE", 

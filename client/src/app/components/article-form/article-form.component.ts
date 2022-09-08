@@ -21,21 +21,29 @@ export class ArticleFormComponent implements OnInit {
   processType: ProcessType = ProcessType.OCR;
   status: Status = Status.ASSIGNED;
   assignedTo?:string = undefined;
-  closedDate:Date = new Date();
-  completedDate:Date = new Date();  
+  closedDate?:Date = undefined;
+  completedDate?:Date = undefined;
   statusOptions = Object.keys(Status);
   users : IUser[]|null = [];
   fromNonAdmin:boolean=false;
-  inputType:InputType=InputType.PDFPRINTED;
+  inputType:InputType=InputType["PDF SCANNED"];
   complexity:Complexity=Complexity.SIMPLE;
   mathCount:string="";
   imagesCount:string="";
   inputTypeOptions = Object.keys(InputType);
   complexityOptions=Object.keys(Complexity);
   processTypeOptions= Object.keys(ProcessType);
+  IsCreatedByMe:boolean=false;
+  blnUpdateArticle:boolean =false;
   constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle,fromNonAdmin:boolean}) {
     this.fromNonAdmin = this.data.fromNonAdmin;
+    
+    
+    
     if(this.data.updateArticle) {
+      if(this.data.article.IsCreatedByMe)
+        this.IsCreatedByMe = this.data.article.IsCreatedByMe;
+      this.blnUpdateArticle = true;
       if(this.data.article.batch)
         this.batch = this.data.article.batch;
       if(this.data.article.client)
@@ -47,12 +55,12 @@ export class ArticleFormComponent implements OnInit {
       //this.articleType= this.data.article.articleTypes;
       this.article= this.data.article.article;
       this.pages = this.data.article.pages;
-      this.inputType = this.data.article.inputType;
-      this.complexity = this.data.article.complexity;
+      this.inputType = InputType[this.data.article.inputType];
+      this.complexity = Complexity[this.data.article.complexity];
       this.mathCount = this.data.article.mathCount;
       this.imagesCount = this.data.article.imagesCount;
 
-      this.processType= this.data.article.processType;     
+      this.processType= ProcessType[this.data.article.processType];     
       if(!this.fromNonAdmin){
         if(this.data.article.status)
           this.status= Status[this.data.article.status];
@@ -70,7 +78,7 @@ export class ArticleFormComponent implements OnInit {
       next: (data) => {        
         if(data.success){
           this.users = data.data;
-          if(this.data.article.assignedTo){
+          if(this.data.article && this.data.article.assignedTo){
             this.assignedTo = this.data.article.assignedTo._id;
           }
         }
@@ -98,16 +106,34 @@ export class ArticleFormComponent implements OnInit {
       closedDate:this.closedDate,
       completedDate:this.completedDate,
     }
+    data.createdBy = loggedUser?._id;
     if(this.fromNonAdmin){
       data.assignedTo = loggedUser?._id;
+      data.IsCreatedByMe = true;
+    }
+    else{
+      data.IsCreatedByMe = false;
     }
     this._articleService.saveArticle(data).subscribe({
       next: (data) => {
-        console.log(data);
-        this._snackBar.open('Article saved', "", {
-          duration: 3000
-        });
-        this._dialog.close(true);
+        if(data.success){
+          this._snackBar.open('Article saved', "", {
+            duration: 3000
+          });
+          this._dialog.close(true);
+        }
+        else{
+          let error = data.error;
+          if(typeof error == "string")
+            this._snackBar.open(error, "", {
+              duration: 3000
+            });
+          else if (Array.isArray(error)){
+            this._snackBar.open(error.join(", "), "", {
+              duration: 3000
+            });
+          }
+        }
       },
       error: (err) => {
         console.error(err);
