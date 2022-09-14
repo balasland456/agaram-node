@@ -39,7 +39,9 @@ export class ExcelService {
             row.getCell(colNumber).value = rowNumber-1;
           }
           else if(columns[colNumber-1]&& columns[colNumber-1].formatter){
-            row.getCell(colNumber).value = columns[colNumber-1].formatter.call(null,row.getCell(colNumber).value,rowNumber);
+            let vv = columns[colNumber-1].formatter.call(null,row.getCell(colNumber).value,rowNumber);
+            console.log(vv);
+            row.getCell(colNumber).value = vv;
           }
           row.getCell(colNumber).border = {
               top: { style: 'thin' },

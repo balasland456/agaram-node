@@ -17,5 +17,5 @@ router.get("/search", auth, articleController.searchArticle);
 router.delete("/delete/:_id", auth, articleController.deleteArticle as unknown as RequestHandler);
 router.put("/update/:_id", auth, validator(articleValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}), articleController.updateArticle as unknown as RequestHandler);
 router.get("/export", auth, articleController.exportdata);
-
+router.post("/import", auth, articleController.importArticle as unknown as RequestHandler);
 export { router as ArticleRouter };

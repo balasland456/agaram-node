@@ -1,3 +1,4 @@
+import { IUser } from './../types';
 import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
 import User from "../models/user";
@@ -16,9 +17,14 @@ export default class CreateArticle {
       client:article.client,
       processType:article.processType,
       assignedTo:article.assignedTo,
-      article:article.article
+      article:article.article,
+      _id:{$ne:article._id}
     });
+    
     if(findlst && findlst.length>0){
+      if(findlst[0]._id == article._id){
+        return true;
+      }
       return false;
     }
     return true;
@@ -164,7 +170,7 @@ export default class CreateArticle {
         }
       }
       
-      const data: IArticle[] = await Article.find(where).sort("-createdAt");
+      const data: any[] = await Article.find(where).populate({path:"assignedTo"}).sort("-createdAt");
       
       let columns:any[] = [        
         {
@@ -173,14 +179,10 @@ export default class CreateArticle {
         },
         {
           key:"batch",
-          header:"Batch"
-        },
+          header:"Batch/JOB ID"
+        },        
         {
-          header:"Article Type",
-          key:"articleTypes",         
-        },
-        {
-          header:"article",
+          header:"Article/ISBN",
           key:"article"
         },
         {
@@ -188,12 +190,41 @@ export default class CreateArticle {
           key:"pages"
         },
         {
+          header:"Input Type",
+          key:"inputType"
+        },
+        {
+          header:"Complexity",
+          key:"complexity"
+        },
+        {
           header:"Process Type",
           key:"processType"
         },
         {
+          header:"Math Count",
+          key:"mathCount"
+        },
+        {
+          header:"Images Count",
+          key:"imagesCount"
+        },        
+        {
           header:"Assigned To",
-          key:"assignedTo"
+          key:"assignedTo",
+          formatter: function(value:string,rowNum:number){
+            if(rowNum>1){
+              let usr:any = value;
+              if(typeof usr=="string"){
+                usr=JSON.parse(usr);
+              }
+              if(usr){
+                return usr.employeeId;
+              }                
+              return "";
+            }
+            return value;
+          }
         },
         {
           header:"Status",
@@ -215,9 +246,42 @@ export default class CreateArticle {
             return value;
           }
         },
+        
         {
           header:"Last Updated",
           key:"updatedAt",
+          formatter: function(value:string,rowNum:number){
+            if(rowNum>1){
+              if(value){
+                let dd = value.split("T")[0];
+                let date : Date = new Date(dd)
+                if(date.toString() !== "Invalid Date"){
+                  return date;
+                }              
+              }
+            }
+            return value;
+          }
+        },
+        {
+          header:"Completed Date",
+          key:"completedDate",
+          formatter: function(value:string,rowNum:number){
+            if(rowNum>1){
+              if(value){
+                let dd = value.split("T")[0];
+                let date : Date = new Date(dd)
+                if(date.toString() !== "Invalid Date"){
+                  return date;
+                }              
+              }
+            }
+            return value;
+          }
+        },
+        {
+          header:"Closed Date",
+          key:"closedDate",
           formatter: function(value:string,rowNum:number){
             if(rowNum>1){
               if(value){
@@ -237,6 +301,24 @@ export default class CreateArticle {
       }     
       let exportedData = await this._excelService.exportData(columns,data);
       return exportedData;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getArticleByUniqueFields(article: IArticle): Promise<IArticle|null> {
+    try {
+      const findlst = await Article.find({
+        client:article.client,
+        processType:article.processType,
+        assignedTo:article.assignedTo,
+        article:article.article,
+        _id:{$ne:article._id}
+      });
+      if(findlst && findlst.length>0){
+        return findlst[0];
+      }
+      return null;
     } catch (error) {
       throw error;
     }

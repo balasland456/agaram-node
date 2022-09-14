@@ -4,6 +4,7 @@ import { ArticleService } from 'src/app/services/article.service';
 import IArticle, {FilterStatus} from 'src/app/shared/types';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
+import { ArticleImportComponent } from '../article-import/article-import.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -137,5 +138,16 @@ export class DashboardComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     })
+  }
+  importDashboard():void{
+    const matDialogRef = this._matDialog.open(ArticleImportComponent, {
+      data: {},
+    });
+
+    matDialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.getArticles();
+      }
+    });
   }
 }

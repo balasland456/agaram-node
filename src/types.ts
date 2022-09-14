@@ -42,14 +42,22 @@ export interface IUserExcel {
 
 export interface IArticle {
   _id: string;
-  articleTypes: string;
-  article: string;  
-  pages: number;
-  processType: string;
-  status: Status;
-  assignedTo: string;
+  //articleTypes: string;
+  article: string,
+  pages: number,
+  inputType:InputType,
+  complexity:Complexity,
+  processType: ProcessType,
+  mathCount:string,
+  imagesCount:string,
   client: string;
   batch: string;
+  assignedTo:string;
+  status: Status,
+  closedDate?:Date,
+  completedDate?:Date,
+  IsCreatedByMe?:boolean,
+  createdBy?:string
   datefield: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -148,4 +156,22 @@ export enum FilterStatus  {
   CLOSED = "CLOSED",
   REJECTED = "REJECTED",
   ALL = "ALL"
+}
+export enum InputType {
+  "PDF PRINTED"= "PDF PRINTED",
+  "PDF SCANNED"="PDF SCANNED"
+}
+export enum Complexity{
+  SIMPLE="SIMPLE", 
+  MEDIUM="MEDIUM", 
+  COMPLEX="COMPLEX",
+  HCOMPLEX="HCOMPLEX"
+}
+export enum ProcessType{
+  OCR="OCR",
+  CODING="CODING",
+  IMAGES="IMAGES",
+  REF="REF",
+  QA="QA",
+  E2E="E2E"
 }

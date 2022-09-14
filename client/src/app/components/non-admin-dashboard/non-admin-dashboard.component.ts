@@ -5,6 +5,7 @@ import IArticle, {FilterStatus,IUser} from 'src/app/shared/types';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { ArticleImportComponent } from '../article-import/article-import.component';
 
 @Component({
   selector: 'app-non-admin-dashboard',
@@ -143,5 +144,16 @@ export class NonAdminDashboardComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     })
+  }
+  importDashboard():void{
+    const matDialogRef = this._matDialog.open(ArticleImportComponent, {
+      data: {},
+    });
+
+    matDialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.getArticles();
+      }
+    });
   }
 }

@@ -112,6 +112,7 @@ export class ArticleFormComponent implements OnInit {
       data.IsCreatedByMe = true;
     }
     else{
+      data.client = this.client;
       data.IsCreatedByMe = false;
     }
     this._articleService.saveArticle(data).subscribe({

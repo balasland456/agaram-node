@@ -121,4 +121,11 @@ export class ArticleService {
   //     }
   //   );
   // }
+  importArticle(articles: IArticleSave[]): Observable<ResponseDTO<IArticle>> {
+    return this._http.post<ResponseDTO<IArticle>>(
+      `${environment.serverUrl}/article/import`,
+      articles,
+      { withCredentials: true }
+    );
+  }
 }
