@@ -235,14 +235,15 @@ export default class ArticleController {
   ): Promise<Response<ResponseDTO<IArticle>> | void> {
     try {
       const articles: IArticle[] = request.body;
-      request.user?._id;
       // Saving the article
       articles.forEach(async article => {
         let userId = await this._user.getByEmpId(article.assignedTo);
         if(userId){
           article = {...article,...{"assignedTo": userId._id}};
         }
-       
+        else{
+          article = {...article,...{"assignedTo":request.user?._id}}
+        }
         const alreadyExistArticle:any = await this._article.getArticleByUniqueFields(article);        
         
         if(alreadyExistArticle) {

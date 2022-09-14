@@ -52,7 +52,7 @@ export interface IArticle {
   imagesCount:string,
   client: string;
   batch: string;
-  assignedTo:string;
+  assignedTo?:string;
   status: Status,
   closedDate?:Date,
   completedDate?:Date,

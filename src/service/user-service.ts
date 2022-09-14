@@ -243,7 +243,7 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
       throw error;
     }
   }
-  async getByEmpId(empId: string): Promise<IUser|null> {
+  async getByEmpId(empId?: string): Promise<IUser|null> {
     try {
       const finduser = await User.find({employeeId:empId});
       console.log(finduser);
