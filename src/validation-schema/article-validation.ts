@@ -57,15 +57,6 @@ export const articleValidatorSchema: ValidatorObject[] = [
     },
  },
  {
-    key: "article",
-    type: ValidatorTypes.String,
-    validators: [FunctionTypes.required, FunctionTypes.notBlank],
-    messages: {
-      required: "article is required",
-      notBlank: "article should not be blank",
-    },
- },
- {
     key: "status",
     type: ValidatorTypes.String,
     validators: [FunctionTypes.required, FunctionTypes.notBlank],

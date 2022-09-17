@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import IArticle, { IArticleSave, IUser, Status } from 'src/app/shared/types';
 import * as XLSX from 'xlsx';
-
 @Component({
   selector: 'app-article-import-form',
   templateUrl: './article-import.component.html',
@@ -47,7 +46,14 @@ export class ArticleImportComponent implements OnInit {
     }
     if(typeof str =="string"){
       let arr = str.split("-");
-      return new Date(arr[2]+"-"+arr[1]+"-"+arr[0]);
+      let datte = new Date(arr[2]+"-"+arr[1]+"-"+arr[0]);
+      if(!(datte instanceof Date)){
+        this._snackBar.open('Date is not in proper format', "", {
+          duration: 3000
+        });
+        this.jsonData=[];
+      }
+      return datte;
     }
     return undefined;
   }
@@ -89,11 +95,91 @@ export class ArticleImportComponent implements OnInit {
           if(readData){          
             let arrData = readData[Object.keys(readData)[0]];
             for(let loop=0;loop<arrData.length;loop++){
-              debugger;
-              if(isNaN(arrData[loop]["Pages"])){
-                this._snackBar.open('Pages is numeric field', "", {
+              if(!arrData[loop]["Article/ISBN"]){
+                this._snackBar.open('Article/ISBN  is required in row '+(loop+1), "", {
                   duration: 3000
                 });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(!arrData[loop]["Process Type"]){
+                this._snackBar.open('Process Type is required in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(!arrData[loop]["Input Type"]){
+                this._snackBar.open('Input Type is required in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(!arrData[loop]["Complexity"]){
+                this._snackBar.open('Complexity is required in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(!arrData[loop]["Pages"]){
+                this._snackBar.open('Pages is required in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(!arrData[loop]["Math Count"]){
+                this._snackBar.open('Math Count is required in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(!arrData[loop]["Images Count"]){
+                this._snackBar.open('Images Count is required  in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(isNaN(arrData[loop]["Pages"])){
+                this._snackBar.open('Pages is numeric field in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(Object.keys(InputType).indexOf(arrData[loop]["Input Type"])==-1){
+                this._snackBar.open('Invalid process type in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(Object.keys(Complexity).indexOf(arrData[loop]["Complexity"])==-1){
+                this._snackBar.open('Invalid process type in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(Object.keys(ProcessType).indexOf(arrData[loop]["Process Type"])==-1){
+                this._snackBar.open('Invalid process type in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
                 this.jsonData=[];
                 break;
               }
