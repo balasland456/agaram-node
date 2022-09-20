@@ -33,9 +33,9 @@ export class DashboardComponent implements OnInit {
     'Assigned To',
     'Status',    
     'Created Date',
-    'Last Updated',
+    // 'Last Updated',
     'Completed Date',
-    'Closed Date',
+    // 'Closed Date',
   ];
   dataSource: IArticle[] = [];
 

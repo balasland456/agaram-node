@@ -154,20 +154,21 @@ export enum FilterStatus  {
   ALL = "ALL"
 }
 export enum InputType {
-  "PDF PRINTED"= "PDF PRINTED",
-  "PDF SCANNED"="PDF SCANNED"
+  "PRINTED PDF"= "PRINTED PDF",
+  "SCANNED PDF"="SCANNED PDF"
 }
 export enum Complexity{
   SIMPLE="SIMPLE", 
   MEDIUM="MEDIUM", 
   COMPLEX="COMPLEX",
-  HCOMPLEX="HCOMPLEX"
+  "HEAVY-COMPLEX"="HEAVY-COMPLEX"
 }
 export enum ProcessType{
   OCR="OCR",
+  "EPUB"="EPUB",
   CODING="CODING",
   IMAGES="IMAGES",
-  REF="REF",
-  QA="QA",
-  E2E="E2E"
+  "REFERENCE"="REFERENCE",
+  "QUALITY ASURENCE"="QUALITY ASURENCE",
+  "END TO END"="END TO END"
 }

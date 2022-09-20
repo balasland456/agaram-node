@@ -22,19 +22,19 @@ const articleSchema = new mongoose.Schema(
     inputType: {
       type: String,
       required: true,
-      enum: ["PDF PRINTED", "PDF SCANNED"],
-      default: "PDF PRINTED"
+      enum: ["PRINTED PDF", "SCANNED PDF"],
+      default: "PRINTED PDF"
     },
     complexity: {
       type: String,
       required: true,
-      enum: ["SIMPLE", "MEDIUM", "COMPLEX", "HCOMPLEX"],
+      enum: ["SIMPLE", "MEDIUM", "COMPLEX", "HEAVY-COMPLEX"],
       default: "SIMPLE"
     },
     processType: {
       type: String,
       required: true,
-      enum: ["OCR", "CODING", "IMAGES", "REF", "QA","E2E"],
+      enum: ["OCR","EPUB", "CODING", "IMAGES", "REFERENCE", "QUALITY ASURENCE","END TO END"],
       default: "OCR"
     },
     mathCount: {

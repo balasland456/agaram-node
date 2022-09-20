@@ -32,10 +32,10 @@ export class NonAdminDashboardComponent implements OnInit {
     'Images Count',
     'Assigned To',
     'Status',    
-    'Created Date',
-    'Last Updated',
+    'Received Date',
+    //'Last Updated',
     'Completed Date',
-    'Closed Date',
+    //'Closed Date',
   ];
   dataSource: IArticle[] = [];
 

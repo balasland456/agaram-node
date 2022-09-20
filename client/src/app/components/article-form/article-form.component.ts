@@ -26,7 +26,7 @@ export class ArticleFormComponent implements OnInit {
   statusOptions = Object.keys(Status);
   users : IUser[]|null = [];
   fromNonAdmin:boolean=false;
-  inputType:InputType=InputType["PDF SCANNED"];
+  inputType:InputType=InputType["SCANNED PDF"];
   complexity:Complexity=Complexity.SIMPLE;
   mathCount:string="";
   imagesCount:string="";
