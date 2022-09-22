@@ -1,12 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
-
+@font-face {
+  font-family: 'Raleway';
+  src: url('./assets/1Ptug8zYS_SKggPNyC0ITw.woff2');
+}
+:root{
+  --bs-body-font-family:'Raleway', sans-serif;
+}
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  // font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+*{
+  font-family: 'Raleway', sans-serif;
 }
 
 body {
@@ -33,8 +42,9 @@ body {
   /* rtl:remove */
   left: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  padding: 70px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  background: #FC6604 !important;
 }
 
 @media (max-width: 767.98px) {
@@ -46,7 +56,7 @@ body {
 .sidebar-sticky {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 70px);
   padding-top: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
@@ -54,7 +64,10 @@ body {
 
 .sidebar .nav-link {
   font-weight: 500;
-  color: #333;
+  color: #fff;
+  border-bottom: 1px solid #E24C11;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .sidebar .nav-link .feather {
@@ -62,8 +75,8 @@ body {
   color: #727272;
 }
 
-.sidebar .nav-link.active {
-  color: #2470dc;
+.sidebar .nav-link.active,.sidebar .nav-link:hover {
+  background: #E24C11;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -81,11 +94,14 @@ body {
  */
 
 .navbar-brand {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  font-size: 1rem;
-  background-color: rgba(0, 0, 0, 0.25);
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  font-size: 1.5rem;
+  background-color: #fff;
+  color:#04319C !important;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
+  font-weight: 800;
+  text-align: center;
 }
 
 .navbar .navbar-toggler {
@@ -130,4 +146,42 @@ body {
 }
 .bad {
   color: #bd2102;
+}
+header.bg-dark{
+  background: #04319C !important;
+  min-height: 70px;
+}
+.page-heading {
+  text-align: center;
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+.page-heading:after {
+  position: absolute;
+  left: 50%;
+  width: 150px;
+  height: 2px;
+  content: '';
+  border-radius: 5px;
+  background: #E24C11;
+  bottom: 0;
+  margin-left: -75px;
+}
+@media only screen and (max-width: 767px) {
+  .navbar-nav{
+    padding-right: 70px;
+  }
+}
+
+.navbar-nav .nav-link{
+  display: inline-block;
+  color:#fff;
+  font-weight: bold;
+}
+.userinfo mat-icon{
+  font-size: 28px;
 }

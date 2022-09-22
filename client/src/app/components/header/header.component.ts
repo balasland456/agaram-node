@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserType } from 'src/app/shared/types';
+import { UserType, IUser } from 'src/app/shared/types';
 import { LogoutComponent } from '../logout/logout.component';
 
 @Component({
@@ -15,11 +15,11 @@ export class HeaderComponent implements OnInit {
 
   isLoginUrl: boolean = false;
   link: string = "";
-
+  user?:IUser|null=null;
   constructor(private dialog: MatDialog, private _authService: AuthService) {
     this.isLoggedIn = this._authService.isUserLoggedIn();
-    const user = this._authService.getLoggedInUser();
-    this.link = user?.type === UserType.EMP ? "non-admin-dashboard" : "admin-dashboard";
+    this.user = this._authService.getLoggedInUser();
+    this.link = this.user?.type === UserType.EMP ? "non-admin-dashboard" : "admin-dashboard";
   }
 
   ngOnInit(): void {
