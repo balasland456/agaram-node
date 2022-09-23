@@ -247,22 +247,22 @@ export default class CreateArticle {
           }
         },
         
-        {
-          header:"Last Updated",
-          key:"updatedAt",
-          formatter: function(value:string,rowNum:number){
-            if(rowNum>1){
-              if(value){
-                let dd = value.split("T")[0];
-                let date : Date = new Date(dd)
-                if(date.toString() !== "Invalid Date"){
-                  return date;
-                }              
-              }
-            }
-            return value;
-          }
-        },
+        // {
+        //   header:"Last Updated",
+        //   key:"updatedAt",
+        //   formatter: function(value:string,rowNum:number){
+        //     if(rowNum>1){
+        //       if(value){
+        //         let dd = value.split("T")[0];
+        //         let date : Date = new Date(dd)
+        //         if(date.toString() !== "Invalid Date"){
+        //           return date;
+        //         }              
+        //       }
+        //     }
+        //     return value;
+        //   }
+        // },
         {
           header:"Completed Date",
           key:"completedDate",
@@ -279,22 +279,22 @@ export default class CreateArticle {
             return value;
           }
         },
-        {
-          header:"Closed Date",
-          key:"closedDate",
-          formatter: function(value:string,rowNum:number){
-            if(rowNum>1){
-              if(value){
-                let dd = value.split("T")[0];
-                let date : Date = new Date(dd)
-                if(date.toString() !== "Invalid Date"){
-                  return date;
-                }              
-              }
-            }
-            return value;
-          }
-        },
+        // {
+        //   header:"Closed Date",
+        //   key:"closedDate",
+        //   formatter: function(value:string,rowNum:number){
+        //     if(rowNum>1){
+        //       if(value){
+        //         let dd = value.split("T")[0];
+        //         let date : Date = new Date(dd)
+        //         if(date.toString() !== "Invalid Date"){
+        //           return date;
+        //         }              
+        //       }
+        //     }
+        //     return value;
+        //   }
+        // },
       ];    
       if(userId && userId !="0"){
         columns.splice(0,1);

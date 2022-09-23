@@ -70,7 +70,7 @@ export class ArticleImportComponent implements OnInit {
       inputType:obj["Input Type"],
       mathCount:obj["Math Count"],
       imagesCount:obj["Images Count"],
-      closedDate:this.convertDate(obj["Closed Date"]),
+      // closedDate:this.convertDate(obj["Closed Date"]),
       completedDate:this.convertDate(obj["Completed Date"]),
     };
     return returnObj;
@@ -160,7 +160,7 @@ export class ArticleImportComponent implements OnInit {
                 break;
               }
               if(Object.keys(InputType).indexOf(arrData[loop]["Input Type"])==-1){
-                this._snackBar.open('Invalid process type in row '+(loop+1), "", {
+                this._snackBar.open('Invalid input type ('+arrData[loop]["Input Type"]+') in row '+(loop+1), "", {
                   duration: 3000
                 });
                 ev.target.value="";
@@ -168,7 +168,7 @@ export class ArticleImportComponent implements OnInit {
                 break;
               }
               if(Object.keys(Complexity).indexOf(arrData[loop]["Complexity"])==-1){
-                this._snackBar.open('Invalid process type in row '+(loop+1), "", {
+                this._snackBar.open('Invalid complexity ('+arrData[loop]["Complexity"]+') in row '+(loop+1), "", {
                   duration: 3000
                 });
                 ev.target.value="";
@@ -176,7 +176,7 @@ export class ArticleImportComponent implements OnInit {
                 break;
               }
               if(Object.keys(ProcessType).indexOf(arrData[loop]["Process Type"])==-1){
-                this._snackBar.open('Invalid process type in row '+(loop+1), "", {
+                this._snackBar.open('Invalid process type ('+arrData[loop]["Process Type"]+') in row '+(loop+1), "", {
                   duration: 3000
                 });
                 ev.target.value="";
