@@ -1,4 +1,4 @@
-import { IResetPassword } from 'src/app/shared/types';
+import { IResetPassword, PagedData } from 'src/app/shared/types';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgModule } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -40,8 +40,8 @@ export class UserService {
   getAllUsers(
     page: number,
     pageSize: number
-  ): Observable<ResponseDTO<IUser[]>> {
-    return this._http.get<ResponseDTO<IUser[]>>(
+  ): Observable<ResponseDTO<PagedData<IUser>>> {
+    return this._http.get<ResponseDTO<PagedData<IUser>>>(
       `${environment.serverUrl}/user/getAll`,
       {
         withCredentials: true,

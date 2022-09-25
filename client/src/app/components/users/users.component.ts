@@ -1,7 +1,8 @@
+import { PageEvent } from '@angular/material/paginator';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
-import { IUser, UserType } from 'src/app/shared/types';
+import { IUser, UserType,PagedData } from 'src/app/shared/types';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { UserDeleteComponent } from '../user-delete/user-delete.component';
 
@@ -12,6 +13,9 @@ import { UserDeleteComponent } from '../user-delete/user-delete.component';
 })
 export class UsersComponent implements OnInit {
   loading: boolean = false;
+  totalRows:number=0;
+  page:number = 1;
+  pageSize:number=10;
   displayedColumns: string[] = [
     '#',
     'Username',
@@ -36,10 +40,12 @@ export class UsersComponent implements OnInit {
 
   getAllUsers(): void {
     this.loading = true;
-    this._userService.getAllUsers(1, 10).subscribe({
+    this._userService.getAllUsers(this.page, this.pageSize).subscribe({
       next: (data) => {
         this.loading = false;
-        this.dataSource = data.data!;
+        const resdata = data.data as PagedData<IUser>;
+        this.dataSource = resdata.data as IUser[];
+        this.totalRows = resdata.totalRows;
       },
       error: (err) => {
         this.loading = false;
@@ -131,5 +137,10 @@ export class UsersComponent implements OnInit {
     //     console.error(err);
     //   }
     // })
+  }
+  onPageChange(e:PageEvent):void{
+    this.page = e.pageIndex+1;
+    this.pageSize = e.pageSize;
+    this.getAllUsers();
   }
 }

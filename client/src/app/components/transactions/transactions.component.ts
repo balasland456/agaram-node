@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { TransactionService } from 'src/app/services/transaction.service';
-import { ITransaction, UserType } from 'src/app/shared/types';
+import { ITransaction, PagedData, UserType } from 'src/app/shared/types';
 import { TransactionDeleteComponent } from '../transaction-delete/transaction-delete.component';
 import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 
@@ -14,6 +15,9 @@ export class TransactionsComponent implements OnInit {
   loading: boolean = false;
   searched:boolean = false;
   for:string = "ALL";
+  totalRows:number=0;
+  page:number = 1;
+  pageSize:number=10;
   options = [
     { key: "ALL", value: "ALL" },
     { key: "EMP", value: UserType.EMP },
@@ -40,10 +44,12 @@ export class TransactionsComponent implements OnInit {
 
   getTransactions(): void {
     this.loading = true;
-    this._transactionService.getAllTransactions(1, 10).subscribe({
+    this._transactionService.getAllTransactions(this.page, this.pageSize).subscribe({
       next: (data) => {
         this.loading = false;
-        this.dataSource = data.data!;
+        const resdata = data.data as PagedData<ITransaction>;
+        this.dataSource = resdata.data!;
+        this.totalRows = resdata.totalRows;
       },
       error: (err) => {
         this.loading = false;
@@ -84,11 +90,13 @@ export class TransactionsComponent implements OnInit {
 
   searchTransaction(): void {
     this.loading = true;
-    this._transactionService.searchTransaction(1, 10, this.startDate, this.endDate,this.for).subscribe({
+    this._transactionService.searchTransaction(this.page, this.pageSize, this.startDate, this.endDate,this.for).subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
-        this.dataSource = data.data!;
+        const resdata = data.data as PagedData<ITransaction>;
+        this.dataSource = resdata.data!;
+        this.totalRows = resdata.totalRows;
       },
       error: (err) => {
         this.loading = false;
@@ -124,5 +132,13 @@ export class TransactionsComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     })
+  }
+  onPageChange(e:PageEvent):void{
+    this.page = e.pageIndex+1;
+    this.pageSize = e.pageSize;
+    if(this.searched)
+      this.searchTransaction();
+    else
+      this.getTransactions();
   }
 }

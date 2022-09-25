@@ -172,3 +172,8 @@ export enum ProcessType{
   "QUALITY ASURENCE"="QUALITY ASURENCE",
   "END TO END"="END TO END"
 }
+
+export interface PagedData<T>{
+  data:T[],
+  totalRows:number
+}

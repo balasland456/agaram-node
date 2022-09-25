@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IUser, UserType, IResetPassword } from "../types";
+import { IUser, UserType, IResetPassword, PagedData } from "../types";
 import User from "../models/user";
 import bcrypt from "bcrypt";
 import ValidatorError from "../exceptions/validator-error";
@@ -106,7 +106,7 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
     sortParam: string,
     page?: number,
     pageSize?: number
-  ): Promise<IUser[]> {
+  ): Promise<PagedData<IUser>> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       const getallusers: IUser[] = await User.find({
@@ -115,7 +115,13 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
-      return getallusers;
+        const rdata :PagedData<IUser>={
+          data : getallusers,
+          totalRows:await User.countDocuments({
+            type: { $ne: UserType.ADMIN },
+          })
+        };     
+      return rdata;
     } catch (error) {
       throw error;
     }

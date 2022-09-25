@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ITransaction, ResponseDTO } from '../shared/types';
+import { ITransaction, PagedData, ResponseDTO } from '../shared/types';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +29,8 @@ export class TransactionService {
   getAllTransactions(
     page: number,
     pageSize: number
-  ): Observable<ResponseDTO<ITransaction[]>> {
-    return this._http.get<ResponseDTO<ITransaction[]>>(
+  ): Observable<ResponseDTO<PagedData<ITransaction>>> {
+    return this._http.get<ResponseDTO<PagedData<ITransaction>>>(
       `${environment.serverUrl}/transaction/getall`,
       {
         params: {
@@ -48,8 +48,8 @@ export class TransactionService {
     sd: Date,
     ed: Date,
     forr:string,
-  ): Observable<ResponseDTO<ITransaction[]>> {
-    return this._http.get<ResponseDTO<ITransaction[]>>(
+  ): Observable<ResponseDTO<PagedData<ITransaction>>> {
+    return this._http.get<ResponseDTO<PagedData<ITransaction>>>(
       `${environment.serverUrl}/transaction/search`,
       {
         withCredentials: true,

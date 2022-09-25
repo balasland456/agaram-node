@@ -1,3 +1,4 @@
+import { PagedData } from './../types';
 import UserService from "../service/user-service";
 import { NextFunction, Request, Response } from "express";
 import { IResetPassword, IUser, ResponseDTO, statusCode } from "../types";
@@ -70,9 +71,9 @@ export default class UserController {
 
   async getallusers(
     request: Request,
-    response: Response<ResponseDTO<IUser[]>>,
+    response: Response<ResponseDTO<PagedData<IUser>>>,
     next: NextFunction
-  ): Promise<Response<ResponseDTO<IUser[]>> | void> {
+  ): Promise<Response<ResponseDTO<PagedData<IUser>>> | void> {
     try {
       const { sort, page, pageSize } = request.query;
       const pageNumber: number | undefined = page ? +page : undefined;
@@ -84,7 +85,7 @@ export default class UserController {
         pageNumber,
         pageSizeNumber
       );
-      const responseDTO = new ResponseDTO<IUser[]>(
+      const responseDTO = new ResponseDTO<PagedData<IUser>>(
         statusCode.OK,
         true,
         alluser,

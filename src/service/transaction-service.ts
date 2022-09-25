@@ -1,6 +1,6 @@
 import ValidatorError from "../exceptions/validator-error";
 import Transaction from "../models/transaction";
-import { ITransaction } from "../types";
+import { ITransaction, PagedData } from "../types";
 import { createStartAndEndIndex, getCurrentDate } from "../utils";
 import excel from 'exceljs';
 import { ExcelService } from "./excel-service";
@@ -27,14 +27,18 @@ export default class Savetransaction {
     sortParam: string,
     page?: number,
     pageSize?: number
-  ): Promise<ITransaction[]> {
+  ): Promise<PagedData<ITransaction>> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       const gettransaction: ITransaction[] = await Transaction.find()
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
-      return gettransaction;
+        const rdata :PagedData<ITransaction>={
+          data : gettransaction,
+          totalRows:await Transaction.countDocuments()
+        };    
+      return rdata;
     } catch (error) {
       throw error;
     }
@@ -49,7 +53,7 @@ export default class Savetransaction {
     page?: number,
     pageSize?: number,
     
-  ): Promise<ITransaction[]> {
+  ): Promise<PagedData<ITransaction>> {
     try {      
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       let where :any = {};
@@ -58,8 +62,7 @@ export default class Savetransaction {
           $eq:forr
         }
       }
-      console.log(where)
-      console.log(getCurrentDate(sd))
+    
       const search: ITransaction[] = await Transaction.find({
         date: {
           $gte: getCurrentDate(sd),
@@ -70,7 +73,18 @@ export default class Savetransaction {
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
-      return search;
+
+        const rdata :PagedData<ITransaction>={
+          data : search,
+          totalRows:await Transaction.countDocuments({
+            date: {
+              $gte: getCurrentDate(sd),
+              $lte: getCurrentDate(ed),
+            },
+            ...where
+          })
+        };    
+      return rdata;
     } catch (error) {
       throw error;
     }

@@ -10,7 +10,7 @@
       <a class="nav-link px-3" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
     </div>
     <div class="nav-item text-nowrap" *ngIf="isLoggedIn">
-      <span class="nav-link px-3 userinfo" style="cursor: pointer;">{{user?.username}}</span>
+      <span class="nav-link px-3 userinfo text-capitalize" style="cursor: pointer;">{{user?.username}}</span>
       <span class="nav-link px-3" style="cursor: pointer;" (click)="openLogout()">Signout</span>
     </div>
   </div>

@@ -2,7 +2,7 @@
 import { NextFunction, Request, Response } from "express";
 import CreateArticle from "../service/article-service";
 import UserService from "../service/user-service";
-import { FilterStatus, IArticle, ResponseDTO, statusCode } from "../types";
+import { FilterStatus, IArticle, PagedData, ResponseDTO, statusCode } from "../types";
 
 export default class ArticleController {
   private _article: CreateArticle;
@@ -59,9 +59,9 @@ export default class ArticleController {
   }
   async getallArticle(
     request: Request,
-    response: Response<ResponseDTO<IArticle[]>>,
+    response: Response<ResponseDTO<PagedData<IArticle>>>,
     next: NextFunction
-  ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
+  ): Promise<Response<ResponseDTO<PagedData<IArticle>>> | void> {
     try {
       const { sort, page, pageSize,userWise } = request.query;
       let userId:string |undefined= "0";
@@ -78,7 +78,7 @@ export default class ArticleController {
         pageSizeNumber,
         userId
       );
-      const responseDTO = new ResponseDTO<IArticle[]>(
+      const responseDTO = new ResponseDTO<PagedData<IArticle>>(
         statusCode.OK,
         true,
         allArticle,

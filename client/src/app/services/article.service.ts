@@ -1,8 +1,9 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import IArticle, { IArticleSave, ResponseDTO,FilterStatus } from '../shared/types';
+import IArticle, { IArticleSave, ResponseDTO,FilterStatus,PagedData } from '../shared/types';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +38,8 @@ export class ArticleService {
     page: number,
     pageSize: number,
     userWise:boolean = false,
-  ): Observable<ResponseDTO<IArticle[]>> {
-    return this._http.get<ResponseDTO<IArticle[]>>(
+  ): Observable<ResponseDTO<PagedData<IArticle>>> {
+    return this._http.get<ResponseDTO<PagedData<IArticle>>>(
       `${environment.serverUrl}/article/getall`,
       {
         withCredentials: true,
@@ -60,8 +61,8 @@ export class ArticleService {
     client: string,
     userWise:boolean = false,
     batch:string,
-  ): Observable<ResponseDTO<IArticle[]>> {
-    return this._http.get<ResponseDTO<IArticle[]>>(
+  ): Observable<ResponseDTO<PagedData<IArticle>>> {
+    return this._http.get<ResponseDTO<PagedData<IArticle>>>(
       `${environment.serverUrl}/article/search`,
       {
         withCredentials: true,

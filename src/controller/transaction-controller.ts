@@ -1,3 +1,4 @@
+import { PagedData } from './../types';
 import Savetransaction from "../service/transaction-service";
 import { ITransaction, ResponseDTO, statusCode } from "../types";
 import { NextFunction, Request, Response } from "express";
@@ -43,9 +44,9 @@ export default class TransactionController {
 
   async getalltransactions(
     request: Request,
-    response: Response<ResponseDTO<ITransaction[]>>,
+    response: Response<ResponseDTO<PagedData<ITransaction>>>,
     next: NextFunction
-  ): Promise<Response<ResponseDTO<ITransaction[]>> | void> {
+  ): Promise<Response<ResponseDTO<PagedData<ITransaction>>> | void> {
     try {
       const { sort, page, pageSize } = request.query;
       const pageNumber: number | undefined = page ? +page : undefined;
@@ -57,7 +58,7 @@ export default class TransactionController {
         pageNumber,
         pageSizeNumber
       );
-      const responseDTO = new ResponseDTO<ITransaction[]>(
+      const responseDTO = new ResponseDTO<PagedData<ITransaction>>(
         statusCode.OK,
         true,
         alltransaction,
@@ -71,9 +72,9 @@ export default class TransactionController {
   // Search a article
   async searchtransaction(
     request: Request,
-    response: Response<ResponseDTO<ITransaction[]>>,
+    response: Response<ResponseDTO<PagedData<ITransaction>>>,
     next: NextFunction
-  ): Promise<Response<ResponseDTO<ITransaction[]>> | void> {
+  ): Promise<Response<ResponseDTO<PagedData<ITransaction>>> | void> {
     try {
       const { sort, page, pageSize, sd, ed, forr } = request.query;
       const pageNumber: number | undefined = page ? +page : undefined;
@@ -88,7 +89,7 @@ export default class TransactionController {
         pageNumber,
         pageSizeNumber        
       );
-      const responseDTO = new ResponseDTO<ITransaction[]>(
+      const responseDTO = new ResponseDTO<PagedData<ITransaction>>(
         statusCode.OK,
         true,
         searched,

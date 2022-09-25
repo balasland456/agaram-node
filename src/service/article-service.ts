@@ -1,4 +1,4 @@
-import { IUser } from './../types';
+import { IUser, PagedData } from './../types';
 import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
 import User from "../models/user";
@@ -45,7 +45,7 @@ export default class CreateArticle {
     page?: number,
     pageSize?: number,
     userId?:string,
-  ): Promise<IArticle[]> {
+  ): Promise<PagedData<IArticle>> {
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       let where = {};
@@ -57,7 +57,12 @@ export default class CreateArticle {
         .skip(startIndex)
         .limit(endIndex)
         .populate("assignedTo");
-      return getArticle;
+
+        const rdata :PagedData<IArticle>={
+          data : getArticle,
+          totalRows:await Article.countDocuments(where)
+        };        
+      return rdata;
     } catch (error) {
       throw error;
     }

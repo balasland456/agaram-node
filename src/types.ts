@@ -175,3 +175,7 @@ export enum ProcessType{
   QA="QA",
   E2E="E2E"
 }
+export interface PagedData<T>{
+  data:T[],
+  totalRows:number
+}
