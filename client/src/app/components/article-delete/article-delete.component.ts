@@ -19,7 +19,6 @@ export class ArticleDeleteComponent implements OnInit {
   deleteArticle(): void {
     this._articleService.deleteArticle(this.data._id).subscribe({
       next: (data) => {
-        console.log(data);
         this._snackBar.open('Article Deleted', "", {
           duration: 3000
         });

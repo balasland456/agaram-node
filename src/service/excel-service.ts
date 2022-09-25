@@ -40,7 +40,6 @@ export class ExcelService {
           }
           else if(columns[colNumber-1]&& columns[colNumber-1].formatter){
             let vv = columns[colNumber-1].formatter.call(null,row.getCell(colNumber).value,rowNumber);
-            console.log(vv);
             row.getCell(colNumber).value = vv;
           }
           row.getCell(colNumber).border = {

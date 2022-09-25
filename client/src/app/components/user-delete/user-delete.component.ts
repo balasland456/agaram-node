@@ -19,7 +19,6 @@ export class UserDeleteComponent implements OnInit {
   deleteUser(): void {
     this._userService.deleteUser(this.data._id).subscribe({
       next: (data) => {
-        console.log(data);
         this._snackBar.open('User Deleted', "", {
           duration: 3000
         });

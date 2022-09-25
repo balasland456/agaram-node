@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
       next: (data) => {
         this.loading = false;
         const resdata = data.data as PagedData<IArticle>;
-        this.dataSource = resdata.data as IArticle[];
+        this.dataSource = resdata.data!;
         this.totalRows = resdata.totalRows;
       },
       error: (err) => {
@@ -154,7 +154,10 @@ export class DashboardComponent implements OnInit {
 
     matDialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.getArticles();
+        if(this.searched)
+          this.searchArticle();
+        else
+          this.getArticles();
       }
     });
   }
