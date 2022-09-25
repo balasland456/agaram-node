@@ -38,7 +38,6 @@ export class TransactionFormComponent implements OnInit {
   createTransaction(): void {
     this._transactionService.savetransaction(this.formData).subscribe({
       next: (data) => {
-        console.log(data);
         this._snackBar.open("Transaction saved successfully.", "", {
           duration: 3000
         });

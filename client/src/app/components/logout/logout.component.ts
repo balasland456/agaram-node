@@ -19,7 +19,6 @@ export class LogoutComponent implements OnInit {
   logout() {
     this._authService.logout().subscribe({
       next: (data) => {
-        console.log(data);
         localStorage.clear();
         this._dialogRef.close();
         this._snackBar.open("Logged out successfully", "", {

@@ -27,7 +27,6 @@ export class AuthorizePasswordResetComponent implements OnInit {
   }
 
   onSave(): void {
-    console.log(this.formData);
     if(this.formData.password!=this.formData.confirmPassword){
         this.passwordMisMatchError=true;
     }
