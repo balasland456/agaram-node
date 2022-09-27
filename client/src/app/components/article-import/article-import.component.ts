@@ -160,6 +160,14 @@ export class ArticleImportComponent implements OnInit {
                 this.jsonData=[];
                 break;
               }
+              if(!(arrData[loop]["Status"])){
+                this._snackBar.open('Status is required in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
               if(Object.keys(InputType).indexOf(arrData[loop]["Input Type"])==-1){
                 this._snackBar.open('Invalid input type ('+arrData[loop]["Input Type"]+') in row '+(loop+1), "", {
                   duration: 3000
@@ -178,6 +186,14 @@ export class ArticleImportComponent implements OnInit {
               }
               if(Object.keys(ProcessType).indexOf(arrData[loop]["Process Type"])==-1){
                 this._snackBar.open('Invalid process type ('+arrData[loop]["Process Type"]+') in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(Object.keys(Status).indexOf(arrData[loop]["Status"])==-1){
+                this._snackBar.open('Invalid status ('+arrData[loop]["Status"]+') in row '+(loop+1), "", {
                   duration: 3000
                 });
                 ev.target.value="";
