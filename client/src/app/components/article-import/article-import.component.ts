@@ -14,15 +14,16 @@ import * as XLSX from 'xlsx';
 })
 export class ArticleImportComponent implements OnInit {
   jsonData:IArticleSave[]=[];
-  constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleImportComponent>, @Inject(MAT_DIALOG_DATA) public data: { }) {
-      
+  isAdmin:boolean=false;
+  constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleImportComponent>, @Inject(MAT_DIALOG_DATA) public data: {isAdmin:boolean }) {
+    this.isAdmin = data.isAdmin;
   }
   ngOnInit(): void {
     
   }
   importDashboard():void{
     if(this.jsonData.length>0){    
-      this._articleService.importArticle(this.jsonData).subscribe({
+      this._articleService.importArticle(this.jsonData,this.isAdmin).subscribe({
         next: (data) => {
           this._snackBar.open('Article imported', "", {
             duration: 3000

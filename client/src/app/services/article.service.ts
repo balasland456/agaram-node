@@ -122,9 +122,9 @@ export class ArticleService {
   //     }
   //   );
   // }
-  importArticle(articles: IArticleSave[]): Observable<ResponseDTO<IArticle>> {
+  importArticle(articles: IArticleSave[],isAdmin:boolean): Observable<ResponseDTO<IArticle>> {
     return this._http.post<ResponseDTO<IArticle>>(
-      `${environment.serverUrl}/article/import`,
+      `${environment.serverUrl}/article/import?isAdmin=${isAdmin}`,
       articles,
       { withCredentials: true }
     );

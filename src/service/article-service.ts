@@ -311,15 +311,18 @@ export default class CreateArticle {
     }
   }
 
-  async getArticleByUniqueFields(article: IArticle): Promise<IArticle|null> {
+  async getArticleByUniqueFields(article: IArticle,isAdmin:boolean): Promise<IArticle|null> {
     try {
-      const findlst = await Article.find({
-        client:article.client,
+      let where:any = {
         processType:article.processType,
         assignedTo:article.assignedTo,
         article:article.article,
         _id:{$ne:article._id}
-      });
+      }; 
+      if(isAdmin){
+        where["client"] = article.client
+      }
+      const findlst = await Article.find(where);
       if(findlst && findlst.length>0){
         return findlst[0];
       }

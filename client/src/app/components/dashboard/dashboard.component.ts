@@ -149,7 +149,7 @@ export class DashboardComponent implements OnInit {
   }
   importDashboard():void{
     const matDialogRef = this._matDialog.open(ArticleImportComponent, {
-      data: {},
+      data: {isAdmin:true},
     });
 
     matDialogRef.afterClosed().subscribe((data) => {

@@ -155,7 +155,7 @@ export class NonAdminDashboardComponent implements OnInit {
   }
   importDashboard():void{
     const matDialogRef = this._matDialog.open(ArticleImportComponent, {
-      data: {},
+      data: {isAdmin:false},
     });
 
     matDialogRef.afterClosed().subscribe((data) => {
