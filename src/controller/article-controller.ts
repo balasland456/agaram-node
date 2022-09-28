@@ -92,9 +92,9 @@ export default class ArticleController {
   // Search a article
   async searchArticle(
     request: Request,
-    response: Response<ResponseDTO<IArticle[]>>,
+    response: Response<ResponseDTO<PagedData<IArticle>>>,
     next: NextFunction
-  ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
+  ): Promise<Response<ResponseDTO<PagedData<IArticle>>> | void> {
     try {
       const { client, status, page, pageSize, sd, ed,userWise,batch } = request.query;
 
@@ -119,7 +119,7 @@ export default class ArticleController {
         pageNumber,
         pageSizeNumber,
       );
-      const responseDTO = new ResponseDTO<IArticle[]>(
+      const responseDTO = new ResponseDTO<PagedData<IArticle>>(
         statusCode.OK,
         true,
         searchedArticle,

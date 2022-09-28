@@ -53,7 +53,7 @@ export default class CreateArticle {
         where = {assignedTo:userId};
       }
       const getArticle: IArticle[] = await Article.find(where)
-        .sort("-createdAt")
+      .sort({"createdAt":-1,"article":1})
         .skip(startIndex)
         .limit(endIndex)
         .populate("assignedTo");
@@ -78,7 +78,7 @@ export default class CreateArticle {
     userId:string,
     page?: number,
     pageSize?: number,    
-  ): Promise<IArticle[]> {
+  ): Promise<PagedData<IArticle>> {
 
     try {
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
@@ -103,10 +103,21 @@ export default class CreateArticle {
         },
         ...where
       })
-        .sort("-createdAt")
+        .sort({"createdAt":-1,"article":1})
         .skip(startIndex)
         .limit(endIndex);
-      return search;
+
+        const rdata :PagedData<IArticle>={
+          data : search,
+          totalRows:await Article.countDocuments({
+            createdAt: {
+              $gte: getCurrentDate(sd),
+              $lte: getCurrentDate(ed),
+            },
+            ...where
+          })
+        };        
+      return rdata;
     } catch (error) {
       throw error;
     }
@@ -175,7 +186,7 @@ export default class CreateArticle {
         }
       }
       
-      const data: any[] = await Article.find(where).populate({path:"assignedTo"}).sort("-createdAt");
+      const data: any[] = await Article.find(where).populate({path:"assignedTo"}).sort({"createdAt":-1,"article":1});
       
       let columns:any[] = [        
         {

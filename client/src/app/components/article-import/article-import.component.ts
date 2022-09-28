@@ -43,7 +43,10 @@ export class ArticleImportComponent implements OnInit {
   }
   convertDate(str:any):Date|undefined{
     if(str instanceof Date){
-      return str;
+      // console.log(str);
+      // console.log(new Date(str.setMinutes(str.getMinutes()+1)))
+      //console.log(str.getTime() + (new Date().getTimezoneOffset() - str.getTimezoneOffset()) * 60000)
+      return new Date(str.setMinutes(str.getMinutes()+1));
     }
     if(typeof str =="string"){
       let arr = str.split("-");
@@ -54,6 +57,7 @@ export class ArticleImportComponent implements OnInit {
         });
         this.jsonData=[];
       }
+      console.log(datte);
       return datte;
     }
     return undefined;
@@ -87,7 +91,7 @@ export class ArticleImportComponent implements OnInit {
         this.jsonData=[];
         reader.onload = (event) => {
           const data = reader.result;
-          workBook = XLSX.read(data, { type: 'binary',cellDates: true });
+          workBook = XLSX.read(data, { type: 'binary',cellText:false,cellDates: true,});
           readData = workBook.SheetNames.reduce((initial:any, name:any) => {
             const sheet = workBook.Sheets[name];
             initial[name] = XLSX.utils.sheet_to_json(sheet);
