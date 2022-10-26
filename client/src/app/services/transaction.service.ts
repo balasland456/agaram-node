@@ -44,22 +44,27 @@ export class TransactionService {
 
   searchTransaction(
     page: number,
-    pageSize: number,
-    sd: Date,
-    ed: Date,
+    pageSize: number,    
     forr:string,
+    sd?: Date,
+    ed?: Date,
   ): Observable<ResponseDTO<PagedData<ITransaction>>> {
+    let params:any={
+      page: page,
+      pageSize: pageSize,
+      forr:forr.toString(),
+    };
+    if(sd){
+      params["sd"]=sd.toString();
+    }
+    if(ed){
+      params["ed"]=ed.toString();
+    }
     return this._http.get<ResponseDTO<PagedData<ITransaction>>>(
       `${environment.serverUrl}/transaction/search`,
       {
         withCredentials: true,
-        params: {
-          page: page,
-          pageSize: pageSize,
-          sd: sd.toString(),
-          ed: ed.toString(),
-          forr:forr.toString(),
-        },
+        params: params
       }
     );
   }
@@ -71,22 +76,29 @@ export class TransactionService {
     );
   }
   exportTransactions(
-    sd: Date,
-    ed: Date,
+   
     filter:boolean,
     forr:string,
+    sd?: Date,
+    ed?: Date,
     ):any {
+      let params:any = {
+        filter:filter,
+        forr:forr
+      }
+      if(sd){
+        params["sd"]=sd.toString();
+      }
+      if(ed){
+        params["ed"]=ed.toString();
+      }
+
     return this._http.get(
       `${environment.serverUrl}/transaction/export`,
       {
         withCredentials: true,        
         responseType:"blob",
-        params: {
-          sd: sd.toString(),
-          ed: ed.toString(),
-          filter:filter,
-          forr:forr
-        },
+        params: params,
       }
     );
   }

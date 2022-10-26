@@ -54,55 +54,73 @@ export class ArticleService {
 
   searchArticle(
     page: number,
-    pageSize: number,
-    sd: Date,
-    ed: Date,
+    pageSize: number,    
     status: FilterStatus,
     client: string,
     userWise:boolean = false,
     batch:string,
+    sd?: Date,
+    ed?: Date,
+    assignedTo?:string,
   ): Observable<ResponseDTO<PagedData<IArticle>>> {
+    let params:any={
+      userWise:userWise,
+      page: page,
+      pageSize: pageSize,      
+      status: (status.toString()),
+      client: (client),
+      batch:(batch)
+    };
+    if(assignedTo){
+      params["assignedTo"]=assignedTo.toString();
+    }
+    if(sd){
+      params["sd"]=sd.toString();
+    }
+    if(ed){
+      params["ed"]=ed.toString();
+    }
     return this._http.get<ResponseDTO<PagedData<IArticle>>>(
       `${environment.serverUrl}/article/search`,
       {
         withCredentials: true,
-        params: {
-          userWise:userWise,
-          page: page,
-          pageSize: pageSize,
-          sd: (sd ? sd.toString():sd),
-          ed: (ed ? ed.toString():ed),
-          status: (status.toString()),
-          client: (client),
-          batch:(batch)
-        },
+        params: params,
       }
     );
   }
 
-  exportDashboard(
-    sd: Date,
-    ed: Date,
+  exportDashboard(    
     filter:boolean,
     status: FilterStatus,
     client: string,
     userWise:boolean = false,
     batch:string,
+    sd?: Date,
+    ed?: Date,
+    assignedTo?:string
     ):any {
+      let params :any={
+        userWise:userWise,        
+        filter:filter,
+        status: (status.toString()),
+        client: (client),
+        batch:(batch)
+      };
+      if(assignedTo){
+        params["assignedTo"]=assignedTo.toString();
+      }
+      if(sd){
+        params["sd"]=sd.toString();
+      }
+      if(ed){
+        params["ed"]=ed.toString();
+      }
     return this._http.get(
       `${environment.serverUrl}/article/export`,
       {
         withCredentials: true,        
         responseType:"blob",
-        params: {
-          userWise:userWise,
-          sd: sd.toString(),
-          ed: ed.toString(),
-          filter:filter,
-          status: (status.toString()),
-          client: (client),
-          batch:(batch)
-        },
+        params: params,
       }
     );
   }

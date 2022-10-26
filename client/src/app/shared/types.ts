@@ -18,10 +18,11 @@ export interface IUser {
   contactPerson: {
     name: string;
     mobileNo: string;
-    email: string;
+    //email: string;
   };
   name: string;
   address: string;
+  joiningDate?:Date;
 }
 
 export interface ITransaction {

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ArticleService } from 'src/app/services/article.service';
-import IArticle, {FilterStatus, PagedData} from 'src/app/shared/types';
+import { UserService } from 'src/app/services/user.service';
+import IArticle, {FilterStatus, IUser, PagedData} from 'src/app/shared/types';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { ArticleImportComponent } from '../article-import/article-import.component';
@@ -13,8 +14,8 @@ import { ArticleImportComponent } from '../article-import/article-import.compone
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  startDate: Date = new Date();
-  endDate: Date = new Date();
+  startDate?: Date = undefined;
+  endDate?: Date = undefined;
   searched:boolean = false;
   statusOptions = Object.keys(FilterStatus);
   status: FilterStatus = FilterStatus.ALL;
@@ -22,6 +23,8 @@ export class DashboardComponent implements OnInit {
   totalRows:number=0;
   page:number = 1;
   pageSize:number=10;
+  assignedTo?:string = undefined;
+  users : IUser[]|null = [];
   displayedColumns: string[] = [
     '#',
     'Client',
@@ -47,7 +50,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private _articleService: ArticleService,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _userService:UserService
   ) {
     this.getArticles();
   }
@@ -115,7 +119,7 @@ export class DashboardComponent implements OnInit {
 
   searchArticle(): void {
     this.loading = true;
-    this._articleService.searchArticle(this.page, this.pageSize, this.startDate, this.endDate,this.status,this.client,false,"").subscribe({
+    this._articleService.searchArticle(this.page, this.pageSize,this.status,this.client,false,"",this.startDate, this.endDate,this.assignedTo).subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
@@ -130,11 +134,22 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._userService.getNonAdmin().subscribe({
+      next: (data) => {        
+        if(data.success){
+          this.users = data.data;          
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
 
   exportDashboard():void{
     this.loading = true;
-    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,this.client,false,"").subscribe((data:any)=>{
+    this._articleService.exportDashboard(this.searched,this.status,this.client,false,"",this.startDate, this.endDate,this.assignedTo).subscribe((data:any)=>{
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');

@@ -16,12 +16,13 @@ export interface IUser {
   type: UserType;
   name: string;
   updatedAt: Date;
-  address: string;
+  address: string;  
   contactPerson: {
     name: string;
     mobileNo: string;
-    email: string;
+    //email: string;
   };
+  joiningDate?:Date;
 }
 
 export interface IUserExcel {

@@ -92,13 +92,22 @@ export const userValidatorSchema: ValidatorObject[] = [
     },
   },
 
+  // {
+  //   key: "contactPerson.email",
+  //   type: ValidatorTypes.String,
+  //   validators: [FunctionTypes.required, FunctionTypes.notBlank],
+  //   messages: {
+  //     required: "email is required",
+  //     notBlank: "email should not be blank",
+  //   },
+  // },
   {
-    key: "contactPerson.email",
+    key: "joiningDate",
     type: ValidatorTypes.String,
     validators: [FunctionTypes.required, FunctionTypes.notBlank],
     messages: {
-      required: "email is required",
-      notBlank: "email should not be blank",
+      required: "Joining Date is required",
+      notBlank: "Joining Date should not be blank",
     },
-  },
+ },
 ];

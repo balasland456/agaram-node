@@ -81,13 +81,22 @@ export default class TransactionController {
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
         : undefined;
+
+      let sdate = undefined;
+      let edate= undefined;
+      if(sd){
+        sdate = new Date(sd as string);
+      }
+      if(ed){
+        edate = new Date(ed as string);
+      }      
       const searched = await this._transaction.searchtransaction(
-        new Date(sd as string),
-        new Date(ed as string),
         sort as string,
         forr as string,
         pageNumber,
-        pageSizeNumber        
+        pageSizeNumber,
+        sdate,
+        edate 
       );
       const responseDTO = new ResponseDTO<PagedData<ITransaction>>(
         statusCode.OK,
@@ -161,11 +170,19 @@ export default class TransactionController {
   ): Promise<Response<Blob> | void> {
     try {      
       const { sd, ed,filter,forr } = request.query;
-      const data = await this._transaction.exportdata(
-        new Date(sd as string),
-        new Date(ed as string),
+      let sdate = undefined;
+      let edate= undefined;
+      if(sd){
+        sdate = new Date(sd as string);
+      }
+      if(ed){
+        edate = new Date(ed as string);
+      }      
+      const data = await this._transaction.exportdata(        
         filter as string,
-        forr as string
+        forr as string,
+        sdate,
+        edate,
       );
       let filename = "Transaction";
       response.set({

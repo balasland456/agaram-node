@@ -45,14 +45,13 @@ export default class Savetransaction {
   }
 
   // Search
-  async searchtransaction(
-    sd: Date,
-    ed: Date,
+  async searchtransaction(    
     sortParam: string,
     forr:string,
     page?: number,
     pageSize?: number,
-    
+    sd?: Date,
+    ed?: Date,    
   ): Promise<PagedData<ITransaction>> {
     try {      
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
@@ -62,12 +61,24 @@ export default class Savetransaction {
           $eq:forr
         }
       }
-    
-      const search: ITransaction[] = await Transaction.find({
-        date: {
+
+      if(sd && ed){
+        where.date= {
           $gte: getCurrentDate(sd),
           $lte: getCurrentDate(ed),
-        },
+        }
+      }
+      else if(sd){
+        where.date= {
+          $gte: getCurrentDate(sd)
+        }
+      }
+      else if(ed){
+        where.date= {
+          $lte: getCurrentDate(ed)
+        }
+      }
+      const search: ITransaction[] = await Transaction.find({        
         ...where
       })
         .sort("-createdAt")
@@ -77,10 +88,6 @@ export default class Savetransaction {
         const rdata :PagedData<ITransaction>={
           data : search,
           totalRows:await Transaction.countDocuments({
-            date: {
-              $gte: getCurrentDate(sd),
-              $lte: getCurrentDate(ed),
-            },
             ...where
           })
         };    
@@ -126,20 +133,34 @@ export default class Savetransaction {
     }
   }
 
-  async exportdata(
-    sd: Date,
-    ed: Date,
+  async exportdata(    
     filter:string,
-    forr:string
+    forr:string,
+    sd?: Date,
+    ed?: Date,
   ): Promise<excel.Workbook> {
     try {      
       let where:any = {};
       if(filter =="true"){
         where = {
-          date: {
+          
+        }
+
+        if(sd && ed){
+          where.date= {
             $gte: getCurrentDate(sd),
             $lte: getCurrentDate(ed),
-          },
+          }
+        }
+        else if(sd){
+          where.date= {
+            $gte: getCurrentDate(sd)
+          }
+        }
+        else if(ed){
+          where.date= {
+            $lte: getCurrentDate(ed)
+          }
         }
 
         if(forr!="ALL"){

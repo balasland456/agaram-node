@@ -121,7 +121,7 @@ export class NonAdminDashboardComponent implements OnInit {
 
   searchArticle(): void {
     this.loading = true;
-    this._articleService.searchArticle(this.page, this.pageSize, this.startDate, this.endDate,this.status,"",true,this.batch).subscribe({
+    this._articleService.searchArticle(this.page, this.pageSize,this.status,"",true,this.batch,this.startDate, this.endDate).subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
@@ -140,7 +140,7 @@ export class NonAdminDashboardComponent implements OnInit {
 
   exportDashboard():void{
     this.loading = true;
-    this._articleService.exportDashboard(this.startDate, this.endDate,this.searched,this.status,"",true,this.batch).subscribe((data:any)=>{
+    this._articleService.exportDashboard(this.searched,this.status,"",true,this.batch,this.startDate, this.endDate).subscribe((data:any)=>{
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');

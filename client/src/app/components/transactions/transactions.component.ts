@@ -35,8 +35,8 @@ export class TransactionsComponent implements OnInit {
     'Recieved',
   ];
   dataSource: ITransaction[] = [];
-  startDate: Date = new Date();
-  endDate: Date = new Date();
+  startDate?: Date = undefined;
+  endDate?: Date = undefined;
 
   constructor(private _transactionService: TransactionService, private _dialog: MatDialog) {
     this.getTransactions();
@@ -90,7 +90,7 @@ export class TransactionsComponent implements OnInit {
 
   searchTransaction(): void {
     this.loading = true;
-    this._transactionService.searchTransaction(this.page, this.pageSize, this.startDate, this.endDate,this.for).subscribe({
+    this._transactionService.searchTransaction(this.page, this.pageSize,this.for,this.startDate, this.endDate).subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
@@ -120,7 +120,7 @@ export class TransactionsComponent implements OnInit {
   }
   exportTransactions():void{
     this.loading = true;
-    this._transactionService.exportTransactions(this.startDate, this.endDate,this.searched,this.for).subscribe((data:any)=>{
+    this._transactionService.exportTransactions(this.searched,this.for,this.startDate, this.endDate).subscribe((data:any)=>{
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');

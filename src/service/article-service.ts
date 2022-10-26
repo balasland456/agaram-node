@@ -69,15 +69,16 @@ export default class CreateArticle {
   }
 
   // Search
-  async searchArticle(
-    sd: Date,
-    ed: Date,
+  async searchArticle(    
     status:FilterStatus,
     client:string,    
     batch:string,
     userId:string,
     page?: number,
     pageSize?: number,    
+    sd?: Date,
+    ed?: Date,
+    assignedTo?:string,
   ): Promise<PagedData<IArticle>> {
 
     try {
@@ -96,24 +97,35 @@ export default class CreateArticle {
       if(batch){
         where.batch = {$regex: '.*' + batch + '.*'};
       }
-      const search: IArticle[] = await Article.find({
-        createdAt: {
+      if(assignedTo){
+        where.assignedTo = assignedTo;
+      }
+      if(sd && ed){
+        where.createdAt= {
           $gte: getCurrentDate(sd),
           $lte: getCurrentDate(ed),
-        },
+        }
+      }
+      else if(sd){
+        where.createdAt= {
+          $gte: getCurrentDate(sd)
+        }
+      }
+      else if(ed){
+        where.createdAt= {
+          $lte: getCurrentDate(ed)
+        }
+      }
+      const search: IArticle[] = await Article.find({       
         ...where
       })
         .sort({"createdAt":-1,"article":1})
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex).populate("assignedTo");
 
         const rdata :PagedData<IArticle>={
           data : search,
           totalRows:await Article.countDocuments({
-            createdAt: {
-              $gte: getCurrentDate(sd),
-              $lte: getCurrentDate(ed),
-            },
             ...where
           })
         };        
@@ -155,14 +167,15 @@ export default class CreateArticle {
   }
 
 
-  async exportdata(
-    sd: Date,
-    ed: Date,
+  async exportdata(    
     filter:string,
     status:FilterStatus,
     client:string,
     batch:string,    
     userId?:string,
+    sd?: Date,
+    ed?: Date,
+    assignedTo?:string,
   ): Promise<excel.Workbook> {
     try {      
       let where :any= {};
@@ -170,11 +183,25 @@ export default class CreateArticle {
         where = {assignedTo:userId};
       }
       if(filter =="true"){
-        where.createdAt= {
+        if(assignedTo){
+          where.assignedTo = assignedTo;
+        }
+        if(sd && ed){
+          where.createdAt= {
             $gte: getCurrentDate(sd),
             $lte: getCurrentDate(ed),
           }
-
+        }
+        else if(sd){
+          where.createdAt= {
+            $gte: getCurrentDate(sd)
+          }
+        }
+        else if(ed){
+          where.createdAt= {
+            $lte: getCurrentDate(ed)
+          }
+        }
         if(status!=FilterStatus.ALL){
           where.status = {$eq:status};
         }

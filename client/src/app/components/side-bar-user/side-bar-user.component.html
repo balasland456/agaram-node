@@ -1,6 +1,37 @@
+<div>
+  <header class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" [routerLink]="link">AGARAM</a>
+      <ul class="navbar-nav mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/non-admin-dashboard" routerLinkActive="active" aria-current="page">
+            <span>Dashboard</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <span class="nav-link px-3 userinfo text-capitalize" style="cursor: pointer;">{{user?.username}}</span>
+        <span class="nav-link px-3" style="cursor: pointer;" (click)="openLogout()">Signout</span>
+      </ul>
+    </div>
+  </header>
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+      <div class="d-flex flew-column justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">{{ heading }}</h1>
+      </div>
+      <ng-content></ng-content>
+    </main>
+  </div>
+</div>
+</div>
+<!-- <div class="container-fluid">
+  <div class="row">
+   <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -11,11 +42,11 @@
         </ul>
       </div>
     </nav>
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
       <div class="d-flex flew-column justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 class="h2">{{ heading }}</h1>
       </div>
       <ng-content></ng-content>
     </main>
   </div>
-</div>
+</div> -->

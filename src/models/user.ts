@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      email: { type: String, required: true },
+      //email: { type: String, required: true },
     },
     type: {
       type: String,
@@ -53,7 +53,10 @@ const userSchema = new mongoose.Schema(
     forgotPassword:{
       type:Boolean,
       default: false
-    }
+    },
+    joiningDate: {
+      type: Date,      
+    },
   },
   { timestamps: true }
 );

@@ -172,7 +172,7 @@
                 >
               </mat-form-field>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Contact Person Email</mat-label>
                 <input
@@ -189,7 +189,7 @@
                   >Contact Person Email is required</mat-error
                 >
               </mat-form-field>
-            </div>
+            </div> -->
             <div class="col-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Contact Person Mobile No</mat-label>
@@ -205,6 +205,20 @@
                   *ngIf="contactPersonMobileNoTemp.invalid &&
                     (contactPersonMobileNoTemp.dirty || contactPersonMobileNoTemp.touched)"
                   >Contact Person MobileNo is required</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Joining Date</mat-label>
+                <input matInput [(ngModel)]="formData.joiningDate" name="joiningDate" [matDatepicker]="spicker1" #joiningDateTemp="ngModel">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="spicker1"></mat-datepicker-toggle>
+                <mat-datepicker #spicker1></mat-datepicker>
+                <mat-error
+                  *ngIf="joiningDateTemp.invalid &&
+                    (joiningDateTemp.dirty || joiningDateTemp.touched)"
+                  >Joining Date is required</mat-error
                 >
               </mat-form-field>
             </div>

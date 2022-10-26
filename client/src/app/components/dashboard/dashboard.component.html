@@ -31,7 +31,14 @@
           </mat-option>
         </mat-select>
       </mat-form-field>   
-
+      <mat-form-field appearance="outline" class="mx-2">
+        <mat-label>Assigned To</mat-label>
+        <mat-select #assignedToTemp="ngModel" [(ngModel)]="assignedTo" name="assignedTo">
+          <mat-option *ngFor="let option of users" [value]="option._id">
+            {{option.username}} - {{option.employeeId}} ({{option.type}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <mat-form-field appearance="outline" class="mx-2">
         <mat-label>Start Date</mat-label>
         <input matInput [(ngModel)]="startDate" [matDatepicker]="spicker">

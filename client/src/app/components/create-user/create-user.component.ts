@@ -15,7 +15,7 @@ export class CreateUserComponent implements OnInit {
     username: "",
     employeeId: "",
     contactPerson: {
-      email: "",
+      //email: "",
       mobileNo: "",
       name: ""
     },
@@ -25,7 +25,8 @@ export class CreateUserComponent implements OnInit {
     type: UserType.EMP,
     name: "",
     address: "",
-    _id:""
+    _id:"",
+    joiningDate:undefined
   }
 
   hide: boolean = true;  

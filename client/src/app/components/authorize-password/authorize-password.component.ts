@@ -22,7 +22,7 @@ export class AuthorizePasswordComponent implements OnInit {
     'Email',
     'Contact Person',
     'Contact Person Mobile',
-    'Contact Person Email',
+    'Joining Date',
   ];
   dataSource: IUser[] = [];
 

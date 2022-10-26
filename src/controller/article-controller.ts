@@ -96,7 +96,7 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<PagedData<IArticle>>> | void> {
     try {
-      const { client, status, page, pageSize, sd, ed,userWise,batch } = request.query;
+      const { client, status, page, pageSize, sd, ed,userWise,batch, assignedTo } = request.query;
 
       let userId:string = "0";
       if(userWise && userWise=="true"){
@@ -109,15 +109,25 @@ export default class ArticleController {
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
         : undefined;
-      const searchedArticle = await this._article.searchArticle(
-        new Date(sd as string),
-        new Date(ed as string),
+      let assto:string|undefined = (assignedTo?assignedTo.toString():undefined);
+      let sdate = undefined;
+      let edate= undefined;
+      if(sd){
+        sdate = new Date(sd as string);
+      }
+      if(ed){
+        edate = new Date(ed as string);
+      }      
+      const searchedArticle = await this._article.searchArticle(       
         status as FilterStatus,
         client as string,        
         batch as string,
         userId,
         pageNumber,
         pageSizeNumber,
+        sdate,
+        edate,
+        assto
       );
       const responseDTO = new ResponseDTO<PagedData<IArticle>>(
         statusCode.OK,
@@ -198,22 +208,31 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<Blob> | void> {
     try {      
-      const { sd, ed,filter,status,client,userWise,batch } = request.query;
+      const { sd, ed,filter,status,client,userWise,batch,assignedTo } = request.query;
       let userId:string = "0";
+      let assto:string|undefined = (assignedTo?assignedTo.toString():undefined);
       if(userWise && userWise=="true"){
         if(request.user?._id){
         userId = request.user?._id;
         }
       }
-      
-      const data = await this._article.exportdata(
-        new Date(sd as string),
-        new Date(ed as string),
+      let sdate = undefined;
+      let edate= undefined;
+      if(sd){
+        sdate = new Date(sd as string);
+      }
+      if(ed){
+        edate = new Date(ed as string);
+      }      
+      const data = await this._article.exportdata(        
         filter as string,
         status as FilterStatus,
         client as string,
         batch as string,
-        userId
+        userId,
+        sdate,
+        edate,
+        assto
       );
       let filename = "Articles";
       response.set({

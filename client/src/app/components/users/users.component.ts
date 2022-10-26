@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
     'Email',
     'Contact Person',
     'Contact Person Mobile',
-    'Contact Person Email',
+    'Joining Date',
   ];
   dataSource: IUser[] = [];
 
@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit {
       username: "",
       employeeId: "",
       contactPerson: {
-        email: "",
+        //email: "",
         mobileNo: "",
         name: ""
       },
@@ -69,7 +69,8 @@ export class UsersComponent implements OnInit {
       type: UserType.EMP,
       name: "",
       address: "",
-      _id:""
+      _id:"",
+      joiningDate:undefined
     }
     const dialogRef = this._dialog.open(CreateUserComponent,{
       data: {
