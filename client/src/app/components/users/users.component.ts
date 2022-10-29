@@ -16,14 +16,16 @@ export class UsersComponent implements OnInit {
   totalRows:number=0;
   page:number = 1;
   pageSize:number=10;
+  searched:boolean = false;
+  employeename:string="";
   displayedColumns: string[] = [
     '#',
     'Username',
-    'Name',
-    'Address',
+    'Name',    
     'ID',
     'User Type',
     'Mobile',
+    'Address',
     'Email',
     'Contact Person',
     'Contact Person Mobile',
@@ -115,7 +117,7 @@ export class UsersComponent implements OnInit {
   }
   exportUsers():void{
     this.loading = true;
-    this._userService.exportUsers().subscribe((data:any)=>{
+    this._userService.exportUsers(true,this.employeename).subscribe((data:any)=>{
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');
@@ -143,5 +145,22 @@ export class UsersComponent implements OnInit {
     this.page = e.pageIndex+1;
     this.pageSize = e.pageSize;
     this.getAllUsers();
+  }
+
+  searchUsers():void{
+    this.loading = true;
+    this._userService.searchUser(this.page, this.pageSize,this.employeename).subscribe({
+      next: (data) => {
+        this.searched = true;
+        this.loading = false;
+        const resdata = data.data as PagedData<IUser>;
+        this.dataSource = resdata.data!;
+        this.totalRows = resdata.totalRows;  
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+      },
+    })
   }
 }

@@ -17,6 +17,7 @@ export default class UserController {
     this.getNonAdmin = this.getNonAdmin.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
+    this.searchUsers = this.searchUsers.bind(this);
   }
 
   async adduser(
@@ -97,6 +98,36 @@ export default class UserController {
     }
   }
 
+  async searchUsers(
+    request: Request,
+    response: Response<ResponseDTO<PagedData<IUser>>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<PagedData<IUser>>> | void> {
+    try {
+      const { sort, page, pageSize,employeename } = request.query;
+      const pageNumber: number | undefined = page ? +page : undefined;
+      const pageSizeNumber: number | undefined = pageSize
+        ? +pageSize
+        : undefined;
+      const alluser = await this._user.searchUsers(
+        sort as string,
+        employeename as string,
+        pageNumber,
+        pageSizeNumber,
+        
+      );
+      const responseDTO = new ResponseDTO<PagedData<IUser>>(
+        statusCode.OK,
+        true,
+        alluser,
+        null
+      );
+      return response.status(statusCode.OK).json(responseDTO);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   async getforgotpasswordlist(
     request: Request,
     response: Response<ResponseDTO<IUser[]>>,
@@ -154,7 +185,8 @@ export default class UserController {
     next: NextFunction
   ): Promise<Response<Blob> | void> {
     try {      
-      const data = await this._user.exportdata();
+      const { filter,employeename } = request.query;
+      const data = await this._user.exportdata(filter as string,employeename as string);
       let filename = "Users";
       response.set({
         "Content-disposition": `attachment; filename=${filename}.xlsx`,

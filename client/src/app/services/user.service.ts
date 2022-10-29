@@ -45,6 +45,10 @@ export class UserService {
       `${environment.serverUrl}/user/getAll`,
       {
         withCredentials: true,
+        params:{
+          page: page,
+          pageSize: pageSize,
+        },
       }
     );
   }
@@ -70,12 +74,17 @@ export class UserService {
     );
   }
 
-  exportUsers():any {
+  exportUsers(filter:boolean,employeename:string):any {
+    let params :any={
+      employeename:employeename,        
+      filter:filter
+    };
     return this._http.get(
       `${environment.serverUrl}/user/export`,
       {
         withCredentials: true,        
-        responseType:"blob"
+        responseType:"blob",
+        params:params
       }
     );
   }
@@ -93,6 +102,23 @@ export class UserService {
     return this._http.delete<ResponseDTO<IUser>>(
       `${environment.serverUrl}/user/delete/${id}`,
       { withCredentials: true }
+    );
+  }
+  searchUser(
+    page: number,
+    pageSize: number,
+    employeename:string
+  ): Observable<ResponseDTO<PagedData<IUser>>> {
+    return this._http.get<ResponseDTO<PagedData<IUser>>>(
+      `${environment.serverUrl}/user/search`,
+      {
+        withCredentials: true,
+        params:{
+          page: page,
+          pageSize: pageSize,
+          employeename: employeename
+        }
+      }
     );
   }
 }

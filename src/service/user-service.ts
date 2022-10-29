@@ -127,6 +127,35 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
     }
   }
 
+  async searchUsers(
+    sortParam: string,
+    employeename:string,
+    page?: number,
+    pageSize?: number,    
+  ): Promise<PagedData<IUser>> {
+    try {
+      let where :any= {type: { $ne: UserType.ADMIN }};
+      
+      if(employeename){
+        where.name = {$regex: '.*' + employeename + '.*'};
+      }
+      
+      const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
+      const getallusers: IUser[] = await User.find(where)
+        .sort("-createdAt")
+        .skip(startIndex)
+        .limit(endIndex);
+        const rdata :PagedData<IUser>={
+          data : getallusers,
+          totalRows:await User.countDocuments(where)
+        };     
+      return rdata;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+
   async getforgotpasswordlist(
     sortParam: string,
     page?: number,
@@ -163,11 +192,15 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
     }
   }
   
-  async exportdata(): Promise<excel.Workbook> {
+  async exportdata(filter:string,employeename:string): Promise<excel.Workbook> {
     try {
-      const data: IUser[] = await User.find({
-        type: { $ne: UserType.ADMIN },
-      }).sort("-createdAt");
+      let where :any= {type: { $ne: UserType.ADMIN }};
+      if(filter =="true"){
+        if(employeename){
+          where.name = {$regex: '.*' + employeename + '.*'};
+        }
+      }
+      const data: IUser[] = await User.find(where).sort("-createdAt");
       let columns:any[] = [
         {
           key:"username",
@@ -202,14 +235,26 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
           key:"cmobileNo"
         },
         {
-          header:"Contact Person Email",
-          key:"cemail"
-        },        
+          header:"Joining Date",
+          key:"joiningDate",
+          formatter: function(value:string,rowNum:number){
+            if(rowNum>1){
+              if(value){
+                let dd = value.split("T")[0];
+                let date : Date = new Date(dd)
+                if(date.toString() !== "Invalid Date"){
+                  return date;
+                }              
+              }
+            }
+            return value;
+          }
+        }, 
       ];
       let convertedData = data.map(function(row){
         let rrow = JSON.parse(JSON.stringify(row));
         rrow["cname"]=rrow.contactPerson.name;
-        rrow["cemail"]=rrow.contactPerson.email;
+        //rrow["cemail"]=rrow.contactPerson.email;
         rrow["cmobileNo"]=rrow.contactPerson.mobileNo;
         delete rrow.contactPerson;
         return rrow;

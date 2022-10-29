@@ -6,6 +6,24 @@
     <h2 class="text-center">
       <span class="page-heading">Users</span>  <button class="float-end" (click)="exportUsers()" mat-icon-button color="primary"><mat-icon>download</mat-icon></button></h2>
     <hr />
+
+    <div class="d-flex justify-content-end my-3">
+      <mat-form-field appearance="outline">
+        <mat-label>Employee name</mat-label>
+        <input
+          matInput
+          placeholder="Employee Name"
+          name="employeename"
+          type="text"
+          [(ngModel)]="employeename"
+          #pageTemp="ngModel"
+        />
+      </mat-form-field>
+      <button mat-icon-button class="mt-2" (click)="searchUsers()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <thead class="thead-light">
@@ -24,11 +42,11 @@
           <tr *ngFor="let data of dataSource; let i = index">
             <th scope="row">{{ ((page-1) * pageSize)+(i + 1) }}</th>
             <td>{{ data.username }}</td>
-            <td>{{ data.name }}</td>
-            <td>{{ data.address }}</td>
+            <td>{{ data.name }}</td>            
             <td>{{ data.employeeId }}</td>
             <td>{{ data.type }}</td>
             <td>{{ data.mobileNo }}</td>
+            <td>{{ data.address }}</td>
             <td>{{ data.email }}</td>
             <td>{{ data.contactPerson.name }}</td>
             <td>{{ data.contactPerson.mobileNo }}</td>
