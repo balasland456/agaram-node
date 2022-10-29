@@ -178,3 +178,9 @@ export interface PagedData<T>{
   data:T[],
   totalRows:number
 }
+
+export interface IAnnouncement {
+  _id?: string;
+  announcementContent: string;
+  active: boolean;
+}

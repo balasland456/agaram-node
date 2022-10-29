@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { AnnouncementService } from 'src/app/services/announcement.service';
 import { ArticleService } from 'src/app/services/article.service';
 import { UserService } from 'src/app/services/user.service';
-import IArticle, {FilterStatus, IUser, PagedData} from 'src/app/shared/types';
+import IArticle, {FilterStatus, IAnnouncement, IUser, PagedData} from 'src/app/shared/types';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { ArticleImportComponent } from '../article-import/article-import.component';
+import { CreateAnnouncementComponent } from '../create-announcement/create-announcement.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +16,7 @@ import { ArticleImportComponent } from '../article-import/article-import.compone
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  announcements:IAnnouncement[]=[];
   startDate?: Date = undefined;
   endDate?: Date = undefined;
   searched:boolean = false;
@@ -51,9 +54,11 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _articleService: ArticleService,
     private _matDialog: MatDialog,
-    private _userService:UserService
+    private _userService:UserService,
+    private _announcementService: AnnouncementService
   ) {
     this.getArticles();
+    this.getAnnouncement();
   }
 
   getArticles(): void {
@@ -183,5 +188,36 @@ export class DashboardComponent implements OnInit {
       this.searchArticle();
     else
       this.getArticles();
+  }
+
+  ShowAnnouncement():void{
+    let data:any ={};    
+    data.updateAnnouncement = this.announcements.length>0;
+    if(this.announcements.length>0){
+      data.announcement = this.announcements[0]
+    }
+    const matDialogRef = this._matDialog.open(CreateAnnouncementComponent, {
+      data: data,
+    });
+
+    matDialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+          this.getAnnouncement();
+      }
+    });
+  }
+  getAnnouncement():void{
+    this.loading = true;
+    this._announcementService.getAllAnnouncements().subscribe({
+      next: (data) => {
+        this.loading = false;
+        const resdata = data.data as PagedData<IAnnouncement>;
+        this.announcements = resdata.data;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+      },
+    });
   }
 }

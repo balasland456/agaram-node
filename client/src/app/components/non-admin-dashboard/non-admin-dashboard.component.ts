@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleService } from 'src/app/services/article.service';
-import IArticle, {FilterStatus,IUser,PagedData} from 'src/app/shared/types';
+import IArticle, {FilterStatus,IAnnouncement,IUser,PagedData} from 'src/app/shared/types';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { ArticleImportComponent } from '../article-import/article-import.component';
 import { PageEvent } from '@angular/material/paginator';
+import { AnnouncementService } from 'src/app/services/announcement.service';
 
 @Component({
   selector: 'app-non-admin-dashboard',
@@ -14,6 +15,7 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./non-admin-dashboard.component.scss']
 })
 export class NonAdminDashboardComponent implements OnInit {  
+  announcements:IAnnouncement[]=[];
   startDate: Date = new Date();
   endDate: Date = new Date();
   searched:boolean = false;
@@ -48,9 +50,11 @@ export class NonAdminDashboardComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _articleService: ArticleService,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _announcementService:AnnouncementService
   ) {
     this.getArticles();
+    this.getAnnouncement();
   }
   
   getArticles(): void {
@@ -171,5 +175,19 @@ export class NonAdminDashboardComponent implements OnInit {
       this.searchArticle();
     else
       this.getArticles();
+  }
+  getAnnouncement():void{
+    this.loading = true;
+    this._announcementService.getAllAnnouncements().subscribe({
+      next: (data) => {
+        this.loading = false;
+        const resdata = data.data as PagedData<IAnnouncement>;
+        this.announcements = resdata.data;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+      },
+    });
   }
 }

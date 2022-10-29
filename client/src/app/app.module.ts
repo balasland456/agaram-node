@@ -27,6 +27,7 @@ import { AuthorizePasswordComponent } from './components/authorize-password/auth
 import { AuthorizePasswordResetComponent } from './components/authorize-password-reset/authorize-password-reset.componenet';
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
 import { ArticleImportComponent } from './components/article-import/article-import.component';
+import { CreateAnnouncementComponent } from './components/create-announcement/create-announcement.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { ArticleImportComponent } from './components/article-import/article-impo
     TransactionFormComponent,
     AuthorizePasswordComponent,
     AuthorizePasswordResetComponent,
-    ArticleImportComponent
+    ArticleImportComponent,
+    CreateAnnouncementComponent
   ],
   imports: [
     BrowserModule,
