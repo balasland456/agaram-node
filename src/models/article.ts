@@ -79,6 +79,9 @@ const articleSchema = new mongoose.Schema(
     IsCreatedByMe:{
       type:Boolean
     },
+    AdminCommand:{
+      type: String,
+    },
   },
   { timestamps: { updatedAt: true, createdAt: false } }
 );

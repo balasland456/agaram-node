@@ -151,6 +151,7 @@ export default class CreateArticle {
   // Update a article
   async updateArticle(article: IArticle, articleId: string): Promise<IArticle> {
     try {
+      console.log(article);
       const update = await Article.findOneAndUpdate(
         { _id: articleId },
         article,
@@ -338,6 +339,10 @@ export default class CreateArticle {
         //     return value;
         //   }
         // },
+        {
+          header:"Admin Command",
+          key:"AdminCommand"
+        },    
       ];    
       if(userId && userId !="0"){
         columns.splice(0,1);

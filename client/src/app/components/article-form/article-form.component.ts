@@ -35,12 +35,15 @@ export class ArticleFormComponent implements OnInit {
   processTypeOptions= Object.keys(ProcessType);
   IsCreatedByMe:boolean=false;
   blnUpdateArticle:boolean =false;
+  AdminCommand:string="";
+  _id?:string="";
   constructor(private _authService: AuthService, private _articleService: ArticleService, private _userService:UserService, private _snackBar: MatSnackBar, private _dialog: MatDialogRef<ArticleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: { updateArticle: boolean, title: string, status: Status, article: IArticle,fromNonAdmin:boolean}) {
     this.fromNonAdmin = this.data.fromNonAdmin;
     
     
     
     if(this.data.updateArticle) {
+      this._id = this.data.article._id;
       if(this.data.article.IsCreatedByMe)
         this.IsCreatedByMe = this.data.article.IsCreatedByMe;
       this.blnUpdateArticle = true;
@@ -59,7 +62,7 @@ export class ArticleFormComponent implements OnInit {
       this.complexity = Complexity[this.data.article.complexity];
       this.mathCount = this.data.article.mathCount;
       this.imagesCount = this.data.article.imagesCount;
-
+      this.AdminCommand = this.data.article.AdminCommand;
       this.processType= ProcessType[this.data.article.processType];     
       if(!this.fromNonAdmin){
         if(this.data.article.status)
@@ -105,6 +108,7 @@ export class ArticleFormComponent implements OnInit {
       imagesCount:this.imagesCount,
       closedDate:this.closedDate,
       completedDate:this.completedDate,
+      AdminCommand:this.AdminCommand,
     }
     data.createdBy = loggedUser?._id;
     if(this.fromNonAdmin){
@@ -144,7 +148,7 @@ export class ArticleFormComponent implements OnInit {
 
   updateArticle(): void {
 
-    const data: IArticleSave = {
+    const data: IArticleSave = {      
       client:this.client,
       batch:this.batch,
       //articleTypes: this.articleType,
@@ -159,6 +163,8 @@ export class ArticleFormComponent implements OnInit {
       imagesCount:this.imagesCount,
       closedDate:this.closedDate,
       completedDate:this.completedDate,
+      AdminCommand:this.AdminCommand,
+      _id:this._id
     }
     
     this._articleService.updateArticle(data, this.data.article._id!).subscribe({

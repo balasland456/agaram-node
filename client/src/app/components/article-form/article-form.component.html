@@ -270,6 +270,23 @@
                 >
               </mat-form-field>
             </div>
+            <div class="col-12" *ngIf="fromNonAdmin && data.updateArticle">
+              <div><label>Admin Command</label></div>
+              <span>{{AdminCommand}}</span>
+            </div>
+            <div class="col-12" *ngIf="!fromNonAdmin">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Admin Command</mat-label>
+                <input
+                  matInput
+                  [disabled]="blnUpdateArticle && fromNonAdmin && !IsCreatedByMe"
+                  placeholder="Admin Command"
+                  name="AdminCommand"
+                  [(ngModel)]="AdminCommand"
+                  #AdminCommandTemp="ngModel"
+                />
+              </mat-form-field>
+            </div>            
 
           </div>
         </div>

@@ -51,16 +51,17 @@ export default interface IArticle {
   assignedTo: IUser;
   IsCreatedByMe:boolean;
   createdBy:IUser;
+  AdminCommand:string;
   client?: string;
   batch?: string;
   closedDate?:Date;
   completedDate?:Date;
   createdAt?: Date;
-  updatedAt?: Date;
-  
+  updatedAt?: Date;  
 }
 
 export interface IArticleSave {
+  _id?:string,
   client?:string,
   batch:string,   
   //articleTypes: string,
@@ -71,6 +72,7 @@ export interface IArticleSave {
   processType: ProcessType,
   mathCount:string,
   imagesCount:string,
+  AdminCommand:string,
   assignedTo?: string,
   status: Status,
   closedDate?:Date,

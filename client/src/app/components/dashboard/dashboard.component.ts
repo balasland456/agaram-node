@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit {
     // 'Last Updated',
     'Completed Date',
     // 'Closed Date',
+    "Admin Command",
   ];
   dataSource: IArticle[] = [];
 

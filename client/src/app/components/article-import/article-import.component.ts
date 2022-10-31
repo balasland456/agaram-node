@@ -77,6 +77,7 @@ export class ArticleImportComponent implements OnInit {
       imagesCount:obj["Images Count"],
       // closedDate:this.convertDate(obj["Closed Date"]),
       completedDate:this.convertDate(obj["Completed Date"]),
+      AdminCommand:obj["Admin Command"],
     };
     return returnObj;
   } 

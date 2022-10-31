@@ -51,17 +51,18 @@ export interface IArticle {
   processType: ProcessType,
   mathCount:string,
   imagesCount:string,
-  client: string;
-  batch: string;
-  assignedTo?:string;
+  client: string,
+  batch: string,
+  assignedTo?:string,
   status: Status,
   closedDate?:Date,
   completedDate?:Date,
   IsCreatedByMe?:boolean,
-  createdBy?:string
-  datefield: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createdBy?:string,
+  datefield: Date,
+  createdAt: Date,
+  updatedAt: Date,
+  AdminCommand:string,
 }
 
 export interface ITransaction {
