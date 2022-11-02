@@ -9,13 +9,13 @@
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <h4>Command from Admin</h4>
+              <h6><b>Command from Admin</b></h6>
             </mat-panel-title>
             <mat-panel-description>            
             </mat-panel-description>
           </mat-expansion-panel-header>    
           <div *ngFor="let announcement of announcements">
-            <p>{{announcement.announcementContent}}</p>
+            <div>{{announcement.announcementContent}}</div>
           </div>
         </mat-expansion-panel>
       </mat-accordion>

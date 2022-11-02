@@ -16,8 +16,8 @@ import { AnnouncementService } from 'src/app/services/announcement.service';
 })
 export class NonAdminDashboardComponent implements OnInit {  
   announcements:IAnnouncement[]=[];
-  startDate: Date = new Date();
-  endDate: Date = new Date();
+  startDate?: Date = undefined;
+  endDate?: Date = undefined;
   searched:boolean = false;
   statusOptions = Object.keys(FilterStatus);
   status: FilterStatus = FilterStatus.ALL;
