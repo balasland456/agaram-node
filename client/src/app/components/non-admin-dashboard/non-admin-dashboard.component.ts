@@ -191,4 +191,12 @@ export class NonAdminDashboardComponent implements OnInit {
       },
     });
   }
+  clearSearch():void{
+    this.batch="";
+    this.status = FilterStatus.ALL;
+    this.startDate=undefined; 
+    this.endDate=undefined;
+    this.searched=false;
+    this.getArticles();
+  }
 }

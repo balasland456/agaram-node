@@ -11,6 +11,7 @@ import { LoginGuardService } from './services/login-guard.service';
 import { IsAdminGuardService } from './services/is-admin-guard.service';
 import { IsNonAdminGuardService } from './services/is-non-admin-guard.service';
 import { AuthorizePasswordComponent } from './components/authorize-password/authorize-password.component';
+import { AnnouncementComponent } from './components/announcement/announcement.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
@@ -44,6 +45,11 @@ const routes: Routes = [
     path: 'forgot-password-requests',
     component: AuthorizePasswordComponent,
     canActivate: [AuthGuardService, IsAdminGuardService],
+  },
+  {
+    path: 'announcement',
+    component: AnnouncementComponent,
+    canActivate: [AuthGuardService, IsNonAdminGuardService],
   }
 ];
 

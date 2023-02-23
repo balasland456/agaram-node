@@ -12,6 +12,11 @@ import { IAnnouncement} from 'src/app/shared/types';
 export class CreateAnnouncementComponent implements OnInit {
   formData: IAnnouncement = {
     announcementContent: "",
+    announcement1Content:"",
+    announcement2Content:"",
+    announcement3Content:"",
+    announcement4Content:"",
+    announcement5Content:"",
     active:true,
   }
 

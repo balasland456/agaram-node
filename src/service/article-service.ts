@@ -374,4 +374,22 @@ export default class CreateArticle {
       throw error;
     }
   }
+
+
+  async closeArticle(articleId: string): Promise<IArticle> {
+    try {
+      const update = await Article.findOneAndUpdate(
+        { _id: articleId },
+        {IsClosed:true,closedDate:Date.now()},
+        { runValidators: true }
+      );
+      if (!update) {
+        throw new ValidatorError("Article not found");
+      }
+      const updated = await Article.findOne({ _id: articleId });
+      return updated;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

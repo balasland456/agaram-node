@@ -10,7 +10,7 @@ const userController = new UserController();
 
 const router: Router = express.Router();
 
-router.post("/add", auth, validator(userValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}) , userController.adduser as unknown as RequestHandler);
+router.post("/add", validator(userValidatorSchema, {customResponse: getCustomValidationResponse(),key: "error"}) , userController.adduser as unknown as RequestHandler);
 router.get("/getall", auth, userController.getallusers);
 router.get("/search", auth, userController.searchUsers);
 router.get("/getforgotpasswordlist", userController.getforgotpasswordlist);

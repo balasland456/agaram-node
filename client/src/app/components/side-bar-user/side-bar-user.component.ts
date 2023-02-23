@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IUser, UserType } from 'src/app/shared/types';
+import { CreateUserComponent } from '../create-user/create-user.component';
 import { LogoutComponent } from '../logout/logout.component';
 
 @Component({
@@ -28,5 +29,18 @@ export class SideBarUserComponent implements OnInit {
   }
   openLogout(): void {
     this.dialog.open(LogoutComponent);
+  }
+  userDetail():void{
+    const dialogRef = this.dialog.open(CreateUserComponent,{
+      data: {
+        updateUser: true,
+        title: 'Update User',
+        user: this.user,
+        profile:true,
+      },
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      localStorage.setItem('user', JSON.stringify(this.user));
+    });
   }
 }

@@ -163,4 +163,9 @@ export class UsersComponent implements OnInit {
       },
     })
   }
+  clearSearch():void{
+    this.employeename="";
+    this.searched=false;
+    this.getAllUsers();
+  }
 }

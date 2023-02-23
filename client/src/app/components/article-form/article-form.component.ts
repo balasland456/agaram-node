@@ -179,5 +179,7 @@ export class ArticleFormComponent implements OnInit {
       }
     });
   }
-
+  CloseArticle():void{
+    
+  }
 }

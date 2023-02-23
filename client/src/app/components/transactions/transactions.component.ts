@@ -141,4 +141,11 @@ export class TransactionsComponent implements OnInit {
     else
       this.getTransactions();
   }
+  clearSearch():void{
+    this.startDate=undefined;
+    this.endDate=undefined;
+    this.for ="";
+    this.searched=false;
+    this.getTransactions();
+  }
 }

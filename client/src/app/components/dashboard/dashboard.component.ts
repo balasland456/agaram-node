@@ -5,6 +5,7 @@ import { AnnouncementService } from 'src/app/services/announcement.service';
 import { ArticleService } from 'src/app/services/article.service';
 import { UserService } from 'src/app/services/user.service';
 import IArticle, {FilterStatus, IAnnouncement, IUser, PagedData} from 'src/app/shared/types';
+import { ArticleCloseComponent } from '../article-close/article-close.component';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
 import { ArticleImportComponent } from '../article-import/article-import.component';
@@ -45,8 +46,9 @@ export class DashboardComponent implements OnInit {
     'Created Date',
     // 'Last Updated',
     'Completed Date',
-    // 'Closed Date',
+    
     "Admin Command",
+    'Closed Date',
   ];
   dataSource: IArticle[] = [];
 
@@ -122,7 +124,19 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+  openCloseArticle(data:IArticle){
+    const matDialogRef = this._matDialog.open(ArticleCloseComponent, {
+      data: {
+        _id: data._id,
+      },
+    });
 
+    matDialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.getArticles();
+      }
+    });
+  }
   searchArticle(): void {
     this.loading = true;
     this._articleService.searchArticle(this.page, this.pageSize,this.status,this.client,false,"",this.startDate, this.endDate,this.assignedTo).subscribe({
@@ -220,5 +234,14 @@ export class DashboardComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+  clearSearch():void{
+    this.status = FilterStatus.ALL;
+    this.client="";
+    this.startDate=undefined; 
+    this.endDate=undefined;
+    this.assignedTo=undefined;
+    this.searched=false;
+    this.getArticles();
   }
 }

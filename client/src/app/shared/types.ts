@@ -58,6 +58,7 @@ export default interface IArticle {
   completedDate?:Date;
   createdAt?: Date;
   updatedAt?: Date;  
+  IsClosed:Boolean
 }
 
 export interface IArticleSave {
@@ -184,5 +185,10 @@ export interface PagedData<T>{
 export interface IAnnouncement {
   _id?: string;
   announcementContent: string;
+  announcement1Content:string;
+  announcement2Content:string;
+  announcement3Content:string;
+  announcement4Content:string;
+  announcement5Content:string;
   active: boolean;
 }

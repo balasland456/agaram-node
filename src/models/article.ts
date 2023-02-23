@@ -39,11 +39,11 @@ const articleSchema = new mongoose.Schema(
     },
     mathCount: {
       type: String,
-      required: true,
+      required: false,
     },
     imagesCount: {
       type: String,
-      required: true,
+      required: false,
     },
     status: {
       type: String,
@@ -81,6 +81,9 @@ const articleSchema = new mongoose.Schema(
     },
     AdminCommand:{
       type: String,
+    },
+    IsClosed:{
+      type:Boolean,
     },
   },
   { timestamps: { updatedAt: true, createdAt: false } }

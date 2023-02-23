@@ -31,10 +31,13 @@ export class CreateUserComponent implements OnInit {
 
   hide: boolean = true;  
   update: boolean = false;
-  constructor(private _userService: UserService, private _snackBar: MatSnackBar, private _matDialogRef: MatDialogRef<CreateUserComponent>,@Inject(MAT_DIALOG_DATA) public data: { updateUser: boolean, title: string, status: Status, user: IUser}) { 
+  profile:boolean=false;
+  constructor(private _userService: UserService, private _snackBar: MatSnackBar, private _matDialogRef: MatDialogRef<CreateUserComponent>,@Inject(MAT_DIALOG_DATA) public data: { updateUser: boolean, title: string, status: Status, user: IUser,profile:boolean}) { 
+    this.update=this.data.updateUser;
     if(this.data.updateUser) {
       this.formData = this.data.user;
     }
+    this.profile = this.data.profile;
   }
 
   ngOnInit(): void {

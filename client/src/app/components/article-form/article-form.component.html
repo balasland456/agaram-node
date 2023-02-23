@@ -158,12 +158,10 @@
                 <mat-label>Math Count</mat-label>
                 <input
                   matInput
-                  [disabled]="blnUpdateArticle && fromNonAdmin && !IsCreatedByMe"
                   placeholder="Math Count"
                   name="mathCount"
                   [(ngModel)]="mathCount"
                   #mathCountTemp="ngModel"
-                  required
                 />
                 <mat-error
                   *ngIf="mathCountTemp.invalid &&
@@ -177,13 +175,11 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Images Count</mat-label>
                 <input
-                  matInput
-                  [disabled]="blnUpdateArticle && fromNonAdmin && !IsCreatedByMe"
+                  matInput                  
                   placeholder="Images Count"
                   name="imagesCount"
                   [(ngModel)]="imagesCount"
                   #imagesCountTemp="ngModel"
-                  required
                 />
                 <mat-error
                   *ngIf="imagesCountTemp.invalid &&

@@ -141,22 +141,22 @@ export class ArticleImportComponent implements OnInit {
                 this.jsonData=[];
                 break;
               }
-              if(!arrData[loop]["Math Count"]){
-                this._snackBar.open('Math Count is required in row '+(loop+1), "", {
-                  duration: 3000
-                });
-                ev.target.value="";
-                this.jsonData=[];
-                break;
-              }
-              if(!arrData[loop]["Images Count"]){
-                this._snackBar.open('Images Count is required  in row '+(loop+1), "", {
-                  duration: 3000
-                });
-                ev.target.value="";
-                this.jsonData=[];
-                break;
-              }
+              // if(!arrData[loop]["Math Count"]){
+              //   this._snackBar.open('Math Count is required in row '+(loop+1), "", {
+              //     duration: 3000
+              //   });
+              //   ev.target.value="";
+              //   this.jsonData=[];
+              //   break;
+              // }
+              // if(!arrData[loop]["Images Count"]){
+              //   this._snackBar.open('Images Count is required  in row '+(loop+1), "", {
+              //     duration: 3000
+              //   });
+              //   ev.target.value="";
+              //   this.jsonData=[];
+              //   break;
+              // }
               if(isNaN(arrData[loop]["Pages"])){
                 this._snackBar.open('Pages is numeric field in row '+(loop+1), "", {
                   duration: 3000

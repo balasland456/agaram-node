@@ -58,6 +58,9 @@
       <button mat-icon-button class="mt-2" (click)="searchArticle()">
         <mat-icon>search</mat-icon>
       </button>
+      <button mat-icon-button class="mt-2" title="Clear filter" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
     </div>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -93,13 +96,17 @@
             <!-- <td>{{ data.closedDate| date }}</td> -->
             <td>{{ data.completedDate| date }}</td>      
             <td>{{ data.AdminCommand }}</td>   
+            <td>{{ data.closedDate|date }}</td>   
             <td>
               <div class="d-flex">
-                <button mat-icon-button color="primary" matTooltip="edit" (click)="openUpdateArticle(data)">
+                <button mat-icon-button color="primary" *ngIf="!data.IsClosed" matTooltip="edit" (click)="openUpdateArticle(data)">
                   <mat-icon>edit</mat-icon>
                 </button>
                 <button mat-icon-button color="accent" matTooltip="delete" (click)="openDeleteArticle(data)">
                   <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" *ngIf="!data.IsClosed" matTooltip="close" (click)="openCloseArticle(data)">
+                  <mat-icon>task_alt</mat-icon>
                 </button>
               </div>
             </td>      

@@ -147,4 +147,10 @@ export class ArticleService {
       { withCredentials: true }
     );
   }
+  closeArticle(id: string): Observable<ResponseDTO<IArticle>> {
+    return this._http.post<ResponseDTO<IArticle>>(
+      `${environment.serverUrl}/article/close/${id}`, {},
+      { withCredentials: true }
+    );
+  }
 }

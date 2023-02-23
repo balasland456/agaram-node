@@ -18,6 +18,7 @@ export default class ArticleController {
     this.searchArticle = this.searchArticle.bind(this);
     this.exportdata = this.exportdata.bind(this);
     this.importArticle = this.importArticle.bind(this);
+    this.closeArticle = this.closeArticle.bind(this);
   }
 
   async addArticle(
@@ -31,9 +32,9 @@ export default class ArticleController {
       request.user?._id;
 
       // Saving the article
-      
+
       let bln = await this._article.validateArticle(article);
-      if(!bln){
+      if (!bln) {
         const responseDTO = new ResponseDTO<IArticle>(
           statusCode.CREATED,
           false,
@@ -42,7 +43,7 @@ export default class ArticleController {
         );
         return response.status(statusCode.CREATED).json(responseDTO);
       }
-      else{
+      else {
         const savedArticle = await this._article.addArticle(article);
         const responseDTO = new ResponseDTO<IArticle>(
           statusCode.CREATED,
@@ -50,9 +51,9 @@ export default class ArticleController {
           savedArticle,
           null
         );
-      return response.status(statusCode.CREATED).json(responseDTO);
+        return response.status(statusCode.CREATED).json(responseDTO);
       }
-      
+
     } catch (error) {
       return next(error);
     }
@@ -63,9 +64,9 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<PagedData<IArticle>>> | void> {
     try {
-      const { sort, page, pageSize,userWise } = request.query;
-      let userId:string |undefined= "0";
-      if(userWise && userWise=="true"){
+      const { sort, page, pageSize, userWise } = request.query;
+      let userId: string | undefined = "0";
+      if (userWise && userWise == "true") {
         userId = request.user?._id;
       }
       const pageNumber: number | undefined = page ? +page : undefined;
@@ -96,12 +97,12 @@ export default class ArticleController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<PagedData<IArticle>>> | void> {
     try {
-      const { client, status, page, pageSize, sd, ed,userWise,batch, assignedTo } = request.query;
+      const { client, status, page, pageSize, sd, ed, userWise, batch, assignedTo } = request.query;
 
-      let userId:string = "0";
-      if(userWise && userWise=="true"){
-        if(request.user?._id){
-        userId = request.user?._id;
+      let userId: string = "0";
+      if (userWise && userWise == "true") {
+        if (request.user?._id) {
+          userId = request.user?._id;
         }
       }
 
@@ -109,18 +110,18 @@ export default class ArticleController {
       const pageSizeNumber: number | undefined = pageSize
         ? +pageSize
         : undefined;
-      let assto:string|undefined = (assignedTo?assignedTo.toString():undefined);
+      let assto: string | undefined = (assignedTo ? assignedTo.toString() : undefined);
       let sdate = undefined;
-      let edate= undefined;
-      if(sd){
+      let edate = undefined;
+      if (sd) {
         sdate = new Date(sd as string);
       }
-      if(ed){
+      if (ed) {
         edate = new Date(ed as string);
-      }      
-      const searchedArticle = await this._article.searchArticle(       
+      }
+      const searchedArticle = await this._article.searchArticle(
         status as FilterStatus,
-        client as string,        
+        client as string,
         batch as string,
         userId,
         pageNumber,
@@ -172,7 +173,7 @@ export default class ArticleController {
       const { _id } = request.params;
       const article = request.body;
       let bln = await this._article.validateArticle(article);
-      if(!bln){
+      if (!bln) {
         const responseDTO = new ResponseDTO<IArticle>(
           statusCode.CREATED,
           false,
@@ -181,7 +182,7 @@ export default class ArticleController {
         );
         return response.status(statusCode.CREATED).json(responseDTO);
       }
-      else{
+      else {
         const updateArticle = await this._article.updateArticle(
           {
             ...article,
@@ -195,7 +196,7 @@ export default class ArticleController {
           null
         );
         return response.status(statusCode.OK).json(responseDTO);
-      }      
+      }
     } catch (error) {
       console.log(error);
       return next(error);
@@ -207,24 +208,24 @@ export default class ArticleController {
     response: Response<Blob>,
     next: NextFunction
   ): Promise<Response<Blob> | void> {
-    try {      
-      const { sd, ed,filter,status,client,userWise,batch,assignedTo } = request.query;
-      let userId:string = "0";
-      let assto:string|undefined = (assignedTo?assignedTo.toString():undefined);
-      if(userWise && userWise=="true"){
-        if(request.user?._id){
-        userId = request.user?._id;
+    try {
+      const { sd, ed, filter, status, client, userWise, batch, assignedTo } = request.query;
+      let userId: string = "0";
+      let assto: string | undefined = (assignedTo ? assignedTo.toString() : undefined);
+      if (userWise && userWise == "true") {
+        if (request.user?._id) {
+          userId = request.user?._id;
         }
       }
       let sdate = undefined;
-      let edate= undefined;
-      if(sd){
+      let edate = undefined;
+      if (sd) {
         sdate = new Date(sd as string);
       }
-      if(ed){
+      if (ed) {
         edate = new Date(ed as string);
-      }      
-      const data = await this._article.exportdata(        
+      }
+      const data = await this._article.exportdata(
         filter as string,
         status as FilterStatus,
         client as string,
@@ -255,27 +256,27 @@ export default class ArticleController {
     try {
       const articles: IArticle[] = request.body;
       const { isAdmin } = request.query;
-      let isAdm:boolean = (isAdmin=="true");
+      let isAdm: boolean = (isAdmin == "true");
       // Saving the article
       articles.forEach(async article => {
         let userId = await this._user.getByEmpId(article.assignedTo);
-        if(userId){
-          article = {...article,...{"assignedTo": userId._id}};
+        if (userId) {
+          article = { ...article, ...{ "assignedTo": userId._id } };
         }
-        else{
-          article = {...article,...{"assignedTo":request.user?._id}}
+        else {
+          article = { ...article, ...{ "assignedTo": request.user?._id } }
         }
-        const alreadyExistArticle:any = await this._article.getArticleByUniqueFields(article,isAdm);        
-        
-        if(alreadyExistArticle) {
-          article = {...article,...{_id:alreadyExistArticle._id}};
-          if(!isAdm){
-            article = {...article,...{client:alreadyExistArticle.client}};
+        const alreadyExistArticle: any = await this._article.getArticleByUniqueFields(article, isAdm);
+
+        if (alreadyExistArticle) {
+          article = { ...article, ...{ _id: alreadyExistArticle._id } };
+          if (!isAdm) {
+            article = { ...article, ...{ client: alreadyExistArticle.client } };
           }
-          await this._article.updateArticle({...article},alreadyExistArticle._id);
+          await this._article.updateArticle({ ...article }, alreadyExistArticle._id);
         }
-        else{
-          await this._article.addArticle({...article});        
+        else {
+          await this._article.addArticle({ ...article });
         }
       });
       const responseDTO = new ResponseDTO<IArticle>(
@@ -284,9 +285,33 @@ export default class ArticleController {
         null,
         null
       );
-      return response.status(statusCode.CREATED).json(responseDTO);      
-      
+      return response.status(statusCode.CREATED).json(responseDTO);
+
     } catch (error) {
+      return next(error);
+    }
+  }
+
+  // close a article
+  async closeArticle(
+    request: Request<IArticle>,
+    response: Response<ResponseDTO<IArticle>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<IArticle>> | void> {
+    try {
+      const { _id } = request.params;
+
+      const updateArticle = await this._article.closeArticle(_id);
+      const responseDTO = new ResponseDTO<IArticle>(
+        statusCode.OK,
+        true,
+        updateArticle,
+        null
+      );
+      return response.status(statusCode.OK).json(responseDTO);
+
+    } catch (error) {
+      console.log(error);
       return next(error);
     }
   }

@@ -8,13 +8,27 @@
       <ul class="navbar-nav mt-2 mt-lg-0">
         <li class="nav-item active">
           <a class="nav-link" routerLink="/non-admin-dashboard" routerLinkActive="active" aria-current="page">
-            <span>Dashboard</span>
+            <mat-icon>leaderboard</mat-icon><span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/announcement" routerLinkActive="active" aria-current="page">
+            <mat-icon>spatial_audio_off</mat-icon><span>Announcement</span>
           </a>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <span class="nav-link px-3 userinfo text-capitalize" style="cursor: pointer;">{{user?.username}}</span>
-        <span class="nav-link px-3" style="cursor: pointer;" (click)="openLogout()">Signout</span>
+        <span class="nav-link px-3 userinfo text-capitalize" [matMenuTriggerFor]="menu" style="cursor: pointer;"><mat-icon>perm_identity</mat-icon>{{user?.username}}</span>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="userDetail()">
+            <mat-icon>perm_identity</mat-icon>
+            <span>User Profile</span>
+          </button>
+          <button mat-menu-item (click)="openLogout()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Signout</span>
+          </button>
+        </mat-menu>
       </ul>
     </div>
   </header>

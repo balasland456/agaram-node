@@ -88,9 +88,13 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
       //     throw new ValidatorError("Email is already in use");
       //   }
       // }
+      // const hashedPassword = await bcrypt.hash(user.password, 6);
+      // user.password = hashedPassword;
+      const userObj = user;
+      //console.log(userObj);
       const update = await User.findOneAndUpdate(
         { _id: id },
-        user,
+        userObj,
         { runValidators: true }
       );
       if (!update) {

@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LogoutComponent } from '../logout/logout.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
+import { CreateUserComponent } from '../create-user/create-user.component';
 
 @Component({
   selector: 'app-side-bar',
@@ -29,5 +30,18 @@ export class SideBarComponent implements OnInit {
   }
   openLogout(): void {
     this.dialog.open(LogoutComponent);
+  }
+  userDetail():void{
+    const dialogRef = this.dialog.open(CreateUserComponent,{
+      data: {
+        updateUser: true,
+        title: 'Update User',
+        user: this.user,
+        profile:true,
+      },
+    });
+    dialogRef.afterClosed().subscribe((data) => {
+      localStorage.setItem('user', JSON.stringify(this.user));
+    });
   }
 }

@@ -16,6 +16,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatMenuModule} from '@angular/material/menu';
+
 @NgModule({
   imports: [
     MatIconModule,
@@ -31,7 +33,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatMenuModule
   ],
   exports: [
     MatIconModule,
@@ -49,7 +52,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatNativeDateModule,
     MatSelectModule,
     MatPaginatorModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatMenuModule
   ],
   providers: [],
 })

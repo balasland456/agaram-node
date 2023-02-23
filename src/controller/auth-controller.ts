@@ -87,7 +87,6 @@ export class AuthController {
         sameSite: true,
         secure: process.env.NODE_ENV === "production",
       });
-      user.password = "HIDDEN";
       const response = new ResponseDTO(statusCode.OK, true, user, null);
       return res.status(statusCode.OK).json(response);
     } catch (error) {
@@ -150,7 +149,6 @@ export class AuthController {
     try {
       const { email } = req.body;
       const user = await this._authService.passwordResetRequest(email);
-      user.password = "HIDDEN";
       const response = new ResponseDTO(statusCode.OK, true, user, null);
       return res.status(statusCode.OK).json(response);
     } catch (error) {

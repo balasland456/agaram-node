@@ -28,6 +28,8 @@ import { AuthorizePasswordResetComponent } from './components/authorize-password
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
 import { ArticleImportComponent } from './components/article-import/article-import.component';
 import { CreateAnnouncementComponent } from './components/create-announcement/create-announcement.component';
+import { ArticleCloseComponent } from './components/article-close/article-close.component';
+import { AnnouncementComponent } from './components/announcement/announcement.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,9 @@ import { CreateAnnouncementComponent } from './components/create-announcement/cr
     AuthorizePasswordComponent,
     AuthorizePasswordResetComponent,
     ArticleImportComponent,
-    CreateAnnouncementComponent
+    CreateAnnouncementComponent,
+    ArticleCloseComponent,
+    AnnouncementComponent
   ],
   imports: [
     BrowserModule,
