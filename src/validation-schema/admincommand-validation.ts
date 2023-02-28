@@ -1,13 +1,13 @@
 import { FunctionTypes, ValidatorObject, ValidatorTypes } from "cape-validator";
 
-export const announcementValidatorSchema: ValidatorObject[] = [
+export const admincommandValidatorSchema: ValidatorObject[] = [
   {
-    key: "announcement",
+    key: "admincommand",
     type: ValidatorTypes.String,
     validators: [FunctionTypes.required, FunctionTypes.notBlank],
     messages: {
-      required: "Announcement is required",
-      notBlank: "Announcement should not be blank",
+      required: "Admin command is required",
+      notBlank: "Admin command should not be blank",
     },
   },
 ];

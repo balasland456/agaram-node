@@ -11,7 +11,8 @@ import { LoginGuardService } from './services/login-guard.service';
 import { IsAdminGuardService } from './services/is-admin-guard.service';
 import { IsNonAdminGuardService } from './services/is-non-admin-guard.service';
 import { AuthorizePasswordComponent } from './components/authorize-password/authorize-password.component';
-import { AnnouncementComponent } from './components/announcement/announcement.component';
+import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { LandingpageComponent } from './components/landingpage/landingpage.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
@@ -47,10 +48,15 @@ const routes: Routes = [
     canActivate: [AuthGuardService, IsAdminGuardService],
   },
   {
-    path: 'announcement',
-    component: AnnouncementComponent,
+    path: 'landingpage',
+    component: LandingpageComponent,
     canActivate: [AuthGuardService, IsNonAdminGuardService],
-  }
+  },
+  {
+    path: 'announcements',
+    component: AnnouncementsComponent,
+    canActivate: [AuthGuardService, IsAdminGuardService],
+  },
 ];
 
 @NgModule({

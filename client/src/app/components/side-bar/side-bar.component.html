@@ -28,6 +28,11 @@
             <span><mat-icon>verified_user</mat-icon>Forgot Password Requests</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/announcements" routerLinkActive="active" aria-current="page">
+            <mat-icon>spatial_audio_off</mat-icon><span>Announcements</span>
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <span class="nav-link px-3 userinfo text-capitalize" [matMenuTriggerFor]="menu" style="cursor: pointer;"><mat-icon>perm_identity</mat-icon>{{user?.username}}</span>

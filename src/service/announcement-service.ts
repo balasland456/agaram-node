@@ -40,14 +40,21 @@ async updateAnnouncement(announcement: IAnnouncement,id:string): Promise<IAnnoun
       throw error;
     }
   }
-  async getallannouncements(): Promise<PagedData<IAnnouncement>> {
+  async getallannouncements(
+    sortParam: string,
+    page?: number,
+    pageSize?: number
+    ): Promise<PagedData<IAnnouncement>> {
     try {
-      const getallannouncements: IAnnouncement[] = await Announcement.find()
-        .sort("-createdAt");
+      const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
+      const getallusers: IAnnouncement[] = await Announcement.find()
+        .sort("-createdAt")
+        .skip(startIndex)
+        .limit(endIndex);
         const rdata :PagedData<IAnnouncement>={
-          data : getallannouncements,
+          data : getallusers,
           totalRows:await Announcement.countDocuments()
-        };     
+        };
       return rdata;
     } catch (error) {
       throw error;
@@ -64,6 +71,26 @@ async updateAnnouncement(announcement: IAnnouncement,id:string): Promise<IAnnoun
         throw new ValidatorError("announcement not found");
       }
       return deleted;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async exportdata(): Promise<excel.Workbook> {
+    try {      
+      const data: IAnnouncement[] = await Announcement.find().sort("-createdAt");
+      let columns:any[] = [
+        {
+          key:"announcement",
+          header:"Announcement"
+        },
+        {
+          key:"active",
+          header:"Active"
+        }, 
+      ];
+      let exportedData = await this._excelService.exportData(columns,data);
+      return exportedData;
     } catch (error) {
       throw error;
     }

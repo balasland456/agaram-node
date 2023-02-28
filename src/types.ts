@@ -181,8 +181,13 @@ export interface PagedData<T>{
   data:T[],
   totalRows:number
 }
+export interface IAdminCommand {
+  _id: string;
+  admincommand: string;
+  active:boolean;
+}
 export interface IAnnouncement {
   _id: string;
-  announcementContent: string;
+  announcement: string;
   active:boolean;
 }

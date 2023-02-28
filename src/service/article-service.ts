@@ -392,4 +392,23 @@ export default class CreateArticle {
       throw error;
     }
   }
+
+  async getMyOpen(
+    userId?:string,
+  ): Promise<IArticle[]> {
+    try {      
+      // let where:any = {IsClosed:{$ne:true}};
+     let where:any = {};
+      if(userId && userId !="0"){
+        where = {...where,assignedTo:userId};
+      }
+      const getArticle: IArticle[] = await Article.find(where)
+      .sort({"createdAt":-1,"article":1})
+        .limit(5)
+        .populate("assignedTo");           
+      return getArticle;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

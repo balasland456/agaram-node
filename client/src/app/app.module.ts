@@ -27,9 +27,12 @@ import { AuthorizePasswordComponent } from './components/authorize-password/auth
 import { AuthorizePasswordResetComponent } from './components/authorize-password-reset/authorize-password-reset.componenet';
 import { UserDeleteComponent } from './components/user-delete/user-delete.component';
 import { ArticleImportComponent } from './components/article-import/article-import.component';
-import { CreateAnnouncementComponent } from './components/create-announcement/create-announcement.component';
+import { CreateAdminCommandComponent } from './components/create-admincommand/create-admincommand.component';
 import { ArticleCloseComponent } from './components/article-close/article-close.component';
-import { AnnouncementComponent } from './components/announcement/announcement.component';
+import { AnnouncementsComponent } from './components/announcements/announcements.component';
+import { CreateAnnouncementComponent } from './components/announcement-create/announcement-create.component';
+import { AnnouncementDeleteComponent } from './components/announcement-delete/announcement-delete.component';
+import { LandingpageComponent } from './components/landingpage/landingpage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,9 +55,12 @@ import { AnnouncementComponent } from './components/announcement/announcement.co
     AuthorizePasswordComponent,
     AuthorizePasswordResetComponent,
     ArticleImportComponent,
-    CreateAnnouncementComponent,
+    CreateAdminCommandComponent,
     ArticleCloseComponent,
-    AnnouncementComponent
+    AnnouncementsComponent,
+    CreateAnnouncementComponent,
+    AnnouncementDeleteComponent,
+    LandingpageComponent
   ],
   imports: [
     BrowserModule,

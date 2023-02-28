@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(['/admin-dashboard']);
         }
         if (data.data?.type === UserType.EMP) {
-          this._router.navigate(['/non-admin-dashboard']);
+          this._router.navigate(['/landingpage']);
         }
       },
       error: (error) => {

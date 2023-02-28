@@ -37,11 +37,17 @@ export class AnnouncementService {
     );
   }
 
-  getAllAnnouncements(): Observable<ResponseDTO<PagedData<IAnnouncement>>> {
+  getAllAnnouncements(
+    page: number,
+    pageSize: number): Observable<ResponseDTO<PagedData<IAnnouncement>>> {
     return this._http.get<ResponseDTO<PagedData<IAnnouncement>>>(
       `${environment.serverUrl}/announcement/getAll`,
       {
         withCredentials: true,
+        params:{
+          page: page,
+          pageSize: pageSize,
+        },  
       }
     );
   }
@@ -50,6 +56,15 @@ export class AnnouncementService {
     return this._http.delete<ResponseDTO<IAnnouncement>>(
       `${environment.serverUrl}/announcement/delete/${id}`,
       { withCredentials: true }
+    );
+  }
+  exportAnnouncements():any {
+    return this._http.get(
+      `${environment.serverUrl}/announcement/export`,
+      {
+        withCredentials: true,        
+        responseType:"blob",
+      }
     );
   }
 }

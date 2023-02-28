@@ -13,6 +13,7 @@ export default class AnnouncementController {
     this.getallannouncements = this.getallannouncements.bind(this);
     this.updateAnnouncement = this.updateAnnouncement.bind(this);
     this.deleteAnnouncement = this.deleteAnnouncement.bind(this);
+    this.exportdata = this.exportdata.bind(this);
   }
 
   async addAnnouncement(
@@ -71,7 +72,15 @@ export default class AnnouncementController {
     next: NextFunction
   ): Promise<Response<ResponseDTO<PagedData<IAnnouncement>>> | void> {
     try {
-      const allannouncement = await this._announcement.getallannouncements();
+      const { sort, page, pageSize } = request.query;
+      const pageNumber: number | undefined = page ? +page : undefined;
+      const pageSizeNumber: number | undefined = pageSize
+        ? +pageSize
+        : undefined;
+      const allannouncement = await this._announcement.getallannouncements(
+        sort as string,
+        pageNumber,
+        pageSizeNumber);
       const responseDTO = new ResponseDTO<PagedData<IAnnouncement>>(
         statusCode.OK,
         true,
@@ -98,6 +107,25 @@ export default class AnnouncementController {
         null
       );
       return response.status(statusCode.OK).json(responseDTO);
+    } catch (error) {
+      return next(error);
+    }
+  }
+  async exportdata(
+    request: Request,
+    response: Response<Blob>,
+    next: NextFunction
+  ): Promise<Response<Blob> | void> {
+    try {
+      const data = await this._announcement.exportdata();
+      let filename = "Announcements";
+      response.set({
+        "Content-disposition": `attachment; filename=${filename}.xlsx`,
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      return data.xlsx.write(response).then(() => {
+        response.status(statusCode.OK).end();
+      });
     } catch (error) {
       return next(error);
     }

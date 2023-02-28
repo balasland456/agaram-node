@@ -12,6 +12,7 @@ import { TransactionRouter } from "./routes/transaction-routes";
 import { uploadRouter } from "./routes/upload-routes";
 import { UserRoutes } from "./routes/user-routes";
 import { AnnouncementRoutes } from "./routes/announcement-routes";
+import { AdminCommandRoutes } from "./routes/admincommand-routes";
 
 // init app
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/article", ArticleRouter);
 app.use("/api/transaction", TransactionRouter);
 app.use("/api/user", UserRoutes);
 app.use("/api/upload", uploadRouter);
+app.use("/api/admincommand", AdminCommandRoutes);
 app.use("/api/announcement", AnnouncementRoutes);
 
 let dir = __dirname.replace("/src", "");

@@ -19,6 +19,7 @@ export default class ArticleController {
     this.exportdata = this.exportdata.bind(this);
     this.importArticle = this.importArticle.bind(this);
     this.closeArticle = this.closeArticle.bind(this);
+    this.getMyOpen = this.getMyOpen.bind(this);
   }
 
   async addArticle(
@@ -312,6 +313,27 @@ export default class ArticleController {
 
     } catch (error) {
       console.log(error);
+      return next(error);
+    }
+  }
+
+
+  async getMyOpen(
+    request: Request,
+    response: Response<ResponseDTO<IArticle[]>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<IArticle[]>> | void> {
+    try {      
+      let userId: string | undefined = request.user?._id;
+      const allArticle = await this._article.getMyOpen(userId);
+      const responseDTO = new ResponseDTO<IArticle[]>(
+        statusCode.OK,
+        true,
+        allArticle,
+        null
+      );
+      return response.status(statusCode.OK).json(responseDTO);
+    } catch (error) {
       return next(error);
     }
   }

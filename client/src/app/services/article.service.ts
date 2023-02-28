@@ -153,4 +153,15 @@ export class ArticleService {
       { withCredentials: true }
     );
   }
+  getMyOpen(userWise:boolean = false):Observable<ResponseDTO<IArticle[]>> {
+    return this._http.get<ResponseDTO<IArticle[]>>(
+      `${environment.serverUrl}/article/getmyopen`,
+      {
+        withCredentials: true,
+        params: {
+          userWise:userWise,          
+        },    
+      }
+    );
+  }
 }
