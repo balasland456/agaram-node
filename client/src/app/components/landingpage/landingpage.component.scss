@@ -1,6 +1,7 @@
-.data-view-card{
-    min-height: 300px;
+.data-view-card{    
     padding: 2rem;
+    height:80vh;
+    overflow-y: auto;
 }
 .no-data{
     position: absolute;
