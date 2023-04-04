@@ -6,7 +6,7 @@ import { ResponseDTO, statusCode } from "../types";
 const getMainDir = function () {
     let newpath = __dirname;
     if (process.env.NODE_ENV == "production") {
-        newpath = newpath.replace("\src", "").replace("\controller", "") + "client\\files\\";
+        newpath = newpath.replace("\src", "").replace("/controller", "") + "client/files/";
     }
     else {
         newpath = newpath.replace("\src", "").replace("\controller", "") + "client\\files\\";
