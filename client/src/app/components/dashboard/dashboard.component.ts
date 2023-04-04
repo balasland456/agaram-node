@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { AdminCommandService } from 'src/app/services/admin-command.service';
 import { ArticleService } from 'src/app/services/article.service';
 import { UserService } from 'src/app/services/user.service';
-import IArticle, {FilterStatus, IAdminCommand, IUser, PagedData} from 'src/app/shared/types';
+import IArticle, { FilterStatus, IAdminCommand, IUser, PagedData } from 'src/app/shared/types';
 import { ArticleCloseComponent } from '../article-close/article-close.component';
 import { ArticleDeleteComponent } from '../article-delete/article-delete.component';
 import { ArticleFormComponent } from '../article-form/article-form.component';
@@ -17,18 +17,18 @@ import { CreateAdminCommandComponent } from '../create-admincommand/create-admin
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  admincommands:IAdminCommand[]=[];
+  admincommands: IAdminCommand[] = [];
   startDate?: Date = undefined;
   endDate?: Date = undefined;
-  searched:boolean = false;
+  searched: boolean = false;
   statusOptions = Object.keys(FilterStatus);
   status: FilterStatus = FilterStatus.ALL;
-  client:string = "";
-  totalRows:number=0;
-  page:number = 1;
-  pageSize:number=10;
-  assignedTo?:string = undefined;
-  users : IUser[]|null = [];
+  client: string = "";
+  totalRows: number = 0;
+  page: number = 1;
+  pageSize: number = 10;
+  assignedTo?: string = undefined;
+  users: IUser[] | null = [];
   displayedColumns: string[] = [
     '#',
     'Client',
@@ -42,13 +42,14 @@ export class DashboardComponent implements OnInit {
     'Math Count',
     'Images Count',
     'Assigned To',
-    'Status',    
+    'Status',
     'Created Date',
     // 'Last Updated',
     'Completed Date',
-    
+
     "Admin Command",
     'Closed Date',
+    'Completed By time'
   ];
   dataSource: IArticle[] = [];
 
@@ -57,13 +58,27 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _articleService: ArticleService,
     private _matDialog: MatDialog,
-    private _userService:UserService,
+    private _userService: UserService,
     private _admincommandService: AdminCommandService
   ) {
     this.getArticles();
     this.getAdminCommand();
   }
-
+  getHours(from: any, to: any): string {
+    if (from && to) {
+      const diffInMs = Date.parse(to) - Date.parse(from);
+      const diffInHours = diffInMs / 1000;
+      return this.secondsToHMS(Math.round(diffInHours));
+    }
+    return "";
+  }
+  secondsToHMS(d: number): string {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ('0' + h).slice(-2) + ':' + ('0' + m).slice(-2) + ':' + ('0' + s).slice(-2);
+  }
   getArticles(): void {
     this.loading = true;
     this._articleService.getAllArticle(this.page, this.pageSize).subscribe({
@@ -124,7 +139,7 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  openCloseArticle(data:IArticle){
+  openCloseArticle(data: IArticle) {
     const matDialogRef = this._matDialog.open(ArticleCloseComponent, {
       data: {
         _id: data._id,
@@ -139,7 +154,7 @@ export class DashboardComponent implements OnInit {
   }
   searchArticle(): void {
     this.loading = true;
-    this._articleService.searchArticle(this.page, this.pageSize,this.status,this.client,false,"",this.startDate, this.endDate,this.assignedTo).subscribe({
+    this._articleService.searchArticle(this.page, this.pageSize, this.status, this.client, false, "", this.startDate, this.endDate, this.assignedTo).subscribe({
       next: (data) => {
         this.searched = true;
         this.loading = false;
@@ -156,9 +171,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this._userService.getNonAdmin().subscribe({
-      next: (data) => {        
-        if(data.success){
-          this.users = data.data;          
+      next: (data) => {
+        if (data.success) {
+          this.users = data.data;
         }
       },
       error: (err) => {
@@ -167,9 +182,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  exportDashboard():void{
+  exportDashboard(): void {
     this.loading = true;
-    this._articleService.exportDashboard(this.searched,this.status,this.client,false,"",this.startDate, this.endDate,this.assignedTo).subscribe((data:any)=>{
+    this._articleService.exportDashboard(this.searched, this.status, this.client, false, "", this.startDate, this.endDate, this.assignedTo).subscribe((data: any) => {
       this.loading = false;
       let url = window.URL.createObjectURL(data);
       let a = document.createElement('a');
@@ -182,34 +197,34 @@ export class DashboardComponent implements OnInit {
       a.remove();
     })
   }
-  importDashboard():void{
+  importDashboard(): void {
     const matDialogRef = this._matDialog.open(ArticleImportComponent, {
-      data: {isAdmin:true},
+      data: { isAdmin: true },
     });
 
     matDialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        if(this.searched)
+        if (this.searched)
           this.searchArticle();
         else
           this.getArticles();
       }
     });
   }
-  onPageChange(e:PageEvent):void{
-    this.page = e.pageIndex+1;
+  onPageChange(e: PageEvent): void {
+    this.page = e.pageIndex + 1;
     this.pageSize = e.pageSize;
-    if(this.searched)
+    if (this.searched)
       this.searchArticle();
     else
       this.getArticles();
   }
 
-  ShowAdminCommand():void{
-    let data:any ={};    
+  ShowAdminCommand(): void {
+    let data: any = {};
     debugger;
-    data.updateAdminCommand = this.admincommands.length>0;
-    if(this.admincommands.length>0){
+    data.updateAdminCommand = this.admincommands.length > 0;
+    if (this.admincommands.length > 0) {
       data.admincommand = this.admincommands[0]
     }
     const matDialogRef = this._matDialog.open(CreateAdminCommandComponent, {
@@ -218,11 +233,11 @@ export class DashboardComponent implements OnInit {
 
     matDialogRef.afterClosed().subscribe((data) => {
       if (data) {
-          this.getAdminCommand();
+        this.getAdminCommand();
       }
     });
   }
-  getAdminCommand():void{
+  getAdminCommand(): void {
     this.loading = true;
     this._admincommandService.getAllAdminCommands().subscribe({
       next: (data) => {
@@ -236,13 +251,13 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
-  clearSearch():void{
+  clearSearch(): void {
     this.status = FilterStatus.ALL;
-    this.client="";
-    this.startDate=undefined; 
-    this.endDate=undefined;
-    this.assignedTo=undefined;
-    this.searched=false;
+    this.client = "";
+    this.startDate = undefined;
+    this.endDate = undefined;
+    this.assignedTo = undefined;
+    this.searched = false;
     this.getArticles();
   }
 }

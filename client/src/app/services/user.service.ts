@@ -5,16 +5,16 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUser, ResponseDTO } from '../shared/types';
 import { CommonModule } from '@angular/common'
-     
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   saveUser(user: IUser): Observable<ResponseDTO<IUser>> {
-    let data = {...user}
+    let data = { ...user }
     delete data._id;
     return this._http.post<ResponseDTO<IUser>>(
       `${environment.serverUrl}/user/add`,
@@ -25,8 +25,8 @@ export class UserService {
     );
   }
 
-  updateUser(user: IUser,id:string): Observable<ResponseDTO<IUser>> {
-    let data = {...user}
+  updateUser(user: IUser, id: string): Observable<ResponseDTO<IUser>> {
+    let data = { ...user }
     delete data._id;
     return this._http.post<ResponseDTO<IUser>>(
       `${environment.serverUrl}/user/update/${id}`,
@@ -45,7 +45,7 @@ export class UserService {
       `${environment.serverUrl}/user/getAll`,
       {
         withCredentials: true,
-        params:{
+        params: {
           page: page,
           pageSize: pageSize,
         },
@@ -64,7 +64,7 @@ export class UserService {
       }
     );
   }
-  resetPassword(user:IResetPassword):Observable<ResponseDTO<IUser>> {
+  resetPassword(user: IResetPassword): Observable<ResponseDTO<IUser>> {
     return this._http.post<ResponseDTO<IUser>>(
       `${environment.serverUrl}/user/resetpassword`,
       user,
@@ -74,17 +74,17 @@ export class UserService {
     );
   }
 
-  exportUsers(filter:boolean,employeename:string):any {
-    let params :any={
-      employeename:employeename,        
-      filter:filter
+  exportUsers(filter: boolean, employeename: string): any {
+    let params: any = {
+      employeename: employeename,
+      filter: filter
     };
     return this._http.get(
       `${environment.serverUrl}/user/export`,
       {
-        withCredentials: true,        
-        responseType:"blob",
-        params:params
+        withCredentials: true,
+        responseType: "blob",
+        params: params
       }
     );
   }
@@ -107,13 +107,13 @@ export class UserService {
   searchUser(
     page: number,
     pageSize: number,
-    employeename:string
+    employeename: string
   ): Observable<ResponseDTO<PagedData<IUser>>> {
     return this._http.get<ResponseDTO<PagedData<IUser>>>(
       `${environment.serverUrl}/user/search`,
       {
         withCredentials: true,
-        params:{
+        params: {
           page: page,
           pageSize: pageSize,
           employeename: employeename

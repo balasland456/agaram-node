@@ -3,7 +3,7 @@ import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
 import User from "../models/user";
 import { IArticle, FilterStatus } from "../types";
-import { createStartAndEndIndex, getCurrentDate } from "../utils";
+import { createStartAndEndIndex, getCurrentDate, getCurrentDateWithTime } from "../utils";
 import { ExcelService } from "./excel-service";
 import excel from 'exceljs';
 export default class CreateArticle {
@@ -380,7 +380,7 @@ export default class CreateArticle {
     try {
       const update = await Article.findOneAndUpdate(
         { _id: articleId },
-        {IsClosed:true,closedDate:Date.now()},
+        {IsClosed:true,closedDate:getCurrentDateWithTime()},
         { runValidators: true }
       );
       if (!update) {

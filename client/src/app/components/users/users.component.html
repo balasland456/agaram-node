@@ -4,20 +4,22 @@
   </div>
   <div *ngIf="!loading">
     <h2 class="text-center">
-      <span class="page-heading">Users</span>  <button class="float-end" (click)="exportUsers()" mat-icon-button color="primary"><mat-icon>download</mat-icon></button></h2>
+      <span class="page-heading">Users</span>
+      <button class="float-end" (click)="exportUsers()" mat-icon-button
+        color="primary"><mat-icon>download</mat-icon></button>
+
+      <button mat-raised-button class="float-end me-2" color="primary" (click)="openCreateUser()" matTooltip="Add User"
+        matTooltipPosition="right">
+        <mat-icon>add</mat-icon> Add New User
+      </button>
+    </h2>
     <hr />
 
     <div class="d-flex justify-content-end my-3">
       <mat-form-field appearance="outline">
         <mat-label>Employee name</mat-label>
-        <input
-          matInput
-          placeholder="Employee Name"
-          name="employeename"
-          type="text"
-          [(ngModel)]="employeename"
-          #pageTemp="ngModel"
-        />
+        <input matInput placeholder="Employee Name" name="employeename" type="text" [(ngModel)]="employeename"
+          #pageTemp="ngModel" />
       </mat-form-field>
       <button mat-icon-button class="mt-2" (click)="searchUsers()">
         <mat-icon>search</mat-icon>
@@ -35,7 +37,8 @@
               {{ column }}
             </th>
             <th>
-              <button mat-icon-button color="primary" (click)="openCreateUser()" matTooltip="Add User" matTooltipPosition="right"  >
+              <button mat-icon-button color="primary" (click)="openCreateUser()" matTooltip="Add User"
+                matTooltipPosition="right">
                 <mat-icon>add</mat-icon>
               </button>
             </th>
@@ -45,7 +48,7 @@
           <tr *ngFor="let data of dataSource; let i = index">
             <th scope="row">{{ ((page-1) * pageSize)+(i + 1) }}</th>
             <td>{{ data.username }}</td>
-            <td>{{ data.name }}</td>            
+            <td>{{ data.name }}</td>
             <td>{{ data.employeeId }}</td>
             <td>{{ data.type }}</td>
             <td>{{ data.mobileNo }}</td>
@@ -68,7 +71,8 @@
           </tr>
         </tbody>
       </table>
-      <mat-paginator  [pageIndex]="page-1" [pageSize]="pageSize" [length]="totalRows" (page)="onPageChange($event)" [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
+      <mat-paginator [pageIndex]="page-1" [pageSize]="pageSize" [length]="totalRows" (page)="onPageChange($event)"
+        [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
       </mat-paginator>
     </div>
   </div>

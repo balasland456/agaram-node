@@ -27,6 +27,9 @@
       <span class="page-heading">Dashboard</span> 
       <button class="float-end" (click)="exportDashboard()" mat-icon-button color="primary"><mat-icon>download</mat-icon></button>
       <button class="float-end" (click)="importDashboard()" mat-icon-button color="primary">Import</button>
+      <button mat-raised-button class="float-end me-2" color="primary" (click)="openCreateArticle()">
+        <mat-icon>add</mat-icon> Add new task
+      </button>
     </h2>
     <div class="d-flex justify-content-end my-3">
       <mat-form-field appearance="outline">
@@ -67,7 +70,7 @@
       </mat-form-field>
       <button mat-icon-button class="mt-2" (click)="searchArticle()">
         <mat-icon>search</mat-icon>
-      </button>
+      </button> 
       <button mat-icon-button class="mt-2" title="Clear filter" (click)="clearSearch()">
         <mat-icon>close</mat-icon>
       </button>
@@ -80,9 +83,7 @@
               {{ column }}
             </th>    
             <th>
-              <button mat-icon-button color="primary" (click)="openCreateArticle()">
-                <mat-icon>add</mat-icon>
-              </button>
+              
             </th>        
           </tr>
         </thead>
@@ -112,6 +113,10 @@
                 </button>
                 <button mat-icon-button color="accent" matTooltip="delete" (click)="openDeleteArticle(data)">
                   <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" *ngIf="!data.IsClosed" matTooltip="close"
+                  (click)="openCloseArticle(data)">
+                  <mat-icon>task_alt</mat-icon>
                 </button>
               </div>
             </td>

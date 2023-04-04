@@ -4,7 +4,13 @@
   </div>
   <div *ngIf="!loading">
     <h2 class="text-center">
-      <span class="page-heading">Announcements</span>  <button class="float-end" (click)="exportAnnouncements()" mat-icon-button color="primary"><mat-icon>download</mat-icon></button></h2>
+      <span class="page-heading">Announcements</span>
+      <button class="float-end" (click)="exportAnnouncements()" mat-icon-button color="primary"><mat-icon>download</mat-icon></button>
+    
+      <button mat-raised-button class="float-end me-2" color="primary" (click)="openCreateAnnouncement()" matTooltip="Add Announcement" matTooltipPosition="right"  >
+        <mat-icon>add</mat-icon> Add new announcement
+      </button>
+    </h2>
     <hr />
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -14,9 +20,7 @@
               {{ column }}
             </th>
             <th>
-              <button mat-icon-button color="primary" (click)="openCreateAnnouncement()" matTooltip="Add Announcement" matTooltipPosition="right"  >
-                <mat-icon>add</mat-icon>
-              </button>
+              
             </th>
           </tr>
         </thead>

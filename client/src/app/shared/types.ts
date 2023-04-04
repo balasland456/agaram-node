@@ -1,8 +1,8 @@
-export interface IResetPassword{
-  password:string;
-  confirmPassword:string;
-  username:string;
-  _id?:string;
+export interface IResetPassword {
+  password: string;
+  confirmPassword: string;
+  username: string;
+  _id?: string;
 }
 
 export interface IUser {
@@ -22,7 +22,7 @@ export interface IUser {
   };
   name: string;
   address: string;
-  joiningDate?:Date;
+  joiningDate?: Date;
 }
 
 export interface ITransaction {
@@ -42,44 +42,44 @@ export default interface IArticle {
   //articleTypes: string;
   article: string;
   pages: number;
-  inputType:InputType;
-  complexity:Complexity;
+  inputType: InputType;
+  complexity: Complexity;
   processType: ProcessType;
-  mathCount:string;
-  imagesCount:string;
+  mathCount: string;
+  imagesCount: string;
   status: Status;
   assignedTo: IUser;
-  IsCreatedByMe:boolean;
-  createdBy:IUser;
-  AdminCommand:string;
+  IsCreatedByMe: boolean;
+  createdBy: IUser;
+  AdminCommand: string;
   client?: string;
   batch?: string;
-  closedDate?:Date;
-  completedDate?:Date;
+  closedDate?: Date;
+  completedDate?: Date;
   createdAt?: Date;
-  updatedAt?: Date;  
-  IsClosed:Boolean
+  updatedAt?: Date;
+  IsClosed: Boolean
 }
 
 export interface IArticleSave {
-  _id?:string,
-  client?:string,
-  batch:string,   
+  _id?: string,
+  client?: string,
+  batch: string,
   //articleTypes: string,
   article: string,
   pages: number,
-  inputType:InputType,
-  complexity:Complexity,
+  inputType: InputType,
+  complexity: Complexity,
   processType: ProcessType,
-  mathCount:string,
-  imagesCount:string,
-  AdminCommand:string,
+  mathCount: string,
+  imagesCount: string,
+  AdminCommand: string,
   assignedTo?: string,
   status: Status,
-  closedDate?:Date,
-  completedDate?:Date,
-  IsCreatedByMe?:boolean,
-  createdBy?:string
+  closedDate?: Date,
+  completedDate?: Date,
+  IsCreatedByMe?: boolean,
+  createdBy?: string
 }
 
 export enum Status {
@@ -149,7 +149,7 @@ declare global {
   }
 }
 
-export enum FilterStatus  {
+export enum FilterStatus {
   ASSIGNED = "ASSIGNED",
   UNASSIGNED = "UNASSIGNED",
   COMPLETED = "COMPLETED",
@@ -158,28 +158,28 @@ export enum FilterStatus  {
   ALL = "ALL"
 }
 export enum InputType {
-  "PRINTED PDF"= "PRINTED PDF",
-  "SCANNED PDF"="SCANNED PDF"
+  "PRINTED PDF" = "PRINTED PDF",
+  "SCANNED PDF" = "SCANNED PDF"
 }
-export enum Complexity{
-  SIMPLE="SIMPLE", 
-  MEDIUM="MEDIUM", 
-  COMPLEX="COMPLEX",
-  "HEAVY-COMPLEX"="HEAVY-COMPLEX"
+export enum Complexity {
+  SIMPLE = "SIMPLE",
+  MEDIUM = "MEDIUM",
+  COMPLEX = "COMPLEX",
+  "HEAVY-COMPLEX" = "HEAVY-COMPLEX"
 }
-export enum ProcessType{
-  OCR="OCR",
-  "EPUB"="EPUB",
-  CODING="CODING",
-  IMAGES="IMAGES",
-  "REFERENCE"="REFERENCE",
-  "QUALITY ASURENCE"="QUALITY ASURENCE",
-  "END TO END"="END TO END"
+export enum ProcessType {
+  OCR = "OCR",
+  "EPUB" = "EPUB",
+  CODING = "CODING",
+  IMAGES = "IMAGES",
+  "REFERENCE" = "REFERENCE",
+  "QUALITY ASURENCE" = "QUALITY ASURENCE",
+  "END TO END" = "END TO END"
 }
 
-export interface PagedData<T>{
-  data:T[],
-  totalRows:number
+export interface PagedData<T> {
+  data: T[],
+  totalRows: number
 }
 
 export interface IAdminCommand {
@@ -187,8 +187,17 @@ export interface IAdminCommand {
   admincommand: string;
   active: boolean;
 }
-export interface IAnnouncement{
+export interface IAnnouncement {
   _id?: string;
   active: boolean;
-  announcement:string;
+  announcement: string;
+}
+export interface ILeave { 
+  appliedBy?:string;
+  _id?:string;
+  dateOfLeave?:Date;
+  reason:string;
+  approval?:boolean;
+  approvedDate?:Date;
+  notesOfApproval?:string;
 }

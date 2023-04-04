@@ -16,9 +16,17 @@
             <mat-icon>leaderboard</mat-icon><span>Dashboard</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/myleaves" routerLinkActive="active" aria-current="page">
+            <mat-icon>settings_accessibility</mat-icon><span>Leave</span>
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <span class="nav-link px-3 userinfo text-capitalize" [matMenuTriggerFor]="menu" style="cursor: pointer;"><mat-icon>perm_identity</mat-icon>{{user?.username}}</span>
+        <span class="nav-link px-3 userinfo text-capitalize" [matMenuTriggerFor]="menu" style="cursor: pointer;">
+          <img class="profile-photo" [src]="profileImage" />
+          {{user?.username}}
+        </span>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="userDetail()">
             <mat-icon>perm_identity</mat-icon>

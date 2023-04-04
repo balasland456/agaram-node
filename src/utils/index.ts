@@ -26,3 +26,15 @@ export const getCurrentDate = (d?: Date) => {
   return `${year}-${month}-${date}`;
 };
 
+export const getCurrentDateWithTime = (d?: Date) => {
+  let t = new Date();
+  if (d) {
+    t = new Date(d);
+  }
+  const date = ("0" + t.getUTCDate()).slice(-2);
+  const month = ("0" + (t.getUTCMonth() + 1)).slice(-2);
+  const year = t.getUTCFullYear();
+  const hours = ("0" + t.getUTCHours()).slice(-2)
+  const mins = ("0" + t.getUTCMinutes()).slice(-2)
+  return `${year}-${month}-${date} ${hours}:${mins}:00`;
+};

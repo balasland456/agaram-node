@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ArticleImportComponent } from '../article-import/article-import.component';
 import { PageEvent } from '@angular/material/paginator';
 import { AdminCommandService } from 'src/app/services/admin-command.service';
+import { ArticleCloseComponent } from '../article-close/article-close.component';
 
 @Component({
   selector: 'app-non-admin-dashboard',
@@ -198,5 +199,18 @@ export class NonAdminDashboardComponent implements OnInit {
     this.endDate=undefined;
     this.searched=false;
     this.getArticles();
+  }
+  openCloseArticle(data: IArticle) {
+    const matDialogRef = this._matDialog.open(ArticleCloseComponent, {
+      data: {
+        _id: data._id,
+      },
+    });
+
+    matDialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this.getArticles();
+      }
+    });
   }
 }

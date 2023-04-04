@@ -13,6 +13,8 @@ import { IsNonAdminGuardService } from './services/is-non-admin-guard.service';
 import { AuthorizePasswordComponent } from './components/authorize-password/authorize-password.component';
 import { AnnouncementsComponent } from './components/announcements/announcements.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
+import { LeavesComponent } from './components/leaves/leaves.component';
+import { LeavesUserComponent } from './components/leaves-user/leaves-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'admin-dashboard', pathMatch: 'full' },
@@ -56,6 +58,16 @@ const routes: Routes = [
     path: 'announcements',
     component: AnnouncementsComponent,
     canActivate: [AuthGuardService, IsAdminGuardService],
+  },
+  {
+    path: 'leaves',
+    component: LeavesComponent,
+    canActivate: [AuthGuardService, IsAdminGuardService],
+  },
+  {
+    path: 'myleaves',
+    component: LeavesUserComponent,
+    canActivate: [AuthGuardService, IsNonAdminGuardService],
   },
 ];
 

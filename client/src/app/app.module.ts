@@ -33,6 +33,12 @@ import { AnnouncementsComponent } from './components/announcements/announcements
 import { CreateAnnouncementComponent } from './components/announcement-create/announcement-create.component';
 import { AnnouncementDeleteComponent } from './components/announcement-delete/announcement-delete.component';
 import { LandingpageComponent } from './components/landingpage/landingpage.component';
+import { LeavesComponent } from './components/leaves/leaves.component';
+import { LeaveDeleteComponent } from './components/leave-delete/leave-delete.component';
+import { CreateLeaveComponent } from './components/leave-create/leave-create.component';
+import { LeaveRejectComponent } from './components/leave-reject/leave-reject.component';
+import { LeaveApproveComponent } from './components/leave-approve/leave-approve.component';
+import { LeavesUserComponent } from './components/leaves-user/leaves-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +66,13 @@ import { LandingpageComponent } from './components/landingpage/landingpage.compo
     AnnouncementsComponent,
     CreateAnnouncementComponent,
     AnnouncementDeleteComponent,
-    LandingpageComponent
+    LandingpageComponent,
+    LeavesComponent,
+    LeaveDeleteComponent,
+    CreateLeaveComponent,
+    LeaveRejectComponent,
+    LeaveApproveComponent,
+    LeavesUserComponent
   ],
   imports: [
     BrowserModule,
@@ -79,4 +91,4 @@ import { LandingpageComponent } from './components/landingpage/landingpage.compo
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

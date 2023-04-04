@@ -1,8 +1,8 @@
 export interface IResetPassword {
-  password:string;
-  confirmPassword:string;
-  username:string;
-  _id?:string;
+  password: string;
+  confirmPassword: string;
+  username: string;
+  _id?: string;
 }
 
 export interface IUser {
@@ -16,13 +16,13 @@ export interface IUser {
   type: UserType;
   name: string;
   updatedAt: Date;
-  address: string;  
+  address: string;
   contactPerson: {
     name: string;
     mobileNo: string;
     //email: string;
   };
-  joiningDate?:Date;
+  joiningDate?: Date;
 }
 
 export interface IUserExcel {
@@ -46,23 +46,23 @@ export interface IArticle {
   //articleTypes: string;
   article: string,
   pages: number,
-  inputType:InputType,
-  complexity:Complexity,
+  inputType: InputType,
+  complexity: Complexity,
   processType: ProcessType,
-  mathCount:string,
-  imagesCount:string,
+  mathCount: string,
+  imagesCount: string,
   client: string,
   batch: string,
-  assignedTo?:string,
+  assignedTo?: string,
   status: Status,
-  closedDate?:Date,
-  completedDate?:Date,
-  IsCreatedByMe?:boolean,
-  createdBy?:string,
+  closedDate?: Date,
+  completedDate?: Date,
+  IsCreatedByMe?: boolean,
+  createdBy?: string,
   datefield: Date,
   createdAt: Date,
   updatedAt: Date,
-  AdminCommand:string,
+  AdminCommand: string,
 }
 
 export interface ITransaction {
@@ -151,7 +151,7 @@ declare global {
 }
 
 
-export enum FilterStatus  {
+export enum FilterStatus {
   ASSIGNED = "ASSIGNED",
   UNASSIGNED = "UNASSIGNED",
   COMPLETED = "COMPLETED",
@@ -160,34 +160,44 @@ export enum FilterStatus  {
   ALL = "ALL"
 }
 export enum InputType {
-  "PDF PRINTED"= "PDF PRINTED",
-  "PDF SCANNED"="PDF SCANNED"
+  "PDF PRINTED" = "PDF PRINTED",
+  "PDF SCANNED" = "PDF SCANNED"
 }
-export enum Complexity{
-  SIMPLE="SIMPLE", 
-  MEDIUM="MEDIUM", 
-  COMPLEX="COMPLEX",
-  HCOMPLEX="HCOMPLEX"
+export enum Complexity {
+  SIMPLE = "SIMPLE",
+  MEDIUM = "MEDIUM",
+  COMPLEX = "COMPLEX",
+  HCOMPLEX = "HCOMPLEX"
 }
-export enum ProcessType{
-  OCR="OCR",
-  CODING="CODING",
-  IMAGES="IMAGES",
-  REF="REF",
-  QA="QA",
-  E2E="E2E"
+export enum ProcessType {
+  OCR = "OCR",
+  CODING = "CODING",
+  IMAGES = "IMAGES",
+  REF = "REF",
+  QA = "QA",
+  E2E = "E2E"
 }
-export interface PagedData<T>{
-  data:T[],
-  totalRows:number
+export interface PagedData<T> {
+  data: T[],
+  totalRows: number
 }
 export interface IAdminCommand {
   _id: string;
   admincommand: string;
-  active:boolean;
+  active: boolean;
 }
 export interface IAnnouncement {
   _id: string;
   announcement: string;
-  active:boolean;
+  active: boolean;
+}
+
+export interface ILeave {
+  appliedBy: string;
+  _id: string;
+  dateOfLeave?: Date;
+  reason: string;
+  approval?: boolean;
+  approvedDate?: Date;
+  notesOfApproval?: string;
 }

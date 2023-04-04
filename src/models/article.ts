@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { getCurrentDate } from "../utils";
+import { getCurrentDate, getCurrentDateWithTime } from "../utils";
 
 const articleSchema = new mongoose.Schema(
   {
@@ -64,7 +64,7 @@ const articleSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       required: true,
-      default: new Date(getCurrentDate()),
+      default: new Date(getCurrentDateWithTime()),
     },
     closedDate: {
       type: Date,      

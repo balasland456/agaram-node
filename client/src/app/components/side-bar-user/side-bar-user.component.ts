@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { IUser, UserType } from 'src/app/shared/types';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { LogoutComponent } from '../logout/logout.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-side-bar-user',
@@ -11,6 +12,7 @@ import { LogoutComponent } from '../logout/logout.component';
   styleUrls: ['./side-bar-user.component.scss']
 })
 export class SideBarUserComponent implements OnInit {
+  profileImage: string = environment.serverUrl + "/files/load?filename=";
   isLoggedIn: boolean = false;
 
   isLoginUrl: boolean = false;
@@ -19,10 +21,11 @@ export class SideBarUserComponent implements OnInit {
   @Input()
   heading: string = ""
 
-  constructor(private dialog: MatDialog, private _authService: AuthService) { 
+  constructor(private dialog: MatDialog, private _authService: AuthService) {     
     this.isLoggedIn = this._authService.isUserLoggedIn();
     this.user = this._authService.getLoggedInUser();
     this.link = this.user?.type !== UserType.ADMIN ? "non-admin-dashboard" : "admin-dashboard";
+    this.profileImage = this.profileImage + this.user?._id +".png";
   }
 
   ngOnInit(): void {
