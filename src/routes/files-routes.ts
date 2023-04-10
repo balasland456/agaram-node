@@ -8,5 +8,6 @@ const fileController = new FileController();
 // routes
 router.post("/upload", fileController.upload as unknown as RequestHandler);
 router.get("/load", fileController.load as unknown as RequestHandler);
+router.get("/filesFolder", fileController.filesFolder as unknown as RequestHandler);
 
 export { router as filesRouter };

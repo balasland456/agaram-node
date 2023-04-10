@@ -6,7 +6,7 @@ import { ResponseDTO, statusCode } from "../types";
 const getMainDir = function () {
     let newpath = __dirname;
     if (process.env.NODE_ENV == "production") {
-        newpath = newpath.replace("\src", "").replace("/controller", "") + "/client/files/";
+        newpath = newpath.replace("/src", "").replace("/dist","").replace("/controller", "") + "/client/files/";
     }
     else {
         newpath = newpath.replace("\src", "").replace("\controller", "") + "client\\files\\";
@@ -18,8 +18,19 @@ export default class FileController {
     constructor() {
         this.upload = this.upload.bind(this);
         this.load = this.load.bind(this);
+        this.filesFolder = this.filesFolder.bind(this);
     }
-
+    async filesFolder(req: Request<FileSystem>,
+        res: Response<ResponseDTO<string>>,
+        next: NextFunction): Promise<Response<ResponseDTO<string>> | void> {
+            const responseDTO = new ResponseDTO<string>(
+                statusCode.CREATED,
+                true,
+                getMainDir(),
+                null
+            );
+            res.status(200).json(responseDTO);
+    }
     async upload(
         req: Request<FileSystem>,
         res: Response<ResponseDTO<string>>,
