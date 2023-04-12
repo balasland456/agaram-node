@@ -25,7 +25,7 @@ export class SideBarUserComponent implements OnInit {
     this.isLoggedIn = this._authService.isUserLoggedIn();
     this.user = this._authService.getLoggedInUser();
     this.link = this.user?.type !== UserType.ADMIN ? "non-admin-dashboard" : "admin-dashboard";
-    this.profileImage = this.profileImage + this.user?._id +".png";
+    this.profileImage = this.profileImage + this.user?._id;
   }
 
   ngOnInit(): void {

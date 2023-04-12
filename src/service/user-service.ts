@@ -40,13 +40,13 @@ export default class UserService {
       const userObj = new User(user);
       const saveduser = await userObj.save();
       return saveduser;
-         
-     
+
+
     } catch (error) {
       throw error;
     }
   }
-async updateUser(user: IUser,id:string): Promise<IUser> {
+  async updateUser(user: IUser, id: string): Promise<IUser> {
     try {
       // // validate user     
       // const retrievedUser = await User.findOne({
@@ -65,7 +65,7 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
       //           ]
       //         }
       //     ]
-            
+
       //   //   },
       //   //   {
       //   //     $or: [
@@ -101,7 +101,7 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
         throw new ValidatorError("User not found");
       }
       const updated = await User.findOne({ _id: id });
-      return updated;     
+      return updated;
     } catch (error) {
       throw error;
     }
@@ -119,12 +119,12 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
-        const rdata :PagedData<IUser>={
-          data : getallusers,
-          totalRows:await User.countDocuments({
-            type: { $ne: UserType.ADMIN },
-          })
-        };     
+      const rdata: PagedData<IUser> = {
+        data: getallusers,
+        totalRows: await User.countDocuments({
+          type: { $ne: UserType.ADMIN },
+        })
+      };
       return rdata;
     } catch (error) {
       throw error;
@@ -133,26 +133,26 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
 
   async searchUsers(
     sortParam: string,
-    employeename:string,
+    employeename: string,
     page?: number,
-    pageSize?: number,    
+    pageSize?: number,
   ): Promise<PagedData<IUser>> {
     try {
-      let where :any= {type: { $ne: UserType.ADMIN }};
-      
-      if(employeename){
-        where.name = {$regex: '.*' + employeename + '.*'};
+      let where: any = { type: { $ne: UserType.ADMIN } };
+
+      if (employeename) {
+        where.name = { $regex: '.*' + employeename + '.*' };
       }
-      
+
       const { startIndex, endIndex } = createStartAndEndIndex(page, pageSize);
       const getallusers: IUser[] = await User.find(where)
         .sort("-createdAt")
         .skip(startIndex)
         .limit(endIndex);
-        const rdata :PagedData<IUser>={
-          data : getallusers,
-          totalRows:await User.countDocuments(where)
-        };     
+      const rdata: PagedData<IUser> = {
+        data: getallusers,
+        totalRows: await User.countDocuments(where)
+      };
       return rdata;
     } catch (error) {
       throw error;
@@ -181,7 +181,7 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
 
 
   async resetPassword(user: IResetPassword): Promise<IUser> {
-    try {      
+    try {
       const objId = new mongoose.Types.ObjectId(user._id);
       const retrievedUser = await User.findOne({
         _id: objId
@@ -195,75 +195,75 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
       throw error;
     }
   }
-  
-  async exportdata(filter:string,employeename:string): Promise<excel.Workbook> {
+
+  async exportdata(filter: string, employeename: string): Promise<excel.Workbook> {
     try {
-      let where :any= {type: { $ne: UserType.ADMIN }};
-      if(filter =="true"){
-        if(employeename){
-          where.name = {$regex: '.*' + employeename + '.*'};
+      let where: any = { type: { $ne: UserType.ADMIN } };
+      if (filter == "true") {
+        if (employeename) {
+          where.name = { $regex: '.*' + employeename + '.*' };
         }
       }
       const data: IUser[] = await User.find(where).sort("-createdAt");
-      let columns:any[] = [
+      let columns: any[] = [
         {
-          key:"username",
-          header:"Username"
+          key: "username",
+          header: "Username"
         },
         {
-          key:"name",
-          header:"Name"
+          key: "name",
+          header: "Name"
         },
         {
-          header:"Address",
-          key:"address"
+          header: "Address",
+          key: "address"
         },
         {
-          header:"ID",
-          key:"employeeId"
+          header: "ID",
+          key: "employeeId"
         },
         {
-          header:"Mobile",
-          key:"mobileNo"
+          header: "Mobile",
+          key: "mobileNo"
         },
         {
-          header:"Email",
-          key:"email"
+          header: "Email",
+          key: "email"
         },
         {
-          header:"Contact Person",
-          key:"cname"
+          header: "Contact Person",
+          key: "cname"
         },
         {
-          header:"Contact Person Mobile",
-          key:"cmobileNo"
+          header: "Contact Person Mobile",
+          key: "cmobileNo"
         },
         {
-          header:"Joining Date",
-          key:"joiningDate",
-          formatter: function(value:string,rowNum:number){
-            if(rowNum>1){
-              if(value){
+          header: "Joining Date",
+          key: "joiningDate",
+          formatter: function (value: string, rowNum: number) {
+            if (rowNum > 1) {
+              if (value) {
                 let dd = value.split("T")[0];
-                let date : Date = new Date(dd)
-                if(date.toString() !== "Invalid Date"){
+                let date: Date = new Date(dd)
+                if (date.toString() !== "Invalid Date") {
                   return date;
-                }              
+                }
               }
             }
             return value;
           }
-        }, 
+        },
       ];
-      let convertedData = data.map(function(row){
+      let convertedData = data.map(function (row) {
         let rrow = JSON.parse(JSON.stringify(row));
-        rrow["cname"]=rrow.contactPerson.name;
+        rrow["cname"] = rrow.contactPerson.name;
         //rrow["cemail"]=rrow.contactPerson.email;
-        rrow["cmobileNo"]=rrow.contactPerson.mobileNo;
+        rrow["cmobileNo"] = rrow.contactPerson.mobileNo;
         delete rrow.contactPerson;
         return rrow;
       })
-      let exportedData = await this._excelService.exportData(columns,convertedData);
+      let exportedData = await this._excelService.exportData(columns, convertedData);
       return exportedData;
     } catch (error) {
       throw error;
@@ -272,7 +272,7 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
 
 
   async getNonAdmin(): Promise<IUser[]> {
-    try {      
+    try {
       const getallusers: IUser[] = await User.find({
         type: { $ne: UserType.ADMIN },
       })
@@ -285,8 +285,8 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
 
   async deleteUser(userId: string): Promise<IUser> {
     try {
-      const checkArticles = await Article.findOne({assignedTo:userId});
-      if(checkArticles){
+      const checkArticles = await Article.findOne({ assignedTo: userId });
+      if (checkArticles) {
         throw new ValidatorError("Unable to delete, User is mapped with articles");
       }
       const deleted = await User.findOneAndDelete({ _id: userId });
@@ -298,13 +298,37 @@ async updateUser(user: IUser,id:string): Promise<IUser> {
       throw error;
     }
   }
-  async getByEmpId(empId?: string): Promise<IUser|null> {
+  async getByEmpId(empId?: string): Promise<IUser | null> {
     try {
-      const finduser = await User.find({employeeId:empId});
-      if(finduser && finduser.length>0){
+      const finduser = await User.find({ employeeId: empId });
+      if (finduser && finduser.length > 0) {
         return finduser[0];
       }
       return null;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async updatePhoto(id: string, photo: Buffer): Promise<IUser> {
+    try {
+      const update = await User.findOneAndUpdate(
+        { _id: id },
+        { photo: photo },
+        { new: true }
+      );
+      if (!update) {
+        throw new ValidatorError("User not found");
+      }
+      const updated = await User.findOne({ _id: id });
+      return updated;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getById(id: string): Promise<IUser> {
+    try {
+      const finduser = await User.findOne({ _id: id });
+      return finduser;
     } catch (error) {
       throw error;
     }

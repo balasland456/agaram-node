@@ -22,6 +22,7 @@ export interface IUser {
     mobileNo: string;
     //email: string;
   };
+  photo?:Buffer;
   joiningDate?: Date;
 }
 

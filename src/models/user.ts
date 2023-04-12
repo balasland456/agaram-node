@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
     address: {
-      type: String, 
+      type: String,
       required: true,
     },
     employeeId: {
@@ -50,13 +50,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    forgotPassword:{
-      type:Boolean,
+    forgotPassword: {
+      type: Boolean,
       default: false
     },
     joiningDate: {
-      type: Date,      
+      type: Date,
     },
+    photo: {
+      type: Buffer,
+    }
   },
   { timestamps: true }
 );
