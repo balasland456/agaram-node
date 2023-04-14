@@ -169,15 +169,15 @@ export default class FileController {
     ): Promise<Response<any> | void> {
         try {
             const { filename } = req.query;
-            console.log(filename);
             const userData: IUser = await this._user.getById(filename as string);
-            console.log(userData);
             if (userData == null || userData.photo == null) {
                 return res.sendFile(getMainDir() + "404.png");
             }
-            res.set('Content-Type', 'application/octet-stream');
-            res.set('Content-Disposition', `attachment; filename=profilephoto.png`);
-            return res.send(userData.photo);
+            else{
+                res.set('Content-Type', 'application/octet-stream');
+                res.set('Content-Disposition', `attachment; filename=profilephoto.png`);
+                return res.send(userData.photo);
+            }            
         } catch (error) {
             return next(error);
         }

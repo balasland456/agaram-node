@@ -92,12 +92,12 @@ export class CreateUserComponent implements OnInit {
       }
     })
   }
-  onFileSelected(event: any):void {
+  onFileSelected(event: any): void {
     if (event.target.files.length > 0) {
       const selectedFile: File = event.target.files[0]
-      const allowedExts: string[] = ["png"];
-      const ext: string = selectedFile.name.split(".").pop()?.toLocaleLowerCase()||"";
-      if ( (allowedExts.indexOf(ext) == -1 || selectedFile.size > 1000000)) {
+      const allowedExts: string[] = ["jpg", "jpeg", "png"];
+      const ext: string = selectedFile.name.split(".").pop()?.toLocaleLowerCase() || "";
+      if ((allowedExts.indexOf(ext) == -1 || selectedFile.size > 1000000)) {
         this._snackBar.open("Please select proper file", "OK");
         event.target.value = "";
         return;
@@ -107,6 +107,7 @@ export class CreateUserComponent implements OnInit {
       formData.append(newFilename, selectedFile, newFilename);
       this._filesService.upload(formData).subscribe({
         next: (data) => {
+          window.location.reload();
           this._snackBar.open("Photo uploaded successfully.", "", {
             duration: 3000,
           });
