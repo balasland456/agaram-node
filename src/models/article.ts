@@ -51,6 +51,11 @@ const articleSchema = new mongoose.Schema(
       enum: ["ASSIGNED", "UNASSIGNED", "CLOSED", "REJECTED", "COMPLETED"],
       default: "UNASSIGNED"
     },
+    userstatus: {
+      type: String,
+      enum: ["STARTED", "NOT STARTED", "COMPLETED"],
+      default: "NOT STARTED"
+    },
     assignedTo: {
       type: String,
       ref: "User"
@@ -84,6 +89,12 @@ const articleSchema = new mongoose.Schema(
     },
     IsClosed:{
       type:Boolean,
+    },
+    userCompletedDate: {
+      type: Date,      
+    },    
+    targetDate: {
+      type: Date,      
     },
   },
   { timestamps: { updatedAt: true, createdAt: false } }

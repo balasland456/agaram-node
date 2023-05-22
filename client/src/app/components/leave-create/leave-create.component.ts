@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
 import { LeaveService } from 'src/app/services/leave.service';
-import { ILeave, IUser, Status } from 'src/app/shared/types';
+import { ILeave, IUser, LeaveType, Status } from 'src/app/shared/types';
 
 @Component({
   selector: 'app-leave-create',
@@ -16,7 +16,9 @@ export class CreateLeaveComponent implements OnInit {
     dateOfLeave: undefined,
     _id: "",
     reason: "",
+    type: LeaveType.FULLDAY,
   }
+  leaveTypeOptions = Object.keys(LeaveType);
 
   hide: boolean = true;
   update: boolean = false;

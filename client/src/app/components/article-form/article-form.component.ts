@@ -1,4 +1,4 @@
-import { ProcessType,InputType,Complexity } from './../../shared/types';
+import { ProcessType,InputType,Complexity, UserStatus } from './../../shared/types';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,9 +20,12 @@ export class ArticleFormComponent implements OnInit {
   pages: number = 0;
   processType: ProcessType = ProcessType.OCR;
   status: Status = Status.ASSIGNED;
+  userstatus:UserStatus=UserStatus["NOT STARTED"];
   assignedTo?:string = undefined;
   closedDate?:Date = undefined;
   completedDate?:Date = undefined;
+  targetDate?:Date=undefined;
+  userstatusOptions = Object.keys(UserStatus);
   statusOptions = Object.keys(Status);
   users : IUser[]|null = [];
   fromNonAdmin:boolean=false;
@@ -55,6 +58,8 @@ export class ArticleFormComponent implements OnInit {
         this.completedDate = this.data.article.completedDate;      
       if(this.data.article.closedDate)
         this.closedDate = this.data.article.closedDate;
+      if(this.data.article.targetDate)
+        this.targetDate = this.data.article.targetDate;
       //this.articleType= this.data.article.articleTypes;
       this.article= this.data.article.article;
       this.pages = this.data.article.pages;
@@ -70,11 +75,14 @@ export class ArticleFormComponent implements OnInit {
         if(this.data.article.assignedTo){
           this.assignedTo = this.data.article.assignedTo._id;
         }
+        if(this.data.article.targetDate){
+          this.targetDate = this.data.article.targetDate;
+        }
       }     
-      
+      if(this.fromNonAdmin){
+        this.userstatus = UserStatus[this.data.article.userstatus];
+      }      
     }
-    
-    
   }
   ngOnInit(): void {
     this._userService.getNonAdmin().subscribe({
@@ -102,11 +110,13 @@ export class ArticleFormComponent implements OnInit {
       processType: this.processType,
       assignedTo: this.assignedTo,
       status: Status.ASSIGNED,      
+      userstatus:UserStatus["NOT STARTED"],
       complexity:this.complexity,
       inputType:this.inputType,
       mathCount:this.mathCount,
       imagesCount:this.imagesCount,
       closedDate:this.closedDate,
+      targetDate:this.targetDate,
       completedDate:this.completedDate,
       AdminCommand:this.AdminCommand,
     }
@@ -157,11 +167,13 @@ export class ArticleFormComponent implements OnInit {
       processType: this.processType,
       assignedTo: this.assignedTo,
       status: this.status,
+      userstatus:this.userstatus,
       complexity:this.complexity,
       inputType:this.inputType,
       mathCount:this.mathCount,
       imagesCount:this.imagesCount,
       closedDate:this.closedDate,
+      targetDate:this.targetDate,
       completedDate:this.completedDate,
       AdminCommand:this.AdminCommand,
       _id:this._id

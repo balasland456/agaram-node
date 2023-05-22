@@ -1,4 +1,4 @@
-import { IUser, PagedData } from './../types';
+import { IUser, PagedData, UserStatus } from './../types';
 import ValidatorError from "../exceptions/validator-error";
 import Article from "../models/article";
 import User from "../models/user";
@@ -151,7 +151,9 @@ export default class CreateArticle {
   // Update a article
   async updateArticle(article: IArticle, articleId: string): Promise<IArticle> {
     try {
-      console.log(article);
+      if(article.userstatus==UserStatus.COMPLETED){
+        article.userCompletedDate = new Date();
+      }
       const update = await Article.findOneAndUpdate(
         { _id: articleId },
         article,
@@ -271,9 +273,29 @@ export default class CreateArticle {
           }
         },
         {
+          header:"Target Date",
+          key:"targetDate",
+          formatter: function(value:string,rowNum:number){
+            if(rowNum>1){
+              if(value){
+                let dd = value.split("T")[0];
+                let date : Date = new Date(dd)
+                if(date.toString() !== "Invalid Date"){
+                  return date;
+                }              
+              }
+            }
+            return value;
+          }
+        },
+        {
           header:"Status",
           key:"status"
-        },        
+        },   
+        {
+          header:"User Status",
+          key:"userstatus"
+        },       
         {
           header:"Created Date",
           key:"createdAt",
@@ -307,6 +329,22 @@ export default class CreateArticle {
         //     return value;
         //   }
         // },
+        {
+          header:"User Completed Date",
+          key:"userCompletedDate",
+          formatter: function(value:string,rowNum:number){
+            if(rowNum>1){
+              if(value){
+                let dd = value.split("T")[0];
+                let date : Date = new Date(dd)
+                if(date.toString() !== "Invalid Date"){
+                  return date;
+                }              
+              }
+            }
+            return value;
+          }
+        },
         {
           header:"Completed Date",
           key:"completedDate",

@@ -1,4 +1,4 @@
-import { ProcessType,InputType,Complexity } from '../../shared/types';
+import { ProcessType,InputType,Complexity, UserStatus } from '../../shared/types';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -70,6 +70,7 @@ export class ArticleImportComponent implements OnInit {
       pages: obj["Pages"],
       processType: obj["Process Type"],
       assignedTo: obj["Assigned To"],
+      userstatus:obj["User Status"],
       status: obj["Status"],
       complexity:obj["Complexity"],
       inputType:obj["Input Type"],
@@ -78,6 +79,8 @@ export class ArticleImportComponent implements OnInit {
       // closedDate:this.convertDate(obj["Closed Date"]),
       completedDate:this.convertDate(obj["Completed Date"]),
       AdminCommand:obj["Admin Command"],
+      targetDate:obj["Target Date"],
+      userCompletedDate:obj["User Completed Date"],
     };
     return returnObj;
   } 
@@ -199,6 +202,14 @@ export class ArticleImportComponent implements OnInit {
               }
               if(Object.keys(Status).indexOf(arrData[loop]["Status"])==-1){
                 this._snackBar.open('Invalid status ('+arrData[loop]["Status"]+') in row '+(loop+1), "", {
+                  duration: 3000
+                });
+                ev.target.value="";
+                this.jsonData=[];
+                break;
+              }
+              if(Object.keys(UserStatus).indexOf(arrData[loop]["User Status"])==-1){
+                this._snackBar.open('Invalid User Status ('+arrData[loop]["User Status"]+') in row '+(loop+1), "", {
                   duration: 3000
                 });
                 ev.target.value="";

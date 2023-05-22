@@ -48,6 +48,7 @@ export default interface IArticle {
   mathCount: string;
   imagesCount: string;
   status: Status;
+  userstatus:UserStatus;
   assignedTo: IUser;
   IsCreatedByMe: boolean;
   createdBy: IUser;
@@ -58,7 +59,9 @@ export default interface IArticle {
   completedDate?: Date;
   createdAt?: Date;
   updatedAt?: Date;
-  IsClosed: Boolean
+  IsClosed: Boolean;
+  userCompletedDate?:Date;
+  targetDate?:Date;
 }
 
 export interface IArticleSave {
@@ -76,10 +79,13 @@ export interface IArticleSave {
   AdminCommand: string,
   assignedTo?: string,
   status: Status,
+  userstatus:UserStatus,
   closedDate?: Date,
   completedDate?: Date,
   IsCreatedByMe?: boolean,
-  createdBy?: string
+  createdBy?: string,
+  userCompletedDate?:Date,
+  targetDate?:Date,
 }
 
 export enum Status {
@@ -200,4 +206,15 @@ export interface ILeave {
   approval?:boolean;
   approvedDate?:Date;
   notesOfApproval?:string;
+  type:LeaveType
+}
+export enum LeaveType{
+  FULLDAY="Full Day",
+  HALFDAY="Half Day"
+}
+
+export enum UserStatus {
+  STARTED = "STARTED",
+  "NOT STARTED" = "NOT STARTED",
+  COMPLETED = "COMPLETED"
 }

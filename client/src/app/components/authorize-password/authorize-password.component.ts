@@ -15,13 +15,10 @@ export class AuthorizePasswordComponent implements OnInit {
   displayedColumns: string[] = [
     '#',
     'Username',
-    'Name',
-    'Address',
-    'ID',
+    'Name of employee',
+    'Empoloyee ID',
     'Mobile',
     'Email',
-    'Contact Person',
-    'Contact Person Mobile',
     'Joining Date',
   ];
   dataSource: IUser[] = [];

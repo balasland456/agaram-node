@@ -59,11 +59,12 @@
           <tr *ngFor="let data of dataSource; let i = index">
             <th scope="row">{{ ((page-1) * pageSize)+(i + 1) }}</th>
             <td>{{ data.invoice }}</td>
-            <td>{{ data.description }}</td>
-            <td>{{ data.date | date }}</td>
             <td>{{ data.for }}</td>
+            <td>{{ data.for }}</td>
+            <td>{{ data.date | date }}</td>            
             <td>Rs. {{ data.paid }}</td>
-            <td>Rs. {{ data.recieved }}</td>
+            <td>Rs. {{ data.recieved }}</td>            
+            <td>{{ data.description }}</td>
             <td>
               <div class="d-flex">
                 <button mat-icon-button color="primary" matTooltip="edit" (click)="openUpdateTransaction(data)">

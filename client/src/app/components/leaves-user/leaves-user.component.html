@@ -28,6 +28,7 @@
             <th scope="row">{{ ((page-1) * pageSize)+(i + 1) }}</th>
             <td>{{data.appliedBy.username}} - {{data.appliedBy.employeeId}} ({{data.appliedBy.type}})</td>
             <td>{{ data.dateOfLeave|date }}</td>
+            <td>{{ data.type }}</td>
             <td>{{ data.reason }}</td>
             <td>
               <span *ngIf="data.approval==null" class="bg-warning badge">To be approved</span>

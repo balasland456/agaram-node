@@ -10,7 +10,7 @@
         color="primary"><mat-icon>download</mat-icon></button>
       <button class="float-end ms-2" (click)="importDashboard()" mat-raised-button color="primary">Import</button>
 
-      <button class="float-end" (click)="ShowAdminCommand()" mat-raised-button color="warn">Command</button>
+      <!-- <button class="float-end" (click)="ShowAdminCommand()" mat-raised-button color="warn">Command</button> -->
 
       <button mat-raised-button class="float-end me-2" color="primary" (click)="openCreateArticle()">
         <mat-icon>add</mat-icon> Add new task
@@ -88,13 +88,16 @@
             <td>{{ data.imagesCount }}</td>
             <td>{{ data.assignedTo?.username }}</td>
             <td>{{ data.status }}</td>
+            <td>{{ data.userstatus }}</td>
             <td>{{ data.createdAt| date }}</td>
+            <td>{{ data.targetDate| date }}</td>
             <!-- <td>{{ data.updatedAt| date }}</td> -->
             <!-- <td>{{ data.closedDate| date }}</td> -->
             <td>{{ data.completedDate| date }}</td>
+            <td>{{ data.userCompletedDate|date }}</td>
             <td>{{ data.AdminCommand }}</td>
             <td>{{ data.closedDate|date }}</td>
-            <td>{{getHours(data.createdAt,data.closedDate)}}</td>
+            <td>{{getHours(data.createdAt,data.userCompletedDate)}}</td>
             <td>
               <div class="d-flex">
                 <button mat-icon-button color="primary" *ngIf="!data.IsClosed" matTooltip="edit"

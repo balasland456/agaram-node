@@ -40,8 +40,11 @@ export class NonAdminDashboardComponent implements OnInit {
     'Assigned To',
     'Status',    
     'Received Date',
+    'Target Date',
+    'User Completed Date',
     //'Last Updated',
     'Completed Date',
+    
     //'Closed Date',
     "Admin Command",
   ];

@@ -224,8 +224,34 @@
               </mat-form-field>
             </div>
 
+            <div class="col-12" *ngIf="!fromNonAdmin">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Target Date</mat-label>
+                <input matInput [(ngModel)]="targetDate" name="targetDate" [matDatepicker]="spicker12" #targetDateTemp="ngModel">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="spicker12"></mat-datepicker-toggle>
+                <mat-datepicker #spicker12></mat-datepicker>
+                <mat-error
+                  *ngIf="targetDateTemp.invalid &&
+                    (targetDateTemp.dirty || targetDateTemp.touched)"
+                  >Target Date is required</mat-error
+                >
+              </mat-form-field>
+            </div>
 
-            <div class="col-12" *ngIf="data.updateArticle">
+
+            <div class="col-12" *ngIf="data.updateArticle && fromNonAdmin">
+              <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select [(ngModel)]="userstatus" name="food">
+                  <mat-option *ngFor="let option of userstatusOptions" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12" *ngIf="data.updateArticle && !fromNonAdmin">
               <mat-form-field appearance="outline">
                 <mat-label>Status</mat-label>
                 <mat-select [(ngModel)]="status" name="food">

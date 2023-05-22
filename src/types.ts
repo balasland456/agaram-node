@@ -64,6 +64,9 @@ export interface IArticle {
   createdAt: Date,
   updatedAt: Date,
   AdminCommand: string,
+  userstatus:UserStatus,
+  userCompletedDate?:Date,
+  targetDate?:Date,
 }
 
 export interface ITransaction {
@@ -84,6 +87,11 @@ export enum Status {
   COMPLETED = "COMPLETED",
   CLOSED = "CLOSED",
   REJECTED = "REJECTED",
+}
+export enum UserStatus {
+  STARTED = "STARTED",
+  "NOT STARTED" = "NOT STARTED",
+  COMPLETED = "COMPLETED"
 }
 
 export enum UserType {

@@ -100,10 +100,12 @@
             <td>{{ data.mathCount }}</td>
             <td>{{ data.imagesCount }}</td>
             <td>{{ data.assignedTo?.username }}</td>
-            <td>{{ data.status }}</td>
+            <td>{{ data.userstatus }}</td>
             <td>{{ data.createdAt| date }}</td>
+            <td>{{ data.targetDate| date }}</td>
             <!-- <td>{{ data.updatedAt| date }}</td> -->
             <!-- <td>{{ data.closedDate| date }}</td> -->
+            <td>{{ data.userCompletedDate| date }}</td>
             <td>{{ data.completedDate| date }}</td>
             <td>{{ data.AdminCommand }}</td>
             <td>
@@ -113,11 +115,7 @@
                 </button>
                 <button mat-icon-button color="accent" matTooltip="delete" (click)="openDeleteArticle(data)">
                   <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button color="accent" *ngIf="!data.IsClosed" matTooltip="close"
-                  (click)="openCloseArticle(data)">
-                  <mat-icon>task_alt</mat-icon>
-                </button>
+                </button>                
               </div>
             </td>
           </tr>

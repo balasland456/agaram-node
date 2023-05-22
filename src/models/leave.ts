@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema(
     notesOfApproval: {
       type: String,
     },
+    type: {
+      type: String,
+      options: ["Full Day", "Half Day"],
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -43,10 +43,12 @@ export class DashboardComponent implements OnInit {
     'Images Count',
     'Assigned To',
     'Status',
+    'User Status',
     'Created Date',
+    'Target Date',
     // 'Last Updated',
     'Completed Date',
-
+    'User Completed Date',
     "Admin Command",
     'Closed Date',
     'Completed By time'

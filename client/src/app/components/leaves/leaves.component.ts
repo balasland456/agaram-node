@@ -2,7 +2,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LeaveService } from 'src/app/services/leave.service';
-import { ILeave, PagedData } from 'src/app/shared/types';
+import { ILeave, LeaveType, PagedData } from 'src/app/shared/types';
 import { CreateLeaveComponent } from '../leave-create/leave-create.component';
 import { LeaveDeleteComponent } from '../leave-delete/leave-delete.component';
 import { LeaveApproveComponent } from '../leave-approve/leave-approve.component';
@@ -22,6 +22,7 @@ export class LeavesComponent implements OnInit {
     '#',
     'Username',
     'Date of Leave',
+    'Leave Type',
     "Reason",
     "Approval Status",
   ];
@@ -54,6 +55,7 @@ export class LeavesComponent implements OnInit {
     const editdata: ILeave = {
       dateOfLeave: undefined,
       reason: "",
+      type:LeaveType.FULLDAY,
     }
     const dialogRef = this._dialog.open(CreateLeaveComponent, {
       data: {

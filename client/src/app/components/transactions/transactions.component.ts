@@ -28,11 +28,12 @@ export class TransactionsComponent implements OnInit {
   displayedColumns: string[] = [
     '#',
     'Invoice',
-    'Description',
-    'TransactionDate',
     'Beneficiary',
-    'Paid',
-    'Recieved',
+    'Beneficiary Name',
+    'Transcation Date',
+    'Paid amount (INR)',
+    'Received amount (INR)',
+    'Description'
   ];
   dataSource: ITransaction[] = [];
   startDate?: Date = undefined;
