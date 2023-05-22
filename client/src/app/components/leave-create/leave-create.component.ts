@@ -36,6 +36,7 @@ export class CreateLeaveComponent implements OnInit {
 
   onSave(): void {
     const loggedUser: IUser | null = this._authService.getLoggedInUser();
+    
     this.formData.appliedBy = loggedUser?._id;
     this._leaveService.saveLeave(this.formData).subscribe({
       next: (data) => {
@@ -59,6 +60,10 @@ export class CreateLeaveComponent implements OnInit {
     })
   }
   updateLeave(): void {
+    debugger;
+    const loggedUser: IUser | null = this._authService.getLoggedInUser();
+    delete this.formData.appliedBy;    
+    this.formData.appliedBy = loggedUser?._id;
     this._leaveService.updateLeave(this.formData, this.data.leave._id!).subscribe({
       next: (data) => {
         this._snackBar.open("Leave updated successfully.", "", {
