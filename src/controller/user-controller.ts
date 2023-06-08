@@ -18,6 +18,7 @@ export default class UserController {
     this.updateUser = this.updateUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.searchUsers = this.searchUsers.bind(this);
+    this.getByRole = this.getByRole.bind(this);
   }
 
   async adduser(
@@ -228,6 +229,26 @@ export default class UserController {
       const { _id } = request.params;
       const deleteUser = await this._user.deleteUser(_id);
       const responseDTO = new ResponseDTO<IUser>(
+        statusCode.OK,
+        true,
+        deleteUser,
+        null
+      );
+      return response.status(statusCode.OK).json(responseDTO);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
+  async getByRole(
+    request: Request,
+    response: Response<ResponseDTO<IUser[]>>,
+    next: NextFunction
+  ): Promise<Response<ResponseDTO<IUser[]>> | void> {
+    try {
+      const { role } = request.query;
+      const deleteUser = await this._user.getByRole(role as string);
+      const responseDTO = new ResponseDTO<IUser[]>(
         statusCode.OK,
         true,
         deleteUser,

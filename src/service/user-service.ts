@@ -309,6 +309,17 @@ export default class UserService {
       throw error;
     }
   }
+  async getByEmail(email?: string): Promise<IUser | null> {
+    try {
+      const finduser = await User.find({ email: email });
+      if (finduser && finduser.length > 0) {
+        return finduser[0];
+      }
+      return null;
+    } catch (error) {
+      throw error;
+    }
+  }
   async updatePhoto(id: string, photo: Buffer): Promise<IUser> {
     try {
       const update = await User.findOneAndUpdate(
@@ -328,6 +339,14 @@ export default class UserService {
   async getById(id: string): Promise<IUser> {
     try {
       const finduser = await User.findOne({ _id: id });
+      return finduser;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getByRole(role: string): Promise<IUser[]> {
+    try {
+      const finduser = await User.find({ type: role });
       return finduser;
     } catch (error) {
       throw error;

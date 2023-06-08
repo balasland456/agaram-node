@@ -78,7 +78,7 @@ export default class LeaveService {
       const getallusers: ILeave[] = await Leave.find(where)
         .sort("-dateOfLeave")
         .skip(startIndex)
-        .limit(endIndex).populate("appliedBy");
+        .limit(endIndex).populate("appliedBy","name username employeeId email");
       const rdata: PagedData<ILeave> = {
         data: getallusers,
         totalRows: await Leave.countDocuments()
@@ -106,8 +106,7 @@ export default class LeaveService {
       if (userId && userId != "0") {
         where = { appliedBy: userId };
       }
-      const data: ILeave[] = await Leave.find(where).sort("-dateOfLeave").populate("appliedBy");
-      console.log(data);
+      const data: ILeave[] = await Leave.find(where).sort("-dateOfLeave").populate("appliedBy","name username employeeId email");
       let columns: any[] = [
         {
           header: "Applied",

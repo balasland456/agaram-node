@@ -56,7 +56,7 @@ export default class CreateArticle {
       .sort({"createdAt":-1,"article":1})
         .skip(startIndex)
         .limit(endIndex)
-        .populate("assignedTo");
+        .populate("assignedTo","name username employeeId email");
 
         const rdata :PagedData<IArticle>={
           data : getArticle,
@@ -121,7 +121,7 @@ export default class CreateArticle {
       })
         .sort({"createdAt":-1,"article":1})
         .skip(startIndex)
-        .limit(endIndex).populate("assignedTo");
+        .limit(endIndex).populate("assignedTo","name username employeeId email");
 
         const rdata :PagedData<IArticle>={
           data : search,
@@ -216,7 +216,7 @@ export default class CreateArticle {
         }
       }
       
-      const data: any[] = await Article.find(where).populate({path:"assignedTo"}).sort({"createdAt":-1,"article":1});
+      const data: any[] = await Article.find(where).populate({path:"assignedTo",select:"name username employeeId email"}).sort({"createdAt":-1,"article":1});
       
       let columns:any[] = [        
         {
@@ -443,7 +443,7 @@ export default class CreateArticle {
       const getArticle: IArticle[] = await Article.find(where)
       .sort({"createdAt":-1,"article":1})
         .limit(5)
-        .populate("assignedTo");           
+        .populate("assignedTo","name username employeeId email");           
       return getArticle;
     } catch (error) {
       throw error;

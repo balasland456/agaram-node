@@ -59,6 +59,9 @@ const userSchema = new mongoose.Schema(
     },
     photo: {
       type: Buffer,
+    },
+    lastLoggedToken:{
+      type:String
     }
   },
   { timestamps: true }

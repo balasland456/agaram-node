@@ -24,6 +24,7 @@ export interface IUser {
   };
   photo?:Buffer;
   joiningDate?: Date;
+  lastLoggedToken?:String;
 }
 
 export interface IUserExcel {

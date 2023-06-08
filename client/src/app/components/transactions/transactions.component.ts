@@ -149,4 +149,11 @@ export class TransactionsComponent implements OnInit {
     this.searched=false;
     this.getTransactions();
   }
+  getUsers(users:any):string{
+    return users.map((user:any)=>{
+      if(typeof user =="object")
+        return user.username
+      return "";
+      }).join(",")
+  }
 }

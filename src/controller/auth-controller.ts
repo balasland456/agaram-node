@@ -2,14 +2,16 @@ import { AuthService } from "../service/auth-service";
 import { NextFunction, Request, Response } from "express";
 import { IUser, ResponseDTO, statusCode } from "../types";
 import TokenService from "../service/token-service";
+import UserService from "../service/user-service";
 
 export class AuthController {
   private _authService: AuthService;
   private _tokenService: TokenService;
-
+  private _userService:UserService;
   constructor() {
     this._authService = new AuthService();
     this._tokenService = new TokenService();
+    this._userService= new UserService();
 
     this.login = this.login.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
@@ -70,7 +72,8 @@ export class AuthController {
       // generate tokens
       const accessToken = this._tokenService.generateAccessToken(user.email);
       const refreshToken = this._tokenService.generateRefreshToken(user.email);
-
+      user.lastLoggedToken = accessToken;
+      await this._userService.updateUser(user,user._id);
       // set cookies
       res.cookie("access_token", accessToken, {
         httpOnly: true,
@@ -127,7 +130,13 @@ export class AuthController {
         sameSite: true,
         secure: process.env.NODE_ENV === "production",
       });
-
+      console.log(req.userEmail);
+      const user:IUser|null = await this._userService.getByEmail(req.userEmail);
+      if(user!=null){
+        user.lastLoggedToken = accessToken;
+        await this._userService.updateUser(user,user._id);
+      }
+      
       const response = new ResponseDTO<string>(
         statusCode.OK,
         true,

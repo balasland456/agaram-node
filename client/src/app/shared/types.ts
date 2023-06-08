@@ -33,6 +33,7 @@ export interface ITransaction {
   for: string;
   paid: number;
   recieved: number;
+  userList:string[];
   createdAt?: Date;
   updatedAt?: Date;
 }

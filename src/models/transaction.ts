@@ -33,6 +33,10 @@ const transactionSchema = new mongoose.Schema(
       required: true,
       default: new Date(getCurrentDate()),
     },
+    userList:{
+      type: [String],
+      ref: "User"
+    }
   },
   { timestamps: { updatedAt: true, createdAt: false } }
 );

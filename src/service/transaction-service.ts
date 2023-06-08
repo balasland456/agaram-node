@@ -33,7 +33,7 @@ export default class Savetransaction {
       const gettransaction: ITransaction[] = await Transaction.find()
         .sort("-createdAt")
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex).populate("userList","name username employeeId email");
         const rdata :PagedData<ITransaction>={
           data : gettransaction,
           totalRows:await Transaction.countDocuments()
@@ -83,7 +83,7 @@ export default class Savetransaction {
       })
         .sort("-createdAt")
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex).populate("userList","name username employeeId email");;
 
         const rdata :PagedData<ITransaction>={
           data : search,
@@ -169,16 +169,31 @@ export default class Savetransaction {
           }
         }
       }
-      const data: ITransaction[] = await Transaction.find(where).sort("-createdAt");
+      const data: ITransaction[] = await Transaction.find(where)
+      .sort("-createdAt")
+      .populate("userList","name username employeeId email");;
 
       let columns:any[] = [
         {
           key:"invoice",
           header:"Invoice"
+        },      
+        {
+          header:"Beneficiary",
+          key:"for"
         },
         {
-          key:"description",
-          header:"Description"
+          header:"Beneficiary Name",
+          key:"userList",
+          formatter:function(value:any[],rowNum:number){
+            if(rowNum>1){
+              return value.map((user:any)=>{
+                if(typeof user =="object")
+                  return user.username
+                return "";
+                }).join(", ")
+            }
+          }
         },
         {
           header:"Transaction Date",
@@ -197,16 +212,16 @@ export default class Savetransaction {
           }
         },
         {
-          header:"Beneficiary",
-          key:"for"
-        },
-        {
           header:"Paid",
           key:"paid"
         },
         {
           header:"Recieved",
           key:"recieved"
+        },
+        {
+          key:"description",
+          header:"Description"
         },
       ];      
       let exportedData = await this._excelService.exportData(columns,data);

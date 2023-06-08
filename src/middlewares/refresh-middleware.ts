@@ -22,9 +22,10 @@ export const checkRefreshToken = async (
       throw new UnAuthenticatedError("access token found.");
     }
     // check user
-    const user = await User.findOne({ email: decodedValue.email });
+    const accessToken = req.cookies["access_token"];
+    const user = await User.findOne({ email: decodedValue.email,lastLoggedToken:accessToken  });
     if (!user) {
-      throw new UnAuthenticatedError("Token not valid");
+      throw new TokenExpiredError("Token not valid",new Date());
     }
     req.userEmail = decodedValue.email;
     return next();

@@ -121,4 +121,17 @@ export class UserService {
       }
     );
   }
+  getByRole(
+    role: string
+  ): Observable<ResponseDTO<IUser[]>> {
+    return this._http.get<ResponseDTO<IUser[]>>(
+      `${environment.serverUrl}/user/getByRole`,
+      {
+        withCredentials: true,
+        params: {
+          role: role
+        }
+      }
+    );
+  }
 }
