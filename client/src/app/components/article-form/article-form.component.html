@@ -292,7 +292,7 @@
                 >
               </mat-form-field>
             </div>
-            <div class="col-12" *ngIf="fromNonAdmin && data.updateArticle">
+            <div class="col-12" *ngIf="fromNonAdmin && data.updateArticle && !AdminCommand">
               <div><label>Admin Command</label></div>
               <span>{{AdminCommand}}</span>
             </div>

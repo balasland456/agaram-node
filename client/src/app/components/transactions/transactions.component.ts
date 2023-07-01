@@ -154,6 +154,6 @@ export class TransactionsComponent implements OnInit {
       if(typeof user =="object")
         return user.username
       return "";
-      }).join(",")
+      }).join(", ")
   }
 }

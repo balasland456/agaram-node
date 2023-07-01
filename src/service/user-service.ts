@@ -118,7 +118,7 @@ export default class UserService {
       })
         .sort("-createdAt")
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex).select("-photo");
       const rdata: PagedData<IUser> = {
         data: getallusers,
         totalRows: await User.countDocuments({
@@ -148,7 +148,7 @@ export default class UserService {
       const getallusers: IUser[] = await User.find(where)
         .sort("-createdAt")
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex).select("-photo");
       const rdata: PagedData<IUser> = {
         data: getallusers,
         totalRows: await User.countDocuments(where)
@@ -172,7 +172,7 @@ export default class UserService {
       })
         .sort("-createdAt")
         .skip(startIndex)
-        .limit(endIndex);
+        .limit(endIndex).select("-photo");
       return getallusers;
     } catch (error) {
       throw error;
@@ -204,7 +204,7 @@ export default class UserService {
           where.name = { $regex: '.*' + employeename + '.*' };
         }
       }
-      const data: IUser[] = await User.find(where).sort("-createdAt");
+      const data: IUser[] = await User.find(where).sort("-createdAt").select("-photo");
       let columns: any[] = [
         {
           key: "username",
@@ -276,7 +276,7 @@ export default class UserService {
       const getallusers: IUser[] = await User.find({
         type: { $ne: UserType.ADMIN },
       })
-        .sort("username")
+        .sort("username").select("-photo")
       return getallusers;
     } catch (error) {
       throw error;
@@ -300,7 +300,7 @@ export default class UserService {
   }
   async getByEmpId(empId?: string): Promise<IUser | null> {
     try {
-      const finduser = await User.find({ employeeId: empId });
+      const finduser = await User.find({ employeeId: empId }).select("-photo");
       if (finduser && finduser.length > 0) {
         return finduser[0];
       }
@@ -311,7 +311,7 @@ export default class UserService {
   }
   async getByEmail(email?: string): Promise<IUser | null> {
     try {
-      const finduser = await User.find({ email: email });
+      const finduser = await User.find({ email: email }).select("-photo");
       if (finduser && finduser.length > 0) {
         return finduser[0];
       }
@@ -346,7 +346,7 @@ export default class UserService {
   }
   async getByRole(role: string): Promise<IUser[]> {
     try {
-      const finduser = await User.find({ type: role });
+      const finduser = await User.find({ type: role }).select("-photo");
       return finduser;
     } catch (error) {
       throw error;

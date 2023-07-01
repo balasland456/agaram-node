@@ -32,7 +32,7 @@
       </button>
     </h2>
     <div class="d-flex justify-content-end my-3">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="ms-2">
         <mat-label>Batch</mat-label>
         <input
           matInput
@@ -45,7 +45,7 @@
       </mat-form-field>
 
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="ms-2">
         <mat-label>Status</mat-label>
         <mat-select [(ngModel)]="status" name="food">
           <mat-option *ngFor="let option of statusOptions" [value]="option">
@@ -54,14 +54,14 @@
         </mat-select>
       </mat-form-field>   
 
-      <mat-form-field appearance="outline" class="mx-2">
+      <mat-form-field appearance="outline" class="ms-2">
         <mat-label>Start Date</mat-label>
         <input matInput [(ngModel)]="startDate" [matDatepicker]="spicker">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="spicker"></mat-datepicker-toggle>
         <mat-datepicker #spicker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="ms-2">
         <mat-label>End Date</mat-label>
         <input matInput [(ngModel)]="endDate" [matDatepicker]="epicker">
         <mat-hint>MM/DD/YYYY</mat-hint>

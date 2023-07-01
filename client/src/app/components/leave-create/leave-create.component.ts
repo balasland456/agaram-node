@@ -18,7 +18,7 @@ export class CreateLeaveComponent implements OnInit {
     reason: "",
     type: LeaveType.FULLDAY,
   }
-  leaveTypeOptions = Object.keys(LeaveType);
+  leaveTypeOptions = Object.values(LeaveType);
 
   hide: boolean = true;
   update: boolean = false;
