@@ -5,7 +5,7 @@
     "main": "server.ts",
     "scripts": {
         "start": "node dist/server.js",
-        "backend-build": "NPM_CONFIG_PRODUCTION=false npx tsc && npm install --prefix ./client && npm run build --prefix ./client",
+        "backend-build": "npm install typescript && NPM_CONFIG_PRODUCTION=false npx tsc && npm install --prefix ./client && npm run build --prefix ./client",
         "frontend-build": "cd client && npm install && npm run build"
     },
     "author": "",
