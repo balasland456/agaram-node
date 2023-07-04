@@ -5,8 +5,8 @@
     "main": "server.ts",
     "scripts": {
         "start": "node dist/server.js",
-        "backend-build": "npm run build",
-        "frontend-build": "cd client && npm run build"
+        "backend-build": "npm install && npm run build",
+        "frontend-build": "cd client && npm install && npm run build"
     },
     "author": "",
     "license": "ISC",
