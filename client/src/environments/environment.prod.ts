@@ -1,4 +1,4 @@
 export const environment = {
-  serverUrl: 'https://agaramdk-app.herokuapp.com/api',
+  serverUrl: 'https://agaram.onrender.com/api',
   production: true,
 };
